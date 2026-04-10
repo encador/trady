@@ -7,4 +7,4 @@ build:
 	go build -o bin/trady
 
 run: build
-	./bin/trady
+	./bin/trady -db-path=bin/trady.db
