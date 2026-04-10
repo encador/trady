@@ -1,16 +1,12 @@
 ---
 Title: Trady
 Description: Simple Trading Web-App
-Author: encador
-tags: ["open-source", "go", "templ", "SSR"]
 ---
 
 ## Status
 - Working: ❌
 
-The project just started.
-
-
+The project is work-in-progress
 
 ## Get Started With Trady
 ```sh
