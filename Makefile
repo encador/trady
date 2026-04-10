@@ -1,10 +1,10 @@
 .PHONY: run dev clean
 
 clean:
-	- rm trady
+	- rm -rf bin
 
 build:
-	go build -o trady
+	go build -o bin/trady
 
-run:
-	go run .
+run: build
+	./bin/trady
