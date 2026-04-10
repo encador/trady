@@ -1,8 +1,9 @@
 package main
 
-import(
-"fmt")
+import (
+	"github.com/encador/trady/internal"
+)
 
-func main(){
-	fmt.Println("Hello, World!")
+func main() {
+	internal.Hello()
 }
