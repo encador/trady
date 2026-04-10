@@ -10,11 +10,9 @@ tags: ["open-source", "go", "templ", "SSR"]
 
 The project just started.
 
-
-
 ## Get Started With Trady
-```sh
-  git clone https://github.com/encador/trady.git
-  cd trady
-  make run
+```console
+  $ git clone https://github.com/encador/trady.git
+  $ cd trady
+  $ make run
 ```
