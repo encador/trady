@@ -8,6 +8,7 @@ import (
 
 	"github.com/encador/trady/internal/database"
 	"github.com/encador/trady/internal/templ/view"
+	"github.com/encador/trady/internal/templ/component"
 )
 
 type config struct {
@@ -20,7 +21,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(r.URL)
-		view.Hello().Render(r.Context(), w)
+		view.Basic(component.Hello("yellow")).Render(r.Context(), w)
 	})
 
 	err := http.ListenAndServe("localhost:55000", mux)
@@ -39,7 +40,7 @@ func main() {
 	db, err := database.Open(cnf.dbPath)
 	if err == nil {
 		fmt.Println("[LOG] DB Opened")
-		defer func() {
+		defer func() { // Does not run when using ctr-c to close
 			db.Close()
 			fmt.Println("[LOG] DB Closed")
 		}()
