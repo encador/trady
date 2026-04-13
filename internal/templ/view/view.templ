@@ -13,11 +13,11 @@ templ Base() {
 					padding: 0;
 				}
 				:where(html) {
-					--dark: rgb(14, 17, 26);
-					--dark-2: rgb(20, 24, 33);
+					--dark: rgb(58, 69, 74);
+					--dark-2: rgb(32, 45, 56);
 					--dark-3: rgb(30, 37, 45);
-					--dark-4: rgb(32, 45, 56);
-					--dark-5: rgb(58, 69, 74);
+					--dark-4: rgb(20, 24, 33);
+					--dark-5: rgb(14, 17, 26);
 					--orange: rgb(186, 133, 70);
 					--orange-2: rgb(128, 78, 57);
 					--orange-3: rgb(75, 42, 42);
@@ -31,6 +31,8 @@ templ Base() {
 					--red-2: rgb(102, 40, 64);
 					--red-3: rgb(52, 28, 50);
 					--white: rgb(230, 230, 230);
+					--white-2: rgb(200, 200, 200);
+					--white-3: rgb(150, 150, 150);
 				}
 			</style>
 		</head>
@@ -47,7 +49,7 @@ templ Base() {
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				background-color: var(--bg);
+				background-color: var(--dark-3);
 			}
 			#container {
 				display: flex;
@@ -64,8 +66,7 @@ templ Base() {
 			#box {
 				width: 60vw;
 				height: 70vh;
-				/* border: #ffffffd0 dashed 4px; */
-				border: var(--blue) dashed 4px;
+				border: var(--white-2) dashed 4px;
 				border-radius: 10px;
 				margin: 20px 0 10px 0;
 				align-items: center;
