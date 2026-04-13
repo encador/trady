@@ -40,7 +40,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	uh := users.NewHandler(db)
+	userH := users.NewHandler(db)
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(r.URL)
@@ -48,7 +48,7 @@ func main() {
 		component.Hello("green").Render(r.Context(), w)
 	})
 
-	mux.Handle("/user", uh.HandleUserPage())
+	mux.Handle("/user", userH.HandleUserPage())
 
 	fmt.Println("[LOG] Serving on localhost:555000")
 	err = http.ListenAndServe("localhost:55000", mux)
