@@ -11,7 +11,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/encador/trady/internal/templ/view"
+	"github.com/encador/trady/internal/templ/layout"
 )
 
 type UserHandler struct {
@@ -24,6 +24,6 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		view.Base().Render(r.Context(), w)
+		layout.Base().Render(r.Context(), w)
 	})
 }
