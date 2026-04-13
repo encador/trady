@@ -1,0 +1,18 @@
+package component
+
+templ Hello(color string) {
+	<h1 class={ h1(color) }>Hello, World!</h1>
+}
+
+css h1(color string) {
+	background-color: { color };
+}
+
+templ Button(text string) {
+	<button class={ button() } type="button">{ text }</button>
+}
+
+css button() {
+	text-decoration: none;
+	border: 2px solid black;
+}
