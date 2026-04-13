@@ -2,12 +2,61 @@ package view
 
 import "github.com/encador/trady/internal/templ/component"
 
-templ Basic(content templ.Component) {
+templ Base() {
 	<!DOCTYPE html>
 	<html>
 		<head>
-			@component.Hello("pink")
+			<title>Trady</title>
 		</head>
+		<body>
+			<div id="box">
+				<div id="container"></div>
+			</div>
+		</body>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				overflow: auto;
+
+				width: 100%;
+				height: fit-content;
+				max-height: 100%;
+				overflow: auto;
+			}
+
+			#box {
+				width: 60vw;
+				height: 70vh;
+				border: #00000030 dashed 4px;
+				border-radius: 10px;
+				margin: 20px 0 10px 0;
+				align-items: center;
+
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				overflow: hidden;
+			}
+		</style>
+	</html>
+}
+
+templ Basic(content templ.Component) {
+	<!DOCTYPE html>
+	<html>
+		<head></head>
 		<body class={ body } style="margin: 0px">
 			@content
 			@component.Hello("red")
