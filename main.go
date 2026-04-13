@@ -7,7 +7,8 @@ import (
 	"os"
 
 	"github.com/encador/trady/internal/database"
-	"github.com/encador/trady/internal/templ/view"
+	"github.com/encador/trady/internal/modules/users"
+	"github.com/encador/trady/internal/templ/component"
 )
 
 type config struct {
@@ -17,16 +18,6 @@ type config struct {
 
 func main() {
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r.URL)
-		view.Base().Render(r.Context(), w)
-	})
-
-	err := http.ListenAndServe("localhost:55000", mux)
-	fmt.Println(err)
-
-	os.Exit(0)
 	var cnf config
 	flag.StringVar(&cnf.dbPath, "db-path", "trady.db", "sqlite3 database file")
 	flag.BoolVar(&cnf.init, "init", true, "initialize application files when missing")
@@ -47,5 +38,20 @@ func main() {
 		fmt.Println(err)
 		os.Exit(0)
 	}
+
+	mux := http.NewServeMux()
+	uh := users.NewHandler(db)
+
+	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println(r.URL)
+		// view.Base().Render(r.Context(), w)
+		component.Hello("green").Render(r.Context(), w)
+	})
+
+	mux.Handle("/user", uh.HandleUserPage())
+
+	fmt.Println("[LOG] Serving on localhost:555000")
+	err = http.ListenAndServe("localhost:55000", mux)
+	fmt.Println(err)
 
 }
