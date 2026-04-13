@@ -5,7 +5,7 @@ templ Hello(color string) {
 }
 
 css h1(color string) {
-	background-color: { color };
+	background-color: var({color});
 }
 
 templ Button(text string) {

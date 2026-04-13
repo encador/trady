@@ -57,7 +57,7 @@ func Hello(color string) templ.Component {
 
 func h1(color string) templ.CSSClass {
 	templ_7745c5c3_CSSBuilder := templruntime.GetBuilder()
-	templ_7745c5c3_CSSBuilder.WriteString(string(templ.SanitizeCSS(`background-color`, color)))
+	templ_7745c5c3_CSSBuilder.WriteString(`background-color:var({color});`)
 	templ_7745c5c3_CSSID := templ.CSSID(`h1`, templ_7745c5c3_CSSBuilder.String())
 	return templ.ComponentCSSClass{
 		ID:    templ_7745c5c3_CSSID,
