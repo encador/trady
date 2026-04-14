@@ -1,6 +1,9 @@
 package layout
 
-import "github.com/encador/trady/internal/templ/component"
+import (
+"github.com/encador/trady/internal/templ/component"
+	"github.com/encador/trady/internal/models"
+)
 
 templ Base() {
 	<!DOCTYPE html>
@@ -38,9 +41,9 @@ templ Base() {
 			</style>
 		</head>
 		<body>
-			<div id="box">
-				<div id="container">
-					@component.Hello("white")
+			<div id="outerbox">
+				<div id="box">
+					@component.LoginForm(models.UserData{})
 				</div>
 			</div>
 		</body>
@@ -52,22 +55,10 @@ templ Base() {
 				justify-content: center;
 				background-color: var(--dark-3);
 			}
-			#container {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				overflow: auto;
-
-				width: 100%;
-				height: fit-content;
-				max-height: 100%;
-				overflow: auto;
-			}
-
-			#box {
+			#outerbox {
 				width: 60vw;
 				height: 70vh;
-				border: var(--dark-1) solid 4px;
+				/* border: var(--dark-1) solid 2px; */
 				background-color: var(--dark-2);
 				border-radius: 10px;
 				margin: 20px 0 10px 0;
@@ -77,6 +68,18 @@ templ Base() {
 				flex-direction: column;
 				justify-content: center;
 				overflow: hidden;
+			}
+
+			#box {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				overflow: auto;
+
+				width: 100%;
+				height: fit-content;
+				max-height: 100%;
+				overflow: auto;
 			}
 		</style>
 	</html>
