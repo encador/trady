@@ -7,10 +7,10 @@ templ LoginForm() {
 		<label for="name">Username</label>
 		<input data-bind="username" placeholder="Enter Name" type="text" id="name" name="username"/>
 		<label for="password">Password</label>
-		<input data-bind:pass1 placeholder="Enter Password" type="password" name="password1"/>
+		<input data-bind:pass1 placeholder="Enter Password" type="password" name="password"/>
 		<div data-computed:match="$pass1 == $pass2"></div>
 		<label data-class:wrong="!$match" for="password">Repeat Password</label>
-		<input data-bind:pass2 data-class:wrong="!$match" placeholder="Repeat Password" type="password" name="password2"/>
+		<input data-bind:pass2 data-class:wrong="!$match" placeholder="Repeat Password" type="password" />
 		<button data-attr:disabled="!$match || $pass1 == '' || $username == ''" data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Submit</button>
 	</form>
 	<style>
@@ -57,7 +57,7 @@ templ LoginForm() {
 			background-color: var(--dark-2);
 			color: var(--white-2);
 			/* caret-color: var(--white-1); */
-			border-radius: 10px;
+			border-radius: 15px;
 			padding: 2px;
 			outline: none;
 			font-size: 15px;

@@ -11,6 +11,7 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
 )
@@ -31,11 +32,17 @@ func (h *UserHandler) HandleUserPage() http.Handler {
 
 func (h *UserHandler) HandleAdd() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		s := []string{}
+		if r.Method != "POST"{
+			http.NotFoundHandler().ServeHTTP(w,r)
+			return
+		}
 		r.ParseForm()
 		form := r.PostForm
-		s = append(s, form.Get("username"))
-		s = append(s, form.Get("password1"))
-		component.MsgBox(s, 2).Render(r.Context(), w)
+		user := models.User{
+			Username: form.Get("username"),
+			Password: form.Get("password"),
+		}
+		errors := addUser(user, h.database)
+		component.MsgBox(errors, 3).Render(r.Context(), w)
 	})
 }
