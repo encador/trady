@@ -16,6 +16,13 @@ type config struct {
 	init   bool
 }
 
+func logger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Printf("%s: %s\n", r.Method, r.URL)
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 
 	var cnf config
@@ -49,9 +56,10 @@ func main() {
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())
+	mux.Handle("/user/new", userH.HandleAdd())
 
 	fmt.Println("[LOG] Serving on localhost:555000")
-	err = http.ListenAndServe("localhost:55000", mux)
+	err = http.ListenAndServe("localhost:55000", logger(mux))
 	fmt.Println(err)
 
 }

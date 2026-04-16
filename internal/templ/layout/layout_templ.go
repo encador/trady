@@ -9,7 +9,6 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/templ/component"
 )
 
@@ -34,11 +33,11 @@ func Base() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title>Trady</title><style>\n\t\t\t\t* {\n\t\t\t\t\tmargin: 0;\n\t\t\t\t\tpadding: 0;\n\t\t\t\t}\n\t\t\t\t:where(html) {\n\t\t\t\t\t--dark-1: rgb(58, 69, 74);\n\t\t\t\t\t--dark-2: rgb(32, 45, 56);\n\t\t\t\t\t--dark-3: rgb(30, 37, 45);\n\t\t\t\t\t--dark-4: rgb(20, 24, 33);\n\t\t\t\t\t--dark-5: rgb(14, 17, 26);\n\t\t\t\t\t--orange-1: rgb(186, 133, 70);\n\t\t\t\t\t--orange-2: rgb(128, 78, 57);\n\t\t\t\t\t--orange-3: rgb(75, 42, 42);\n\t\t\t\t\t--green-1: rgb(141, 173, 94);\n\t\t\t\t\t--green-2: rgb(74, 120, 78);\n\t\t\t\t\t--green-3: rgb(39, 73, 59);\n\t\t\t\t\t--blue-1: rgb(102, 154, 189);\n\t\t\t\t\t--blue-2: rgb(70, 96, 129);\n\t\t\t\t\t--blue-3: rgb(40, 53, 82);\n\t\t\t\t\t--red-1: rgb(172, 71, 64);\n\t\t\t\t\t--red-2: rgb(102, 40, 64);\n\t\t\t\t\t--red-3: rgb(52, 28, 50);\n\t\t\t\t\t--white-1: rgb(255, 255, 255);\n\t\t\t\t\t--white-2: rgb(230, 230, 230);\n\t\t\t\t\t--white-3: rgb(200, 200, 200);\n\t\t\t\t\t--white-4: rgb(150, 150, 150);\n\t\t\t\t}\n\t\t\t</style></head><body><div id=\"outerbox\"><div id=\"box\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title>Trady</title><style>\n\t\t\t\t* {\n\t\t\t\t\tmargin: 0;\n\t\t\t\t\tpadding: 0;\n\t\t\t\t}\n\t\t\t\t:where(html) {\n\t\t\t\t\t--dark-1: rgb(58, 69, 74);\n\t\t\t\t\t--dark-2: rgb(32, 45, 56);\n\t\t\t\t\t--dark-3: rgb(30, 37, 45);\n\t\t\t\t\t--dark-4: rgb(20, 24, 33);\n\t\t\t\t\t--dark-5: rgb(14, 17, 26);\n\t\t\t\t\t--orange-1: rgb(186, 133, 70);\n\t\t\t\t\t--orange-2: rgb(128, 78, 57);\n\t\t\t\t\t--orange-3: rgb(75, 42, 42);\n\t\t\t\t\t--green-1: rgb(141, 173, 94);\n\t\t\t\t\t--green-2: rgb(74, 120, 78);\n\t\t\t\t\t--green-3: rgb(39, 73, 59);\n\t\t\t\t\t--blue-1: rgb(102, 154, 189);\n\t\t\t\t\t--blue-2: rgb(70, 96, 129);\n\t\t\t\t\t--blue-3: rgb(40, 53, 82);\n\t\t\t\t\t--red-1: rgb(172, 71, 64);\n\t\t\t\t\t--red-2: rgb(102, 40, 64);\n\t\t\t\t\t--red-3: rgb(52, 28, 50);\n\t\t\t\t\t--white-1: rgb(255, 255, 255);\n\t\t\t\t\t--white-2: rgb(230, 230, 230);\n\t\t\t\t\t--white-3: rgb(200, 200, 200);\n\t\t\t\t\t--white-4: rgb(150, 150, 150);\n\t\t\t\t}\n\t\t\t</style><script type=\"module\" src=\"https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.8/bundles/datastar.js\"></script></head><body><div id=\"outerbox\"><div id=\"box\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = component.LoginForm(models.UserData{}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = component.LoginForm().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
