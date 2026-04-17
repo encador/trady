@@ -27,7 +27,8 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(SignupForm()).Render(r.Context(), w)
+		// layout.Base(SignupForm()).Render(r.Context(), w)
+		layout.Base(userPage()).Render(r.Context(), w)
 	})
 }
 

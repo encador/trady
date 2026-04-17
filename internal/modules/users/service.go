@@ -28,15 +28,15 @@ func addUser(user models.User, db *sql.DB) ([]string, error) {
 
 	username := strings.TrimSpace(user.Username)
 	if username == "" {
-		msgs = append(msgs, "Name: Connot be Empty")
+		msgs = append(msgs, "Name: Cannot be Empty")
 	} else if len(username) > 24 {
-		msgs = append(msgs, "Name: Connot Exceed 24 Characters")
+		msgs = append(msgs, "Name: Cannot Exceed 24 Characters")
 	}
 
 	if user.Password == "" {
-		msgs = append(msgs, "Password: Connot be Empty")
+		msgs = append(msgs, "Password: Cannot be Empty")
 	} else if len(user.Password) > 64 {
-		msgs = append(msgs, "Password: Connot Exceed 64 Characters")
+		msgs = append(msgs, "Password: Cannot Exceed 64 Characters")
 	}
 	if len(msgs) != 0 {
 		return msgs, errors.New("[addUser]: Invalid Input")
