@@ -1,8 +1,7 @@
-package component
+package users
 
-templ LoginForm() {
+templ SignupForm() {
 	<div id="msg-container"></div>
-	//@MsgBox([]string{"hello", "world"}, 2)
 	<form>
 		<label for="name">Username</label>
 		<input data-bind="username" placeholder="Enter Name" type="text" id="name" name="username"/>
@@ -11,7 +10,7 @@ templ LoginForm() {
 		<div data-computed:match="$pass1 == $pass2"></div>
 		<label data-class:wrong="!$match" for="password">Repeat Password</label>
 		<input data-bind:pass2 data-class:wrong="!$match" placeholder="Repeat Password" type="password" />
-		<button  data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Submit</button>
+		<button disabled data-attr:disabled="!$match || $pass1 == '' || $username == ''" data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Submit</button>
 	</form>
 	<style>
 		form {
@@ -89,10 +88,6 @@ templ LoginForm() {
 			border: var(--red-2) solid 2px;
 		}
 		label {
-			/* border: var(--dark-1) dotted 2px; */
-			/* background-color: var(--dark-3); */
-			/* border-radius: 5px; */
-			/* border-bottom: none; */
 			color: var(--blue-1);
 			width: fit-content;
 			text-align: center;

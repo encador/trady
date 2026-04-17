@@ -9,6 +9,7 @@ package users
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/encador/trady/internal/models"
@@ -26,7 +27,7 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		layout.Base().Render(r.Context(), w)
+		layout.Base(SignupForm()).Render(r.Context(), w)
 	})
 }
 
@@ -42,7 +43,13 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			Username: form.Get("username"),
 			Password: form.Get("password"),
 		}
-		errors := addUser(user, h.database)
-		component.MsgBox(errors, 3).Render(r.Context(), w)
+		msgs, err := addUser(user, h.database)
+		if err != nil {
+			fmt.Println(err)
+			component.MsgBox(msgs, 3).Render(r.Context(), w)
+		} else {
+			component.MsgBox(msgs, 1).Render(r.Context(), w)
+			fmt.Println("[HandleAdd]: New User Added")
+		}
 	})
 }

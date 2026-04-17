@@ -4,7 +4,7 @@ import (
 	"github.com/encador/trady/internal/templ/component"
 )
 
-templ Base() {
+templ Base(content templ.Component) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -43,7 +43,7 @@ templ Base() {
 		<body>
 			<div id="outerbox">
 				<div id="box">
-					@component.LoginForm()
+					@content
 				</div>
 			</div>
 		</body>
