@@ -4,10 +4,19 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"crypto/sha512"
+	"encoding/hex"
 	"strings"
 
 	"github.com/encador/trady/internal/models"
 )
+
+// military grade encryption :)
+func HashPass(pass string, user string) string {
+	data := []byte("superDUPERs3cure" + pass + "ufshi8H8()#)sudfh3484*$*#8" + user)
+	h := sha512.Sum512(data)
+	return hex.EncodeToString(h[:])
+}
 
 func addUser(user models.User, db *sql.DB) ([]string, error) {
 	msgs := []string{}
@@ -35,7 +44,7 @@ func addUser(user models.User, db *sql.DB) ([]string, error) {
 
 	// Add User to Database
 	q := `insert into users(username, password) values(?,?)`
-	if _, err := db.Exec(q, username, user.Password); err == nil {
+	if _, err := db.Exec(q, username, HashPass(user.Password, username)); err == nil {
 		m := fmt.Sprintf("User %s Created", username)
 		msgs = append(msgs, m)
 	} else {

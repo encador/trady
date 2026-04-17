@@ -32,6 +32,7 @@ func main() {
 
 	if cnf.init {
 		database.Create(cnf.dbPath)
+		fmt.Println("[LOG] DB Created")
 	}
 
 	db, err := database.Open(cnf.dbPath)
