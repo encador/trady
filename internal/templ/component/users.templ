@@ -11,7 +11,7 @@ templ LoginForm() {
 		<div data-computed:match="$pass1 == $pass2"></div>
 		<label data-class:wrong="!$match" for="password">Repeat Password</label>
 		<input data-bind:pass2 data-class:wrong="!$match" placeholder="Repeat Password" type="password" />
-		<button data-attr:disabled="!$match || $pass1 == '' || $username == ''" data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Submit</button>
+		<button  data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Submit</button>
 	</form>
 	<style>
 		form {
