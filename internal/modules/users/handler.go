@@ -11,10 +11,12 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
+	"github.com/starfederation/datastar-go/datastar"
 )
 
 type UserHandler struct {
@@ -34,8 +36,8 @@ func (h *UserHandler) HandleUserPage() http.Handler {
 
 func (h *UserHandler) HandleAdd() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "POST"{
-			http.NotFoundHandler().ServeHTTP(w,r)
+		if r.Method != "POST" {
+			http.NotFoundHandler().ServeHTTP(w, r)
 			return
 		}
 		r.ParseForm()
@@ -44,13 +46,22 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			Username: form.Get("username"),
 			Password: form.Get("password"),
 		}
+
+
+		sse := datastar.NewSSE(w, r)
 		msgs, err := addUser(user, h.database)
 		if err != nil {
 			fmt.Println(err)
-			component.MsgBox(msgs, 3).Render(r.Context(), w)
+			// component.MsgBox(msgs, 3).Render(r.Context(), w)
+			sse.PatchElementTempl(component.MsgBox(msgs, 3))
 		} else {
-			component.MsgBox(msgs, 1).Render(r.Context(), w)
+			// component.MsgBox(msgs, 1).Render(r.Context(), w)
+			sse.PatchElementTempl(component.MsgBox(msgs, 1))
 			fmt.Println("[HandleAdd]: New User Added")
+			time.Sleep(time.Second * 1)
+			sse.Redirect("/")
+			// http.Redirect(w, r, "/", http.StatusSeeOther)
+
 		}
 	})
 }
