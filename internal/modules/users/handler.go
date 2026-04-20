@@ -59,6 +59,8 @@ func (h *UserHandler) HandleLogin() http.Handler {
 
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
+		time.Sleep(time.Second)
+		sse.Redirect("/")
 
 	})
 }
