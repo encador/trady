@@ -1,11 +1,11 @@
 package users
 
 import (
+	"crypto/sha512"
 	"database/sql"
+	"encoding/hex"
 	"errors"
 	"fmt"
-	"crypto/sha512"
-	"encoding/hex"
 	"strings"
 
 	"github.com/encador/trady/internal/models"
@@ -16,6 +16,27 @@ func HashPass(pass string, user string) string {
 	data := []byte("superDUPERs3cure" + pass + "ufshi8H8()#)sudfh3484*$*#8" + user)
 	h := sha512.Sum512(data)
 	return hex.EncodeToString(h[:])
+}
+
+func GetUser(username string, db *sql.DB) (models.User, error) {
+	q := `select id, username, password from users where username = ?`
+	row := db.QueryRow(q, username)
+	user := models.User{}
+	err := row.Scan(&user.ID, &user.Username, &user.Password)
+	return user, err
+}
+
+func verifyPass(username, password string, db *sql.DB) error {
+	u, err := GetUser(username, db)
+	if err != nil {
+		fmt.Println(err)
+		return errors.New("[verifyPass] Wrong Username")
+	}
+	if username != u.Username || HashPass(password, username) != u.Password {
+		return errors.New("[verifyPass] Wrong Password")
+	}
+
+	return nil
 }
 
 func addUser(user models.User, db *sql.DB) ([]string, error) {

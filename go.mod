@@ -4,6 +4,7 @@ go 1.26.1
 
 require (
 	github.com/a-h/templ v0.3.1001
+	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/starfederation/datastar-go v1.2.1
 	modernc.org/sqlite v1.48.2
 )

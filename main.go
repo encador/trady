@@ -38,8 +38,10 @@ func main() {
 	flag.Parse()
 
 	if cnf.init {
-		database.Create(cnf.dbPath)
-		fmt.Println("[LOG] DB Created")
+		err := database.Create(cnf.dbPath)
+		if err == nil {
+			fmt.Println("[LOG] DB Created")
+		}
 	}
 
 	db, err := database.Open(cnf.dbPath)
@@ -64,6 +66,7 @@ func main() {
 
 	mux.Handle("/user", userH.HandleUserPage())
 	mux.Handle("/user/new", userH.HandleAdd())
+	mux.Handle("/user/login", userH.HandleLogin())
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
