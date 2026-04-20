@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/encador/trady/internal/database"
 	"github.com/encador/trady/internal/modules/users"
@@ -18,7 +19,9 @@ type config struct {
 
 func logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Printf("%s: %s\n", r.Method, r.URL)
+		// t := time.Now().Format("1-02 15:04:05")
+		t := time.Now().Format("15:04:05")
+		fmt.Printf("[%s] %s: %s\n", t, r.Method, r.URL)
 		next.ServeHTTP(w, r)
 	})
 }
@@ -51,7 +54,6 @@ func main() {
 	userH := users.NewHandler(db)
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r.URL)
 		// view.Base().Render(r.Context(), w)
 		component.Hello("green").Render(r.Context(), w)
 	})
