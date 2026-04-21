@@ -30,7 +30,8 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(userPage()).Render(r.Context(), w)
+		fmt.Println("Name: " + auth.GetUser(r.Context()))
+		layout.Base(loginPage()).Render(r.Context(), w)
 	})
 }
 
@@ -59,7 +60,6 @@ func (h *UserHandler) HandleLogin() http.Handler {
 
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
-		time.Sleep(time.Second)
 		sse.Redirect("/")
 
 	})

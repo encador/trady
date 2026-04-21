@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/encador/trady/internal/database"
+	"github.com/encador/trady/internal/modules/auth"
 	"github.com/encador/trady/internal/modules/users"
 	"github.com/encador/trady/internal/templ/component"
 )
@@ -71,7 +72,7 @@ func main() {
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
 	fmt.Println("[LOG] Serving on " + adr)
-	err = http.ListenAndServe(adr, logger(mux))
+	err = http.ListenAndServe(adr, logger(auth.Handler(mux)))
 	fmt.Println(err)
 
 }
