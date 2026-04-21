@@ -75,7 +75,7 @@ func (h *UserHandler) HandleLogin() http.Handler {
 		// sse := datastar.NewSSE(w, r)
 		// sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
 		// sse.Redirect("/user")
-		http.Redirect(w,r,"/user", http.StatusSeeOther)
+		http.Redirect(w, r, "/user", http.StatusSeeOther)
 
 	})
 }
@@ -87,7 +87,7 @@ func (h *UserHandler) HandleLogout() http.Handler {
 			return
 		}
 		auth.RemoveCookie(w)
-		http.Redirect(w,r,"/user", http.StatusSeeOther)
+		http.Redirect(w, r, "/user", http.StatusSeeOther)
 	})
 }
 
@@ -104,16 +104,22 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			Password: form.Get("password"),
 		}
 
-		sse := datastar.NewSSE(w, r)
 		msgs, err := addUser(user, h.database)
 		if err != nil {
 			fmt.Println(err)
+			sse := datastar.NewSSE(w, r)
 			sse.PatchElementTempl(component.MsgBox(msgs, 2))
 		} else {
+
+			if err := auth.SetCookie(user, w); err != nil {
+				fmt.Println(err)
+			}
+
+			sse := datastar.NewSSE(w, r)
 			sse.PatchElementTempl(component.MsgBox(msgs, 1))
 			fmt.Println("[HandleAdd]: New User Added")
 			time.Sleep(time.Second * 1)
-			sse.Redirect("/")
+			sse.Redirect("/user")
 
 		}
 	})
