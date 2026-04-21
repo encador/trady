@@ -8,6 +8,8 @@ package users
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/encador/trady/internal/models"
+
 func loginPage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -36,7 +38,7 @@ func loginPage() templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 7, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 9, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -57,7 +59,7 @@ func loginPage() templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 11, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 13, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -71,7 +73,49 @@ func loginPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><button id=\"toggle\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n    #toggle {\n      background: none;\n      color: var(--blue-1);\n      border: solid 3px var(--blue-2);\n\t\t\tborder-radius: 8px;\n      margin: 10px 0 0 0;\n      padding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n    #toggle:hover {\n      background-color: var(--blue-2);\n      color: var(--blue-1);\n      border-color: var(--blue-3);\n      cursor: pointer;\n    }\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><button id=\"toggle\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t\t#toggle {\n\t\t\tbackground: none;\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder: solid 3px var(--blue-2);\n\t\t\tborder-radius: 8px;\n\t\t\tmargin: 10px 0 0 0;\n\t\t\tpadding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#toggle:hover {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func userPage(user models.User) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<h1>Account</h1><div id=\"account-box\"><p>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.Username)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 46, Col: 20}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</p></div><button id=\"logout\" data-on:click=\"@post('/user/logout')\">Log Out</button><style>\n\t\th1 {\n\t\t\tcolor: var(--white-2);\n\t\t}\n\t\t#account-box {\n\t\t\tborder: 3px solid var(--blue-2);\n\t\t\tborder-radius: 5px;\n\t\t\tmin-width: 200px;\n\t\t\twidth: fit-content;\n\t\t\tmax-width: 90%;\n\t\t\tpadding: 5px;\n\t\t\theight: 100px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t#account-box p {\n\t\t\tfont-weight: bold;\n\t\t\tcolor: var(--white-2);\n\t\t\tfont-size: 1.5em;\n\t\t}\n\n\t\t#logout {\n\t\t\ttext-decoration: none;\n\t\t\tcolor: var(--red-1);\n      background: none;\n      border: var(--red-2) solid 3px;\n\t\t\tmargin-left: 5px;\n\t\t\tmargin-right: 5px;\n\t\t\tborder-radius: 5px;\n\t\t\tfont-weight: bolder;\n\t\t\theight: auto;\n\t\t\twidth: fit-content;\n\t\t\tfont-size: 16px;\n\t\t\ttext-align: center;\n\t\t\tpadding-top: 5px;\n\t\t\tpadding-bottom: 2px;\n\t\t\tpadding-left: 10px;\n\t\t\tpadding-right: 10px;\n\t\t\tmargin: 10px;\n\t\t}\n\n\t\t#logout:hover {\n\t\t\tbackground: var(--red-2);\n      border-color: var(--red-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

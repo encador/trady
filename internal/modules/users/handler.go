@@ -30,7 +30,22 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(loginPage()).Render(r.Context(), w)
+		username := auth.GetUsername(r.Context())
+
+		// Not signed-in
+		if username == "" {
+			layout.Base(loginPage()).Render(r.Context(), w)
+			return
+		}
+
+		user, err := GetUser(username, h.database)
+		if err != nil {
+			fmt.Println(err)
+			http.NotFoundHandler().ServeHTTP(w, r)
+			return
+		}
+
+		layout.Base(userPage(user)).Render(r.Context(), w)
 	})
 }
 
@@ -57,10 +72,22 @@ func (h *UserHandler) HandleLogin() http.Handler {
 			fmt.Println(err)
 		}
 
-		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
-		sse.Redirect("/")
+		// sse := datastar.NewSSE(w, r)
+		// sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
+		// sse.Redirect("/user")
+		http.Redirect(w,r,"/user", http.StatusSeeOther)
 
+	})
+}
+
+func (h *UserHandler) HandleLogout() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			http.NotFoundHandler().ServeHTTP(w, r)
+			return
+		}
+		auth.RemoveCookie(w)
+		http.Redirect(w,r,"/user", http.StatusSeeOther)
 	})
 }
 

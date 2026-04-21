@@ -35,6 +35,10 @@ func Handler(next http.Handler) http.Handler {
 			}
 		}
 
+		// Basic Request Logging
+		t := time.Now().Format("15:04:05")
+		fmt.Printf("[%s] [%s] %s: %s\n", t, user.Username, r.Method, r.URL)
+
 		url := r.URL.String()
 		if user.Username == "" && !allowList[url] {
 			http.NotFoundHandler().ServeHTTP(w, r)
@@ -46,7 +50,7 @@ func Handler(next http.Handler) http.Handler {
 	})
 }
 
-func GetUser(ctx context.Context) string {
+func GetUsername(ctx context.Context) string {
 	user, ok := ctx.Value(ctxKey).(models.User)
 	if !ok {
 		return ""
@@ -94,4 +98,16 @@ func SetCookie(user models.User, w http.ResponseWriter) error {
 	})
 
 	return nil
+}
+
+func RemoveCookie(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Now(),
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+	})
 }

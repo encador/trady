@@ -5,22 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/encador/trady/internal/database"
 	"github.com/encador/trady/internal/modules/auth"
 	"github.com/encador/trady/internal/modules/users"
 	"github.com/encador/trady/internal/templ/component"
 )
-
-func logger(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// t := time.Now().Format("1-02 15:04:05")
-		t := time.Now().Format("15:04:05")
-		fmt.Printf("[%s] %s: %s\n", t, r.Method, r.URL)
-		next.ServeHTTP(w, r)
-	})
-}
 
 type config struct {
 	address string
@@ -68,11 +58,12 @@ func main() {
 	mux.Handle("/user", userH.HandleUserPage())
 	mux.Handle("/user/new", userH.HandleAdd())
 	mux.Handle("/user/login", userH.HandleLogin())
+	mux.Handle("/user/logout", userH.HandleLogout())
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
 	fmt.Println("[LOG] Serving on " + adr)
-	err = http.ListenAndServe(adr, logger(auth.Handler(mux)))
+	err = http.ListenAndServe(adr, auth.Handler(mux))
 	fmt.Println(err)
 
 }
