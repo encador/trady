@@ -30,7 +30,6 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Name: " + auth.GetUser(r.Context()))
 		layout.Base(loginPage()).Render(r.Context(), w)
 	})
 }
