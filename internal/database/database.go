@@ -44,5 +44,24 @@ func Create(path string) error {
 		return err
 	}
 
-	return os.WriteFile(path, nil, 0o644)
+	err := os.WriteFile(path, nil, 0o644)
+	if err != nil {
+		return err
+	}
+
+	db, err := Open(path)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	q := `
+	drop table if exists users;
+	create table users(
+	id integer primary key autoincrement,
+	username text not null unique,
+	password text not null);
+	`
+	_, err = db.Exec(q)
+	return err
 }

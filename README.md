@@ -4,13 +4,14 @@ Description: Simple Trading Web-App
 ---
 
 ## Status
+The project is work-in-progress
 - Working: ❌
 
-The project is work-in-progress
 
-## Get Started With Trady
+## Download Trady
 ```sh
   git clone https://github.com/encador/trady.git
   cd trady
+  go mod download
   make run
 ```

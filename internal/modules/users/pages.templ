@@ -1,0 +1,100 @@
+package users
+
+import "github.com/encador/trady/internal/models"
+
+templ loginPage() {
+	<div id="msg-container"></div>
+	<div data-signals:toggle="false"></div>
+	<div data-show="!$toggle">
+		<h1 style={ "color: var(--white-2)" }>Login</h1>
+		@LoginForm()
+	</div>
+	<div data-show="$toggle" style="display:none">
+		<h1 style={ "color: var(--white-2)" }>Sign Up</h1>
+		@SignupForm()
+	</div>
+	<button id="toggle" data-text="$toggle === true ? 'Use Existing' : 'Create Account'" data-on:click="$toggle = !$toggle" type="button"></button>
+	<style>
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		#toggle {
+			background: none;
+			color: var(--blue-1);
+			border: solid 3px var(--blue-2);
+			border-radius: 8px;
+			margin: 10px 0 0 0;
+			padding: 4px 10px 4px 10px;
+			width: auto;
+			font-weight: bolder;
+			font-size: 15px;
+		}
+		#toggle:hover {
+			background-color: var(--blue-2);
+			color: var(--blue-1);
+			border-color: var(--blue-3);
+			cursor: pointer;
+		}
+	</style>
+}
+
+templ userPage(user models.User) {
+	<h1>Account</h1>
+	<div id="account-box">
+		<p>{ user.Username }</p>
+	</div>
+	<button id="logout" data-on:click="@post('/user/logout')">Log Out</button>
+	<style>
+		h1 {
+			color: var(--white-2);
+		}
+		#account-box {
+			border: 3px solid var(--blue-2);
+			border-radius: 5px;
+			min-width: 200px;
+			width: fit-content;
+			max-width: 90%;
+			padding: 5px;
+			height: 100px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			overflow: auto;
+		}
+
+		#account-box p {
+			font-weight: bold;
+			color: var(--white-2);
+			font-size: 1.5em;
+		}
+
+		#logout {
+			text-decoration: none;
+			color: var(--red-1);
+      background: none;
+      border: var(--red-2) solid 3px;
+			margin-left: 5px;
+			margin-right: 5px;
+			border-radius: 5px;
+			font-weight: bolder;
+			height: auto;
+			width: fit-content;
+			font-size: 16px;
+			text-align: center;
+			padding-top: 5px;
+			padding-bottom: 2px;
+			padding-left: 10px;
+			padding-right: 10px;
+			margin: 10px;
+		}
+
+		#logout:hover {
+			background: var(--red-2);
+      border-color: var(--red-3);
+			cursor: pointer;
+		}
+	</style>
+}

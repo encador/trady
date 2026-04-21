@@ -1,11 +1,13 @@
 package component
 
 templ Hello(color string) {
-	<h1 class={ h1(color) }>Hello, World!</h1>
+	<h1 style={ "background-color: var(--green-2)" }>Hello, World!</h1>
 }
 
-css h1(color string) {
-	background-color: { color };
+templ Test() {
+	<div id="replace">
+		@Hello("black")
+	</div>
 }
 
 templ Button(text string) {
@@ -15,4 +17,41 @@ templ Button(text string) {
 css button() {
 	text-decoration: none;
 	border: 2px solid black;
+}
+
+templ MsgBox(msg []string, level int) {
+	<div id="msg-container" style={ msgBoxColor(level) }>
+		for _, m := range msg {
+			<p>{ m }</p>
+		}
+		<style>
+			#msg-container {
+				border: 3px solid;
+				border-radius: 10px;
+				width: auto;
+				max-width: 80%;
+				min-width: 100px;
+				text-align: center;
+				height: auto;
+				margin: 10px;
+				padding: 5px;
+			}
+			p {
+				font-weight: bold;
+				margin: 3px;
+			}
+		</style>
+	</div>
+}
+
+func msgBoxColor(level int) string {
+	switch level {
+	case 1:
+		return "border-color: var(--green-1); color: var(--green-1)"
+	case 2:
+		return "border-color: var(--orange-1); color: var(--orange-1)"
+	case 3:
+		return "border-color: var(--red-1); color: var(--red-1)"
+	}
+	return ""
 }
