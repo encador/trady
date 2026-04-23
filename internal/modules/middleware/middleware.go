@@ -20,12 +20,12 @@ var allowList = map[string]bool{
 	"/user/login": true,
 }
 
-// List of protected urls from which to redirect to login
+// List of protected urls that can be redirected to
 var validRedirect = map[string]bool{
 	"/": true,
 }
 
-func Authentication(next http.Handler, db *sql.DB) http.Handler {
+func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		username := ""
 		if cookie, err := r.Cookie("auth"); err == nil {

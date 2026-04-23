@@ -51,7 +51,7 @@ func main() {
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		layout.Base(component.Hello("")).Render(r.Context(), w)
 	})
 
@@ -63,7 +63,7 @@ func main() {
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
 	fmt.Println("[LOG] Serving on " + adr)
-	err = http.ListenAndServe(adr, middleware.Authentication(mux, db))
+	err = http.ListenAndServe(adr, middleware.AuthHandler(mux, db))
 	fmt.Println(err)
 
 }
