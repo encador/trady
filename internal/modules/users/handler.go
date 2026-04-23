@@ -72,14 +72,15 @@ func (h *UserHandler) HandleLogin() http.Handler {
 			fmt.Println(err)
 		}
 
-		sse := datastar.NewSSE(w, r)
 		// sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
 		if url, err := getRedirectURL(r); err == nil {
 			UnsetRedirectCookie(w)
+			sse := datastar.NewSSE(w, r)
 			sse.Redirect(url)
 			return
 		}
 		// http.Redirect(w, r, "/user", http.StatusSeeOther)
+		sse := datastar.NewSSE(w, r)
 		sse.Redirect("/user")
 	})
 }

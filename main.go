@@ -10,6 +10,7 @@ import (
 	"github.com/encador/trady/internal/modules/middleware"
 	"github.com/encador/trady/internal/modules/users"
 	"github.com/encador/trady/internal/templ/component"
+	"github.com/encador/trady/internal/templ/layout"
 )
 
 type config struct {
@@ -50,9 +51,8 @@ func main() {
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
 
-	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		// view.Base().Render(r.Context(), w)
-		component.Hello("green").Render(r.Context(), w)
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		layout.Base(component.Hello("")).Render(r.Context(), w)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())
