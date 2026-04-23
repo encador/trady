@@ -6,7 +6,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 )
@@ -16,6 +18,38 @@ func HashPass(pass string, user string) string {
 	data := []byte("superDUPERs3cure" + pass + "ufshi8H8()#)sudfh3484*$*#8" + user)
 	h := sha512.Sum512(data)
 	return hex.EncodeToString(h[:])
+}
+
+func SetRedirectCookie(url string, w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "redirect",
+		Value:    url,
+		Path:     "/user",
+		Expires:  time.Now().Add(time.Minute * 5),
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+	})
+}
+
+func UnsetRedirectCookie(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "redirect",
+		Value:    "",
+		Path:     "/user",
+		Expires:  time.Now(),
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+	})
+}
+
+func getRedirectURL(r *http.Request) (string, error) {
+	cookie, err := r.Cookie("redirect")
+	if err != nil {
+		return "", err
+	}
+	return cookie.Value, nil
 }
 
 func GetUser(username string, db *sql.DB) (models.User, error) {

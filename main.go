@@ -7,9 +7,10 @@ import (
 	"os"
 
 	"github.com/encador/trady/internal/database"
-	"github.com/encador/trady/internal/modules/auth"
+	"github.com/encador/trady/internal/modules/middleware"
 	"github.com/encador/trady/internal/modules/users"
 	"github.com/encador/trady/internal/templ/component"
+	"github.com/encador/trady/internal/templ/layout"
 )
 
 type config struct {
@@ -51,8 +52,7 @@ func main() {
 	userH := users.NewHandler(db)
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		// view.Base().Render(r.Context(), w)
-		component.Hello("green").Render(r.Context(), w)
+		layout.Base(component.Hello("")).Render(r.Context(), w)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())
@@ -63,7 +63,7 @@ func main() {
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
 	fmt.Println("[LOG] Serving on " + adr)
-	err = http.ListenAndServe(adr, auth.Handler(mux))
+	err = http.ListenAndServe(adr, middleware.AuthHandler(mux, db))
 	fmt.Println(err)
 
 }

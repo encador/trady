@@ -72,11 +72,16 @@ func (h *UserHandler) HandleLogin() http.Handler {
 			fmt.Println(err)
 		}
 
-		// sse := datastar.NewSSE(w, r)
 		// sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1))
-		// sse.Redirect("/user")
-		http.Redirect(w, r, "/user", http.StatusSeeOther)
-
+		if url, err := getRedirectURL(r); err == nil {
+			UnsetRedirectCookie(w)
+			sse := datastar.NewSSE(w, r)
+			sse.Redirect(url)
+			return
+		}
+		// http.Redirect(w, r, "/user", http.StatusSeeOther)
+		sse := datastar.NewSSE(w, r)
+		sse.Redirect("/user")
 	})
 }
 
@@ -119,6 +124,13 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			sse.PatchElementTempl(component.MsgBox(msgs, 1))
 			fmt.Println("[HandleAdd]: New User Added")
 			time.Sleep(time.Second * 1)
+
+			if url, err := getRedirectURL(r); err == nil {
+				UnsetRedirectCookie(w)
+				sse.Redirect(url)
+				return
+			}
+
 			sse.Redirect("/user")
 
 		}
