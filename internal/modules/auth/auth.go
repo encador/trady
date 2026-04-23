@@ -28,6 +28,14 @@ func GetUsername(ctx context.Context) string {
 	return user.Username
 }
 
+func GetUser(ctx context.Context) models.User {
+	user, ok := ctx.Value(ctxKey).(models.User)
+	if ok {
+		return user
+	}
+	return models.User{}
+}
+
 func genToken(user models.User) (string, error) {
 	claims := jwt.RegisteredClaims{
 		Subject:   user.Username,

@@ -14,10 +14,15 @@ import (
 
 // list of allowed urls without needing account
 var allowList = map[string]bool{
-	"/":           true,
+	// "/":           true,
 	"/user":       true,
 	"/user/new":   true,
 	"/user/login": true,
+}
+
+// List of protected urls from which to redirect to login
+var validRedirect = map[string]bool{
+	"/": true,
 }
 
 func Authentication(next http.Handler, db *sql.DB) http.Handler {
@@ -51,9 +56,16 @@ func Authentication(next http.Handler, db *sql.DB) http.Handler {
 		fmt.Printf("[%s] [%s] %s: %s\n", t, user.Username, r.Method, r.URL)
 
 		url := r.URL.String()
+
 		if user.Username == "" && !allowList[url] {
-			// fmt.Println("Access Not Allowed")
-			http.NotFoundHandler().ServeHTTP(w, r)
+
+			if !validRedirect[url] {
+				http.NotFoundHandler().ServeHTTP(w, r)
+				return
+			}
+
+			users.SetRedirectCookie(url, w)
+			http.Redirect(w, r, "/user", http.StatusSeeOther)
 			return
 		}
 
