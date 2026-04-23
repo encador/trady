@@ -3,7 +3,6 @@ package auth
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -17,37 +16,8 @@ const ctxKey authContextKey = "key"
 
 var secret_key []byte = []byte("super-secure-key")
 
-// list of allowed urls without needing account
-var allowList = map[string]bool{
-	"/":           true,
-	"/user":       true,
-	"/user/new":   true,
-	"/user/login": true,
-}
-
-func Handler(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		user := models.User{}
-		if cookie, err := r.Cookie("auth"); err == nil {
-			user, err = parseToken(cookie.Value)
-			if err != nil {
-				fmt.Println(err)
-			}
-		}
-
-		// Basic Request Logging
-		t := time.Now().Format("15:04:05")
-		fmt.Printf("[%s] [%s] %s: %s\n", t, user.Username, r.Method, r.URL)
-
-		url := r.URL.String()
-		if user.Username == "" && !allowList[url] {
-			http.NotFoundHandler().ServeHTTP(w, r)
-			return
-		}
-
-		ctx := context.WithValue(r.Context(), ctxKey, user)
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
+func UpdateContext(ctx context.Context, user models.User) context.Context {
+	return context.WithValue(ctx, ctxKey, user)
 }
 
 func GetUsername(ctx context.Context) string {
@@ -67,18 +37,16 @@ func genToken(user models.User) (string, error) {
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret_key)
 }
 
-func parseToken(tString string) (models.User, error) {
-	user := models.User{}
+func ParseToken(tString string) (*jwt.RegisteredClaims, error) {
 	claims := jwt.RegisteredClaims{}
 	token, err := jwt.ParseWithClaims(tString, &claims, func(t *jwt.Token) (any, error) { return secret_key, nil })
 	if err != nil {
-		return user, err
+		return nil, err
 	}
 	if claims, ok := token.Claims.(*jwt.RegisteredClaims); ok && token.Valid {
-		user.Username = claims.Subject
-		return user, nil
+		return claims, nil
 	}
-	return user, errors.New("[parseToken] invalid claims")
+	return nil, errors.New("[parseToken] invalid claims")
 }
 
 func SetCookie(user models.User, w http.ResponseWriter) error {
