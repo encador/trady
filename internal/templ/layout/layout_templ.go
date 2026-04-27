@@ -8,9 +8,7 @@ package layout
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/encador/trady/internal/templ/component"
-)
+import "github.com/encador/trady/internal/templ/component"
 
 func Base(content templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -41,7 +39,15 @@ func Base(content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div></body><style>\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\t#outerbox {\n\t\t\t\twidth: 60vw;\n\t\t\t\theight: 70vh;\n\t\t\t\t/* border: var(--dark-1) solid 2px; */\n\t\t\t\tbackground-color: var(--dark-2);\n\t\t\t\tborder-radius: 10px;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\talign-items: center;\n\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\tjustify-content: center;\n\t\t\t\toverflow: hidden;\n\t\t\t}\n\n\t\t\t#box {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\toverflow: auto;\n\n\t\t\t\twidth: 100%;\n\t\t\t\theight: fit-content;\n\t\t\t\tmax-height: 100%;\n\t\t\t\toverflow: auto;\n\t\t\t}\n\t\t</style></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = component.Navbar("/user", 3).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</body><style>\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\t#outerbox {\n\t\t\t\twidth: 60vw;\n\t\t\t\theight: 70vh;\n\t\t\t\t/* border: var(--dark-1) solid 2px; */\n\t\t\t\tbackground-color: var(--dark-2);\n\t\t\t\tborder-radius: 10px;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\talign-items: center;\n\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\tjustify-content: center;\n\t\t\t\toverflow: hidden;\n\t\t\t}\n\n\t\t\t#box {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\toverflow: auto;\n\n\t\t\t\twidth: 100%;\n\t\t\t\theight: fit-content;\n\t\t\t\tmax-height: 100%;\n\t\t\t\toverflow: auto;\n\t\t\t}\n\t\t</style></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -70,7 +76,7 @@ func Basic(content templ.Component) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!doctype html><html><head></head>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<!doctype html><html><head></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -79,7 +85,7 @@ func Basic(content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<body class=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<body class=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -92,7 +98,7 @@ func Basic(content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" style=\"margin: 0px\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" style=\"margin: 0px\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -108,7 +114,7 @@ func Basic(content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

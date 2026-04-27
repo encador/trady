@@ -1,0 +1,64 @@
+package component
+
+templ Navbar(path string, sec int) {
+	<nav>
+		<a
+			class={ "nav-item", templ.KV("active", path == "/user") }
+			href="/user"
+		>
+			Account
+		</a>
+		<a
+			class={ "nav-item", templ.KV("active", path == "/") }
+			href="/"
+		>
+			Home
+		</a>
+	</nav>
+	<style>
+		.nav-item {
+			text-decoration: none;
+			color: var(--white-4);
+			background-color: var(--dark-3);
+			border: var(--dark-3) solid 3px;
+			margin-left: 5px;
+			margin-right: 5px;
+			border-radius: 5px;
+			font-weight: bolder;
+			height: 25px;
+			width: auto;
+			font-size: 20px;
+			text-align: center;
+			padding-top: 5px;
+			padding-left: 10px;
+			padding-right: 10px;
+			margin: 10px;
+		}
+
+		.nav-item:hover {
+			background-color: var(--dark-1);
+			border-color: var(--dark-1);
+		}
+
+		.nav-item.active {
+			background-color: var(--blue-2);
+			border-color: var(--blue-3);
+			color: var(--blue-1);
+		}
+
+		nav {
+			height: auto;
+			width: auto;
+			padding-left: 10px;
+			gap: 10px;
+			padding-right: 10px;
+			background-color: var(--dark-2);
+			border-radius: 5px;
+			margin: 10px;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			display: flex;
+		}
+	</style>
+}

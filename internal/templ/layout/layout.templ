@@ -1,8 +1,6 @@
 package layout
 
-import (
-	"github.com/encador/trady/internal/templ/component"
-)
+import "github.com/encador/trady/internal/templ/component"
 
 templ Base(content templ.Component) {
 	<!DOCTYPE html>
@@ -46,6 +44,7 @@ templ Base(content templ.Component) {
 					@content
 				</div>
 			</div>
+			@component.Navbar("/user", 3)
 		</body>
 		<style>
 			body {
