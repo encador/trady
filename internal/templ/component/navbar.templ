@@ -1,6 +1,6 @@
 package component
 
-templ Navbar(path string, sec int) {
+templ Navbar(path string) {
 	<nav>
 		<a
 			class={ "nav-item", templ.KV("active", path == "/user") }
@@ -37,7 +37,7 @@ templ Navbar(path string, sec int) {
 
 		.nav-item:hover {
 			background-color: var(--dark-1);
-			border-color: var(--dark-1);
+			border-color: var(--dark-3);
 		}
 
 		.nav-item.active {
