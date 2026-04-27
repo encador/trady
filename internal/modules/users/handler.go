@@ -34,7 +34,11 @@ func (h *UserHandler) HandleUserPage() http.Handler {
 
 		// Not signed-in
 		if username == "" {
-			layout.Base(loginPage()).Render(r.Context(), w)
+			opt := layout.Options{
+				Content: loginPage(),
+				URL:     "/user",
+			}
+			layout.Base(opt).Render(r.Context(), w)
 			return
 		}
 
@@ -45,7 +49,11 @@ func (h *UserHandler) HandleUserPage() http.Handler {
 			return
 		}
 
-		layout.Base(userPage(user)).Render(r.Context(), w)
+		opt := layout.Options{
+			Content: userPage(user),
+			URL:     "/user",
+		}
+		layout.Base(opt).Render(r.Context(), w)
 	})
 }
 

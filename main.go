@@ -52,7 +52,7 @@ func main() {
 	userH := users.NewHandler(db)
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(component.Hello("")).Render(r.Context(), w)
+		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())
