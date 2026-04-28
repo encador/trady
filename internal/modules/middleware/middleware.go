@@ -6,22 +6,27 @@ import (
 	"net/http"
 	"time"
 
-	// "github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
 	"github.com/encador/trady/internal/modules/users"
 )
 
-// list of allowed urls without needing account
-var allowList = map[string]bool{
-	// "/":           true,
-	"/user":       true,
-	"/user/new":   true,
-	"/user/login": true,
-	"/static/datastar.js":     true,
+// Map url to security level
+// use -1 for guest instead of 0, so that security is explicit
+// -1: guest (no user)
+// 0: invalid urls
+// 1: normal user
+var secLevel = map[string]int{
+	"/user":               -1,
+	"/user/new":           -1,
+	"/user/login":         -1,
+	"/static/datastar.js": -1,
+
+	"/user/logout": 1,
+	"/":            1,
 }
 
-// List of protected urls that can be redirected to
+// List of urls that redirect to Login when not logged-in
 var validRedirect = map[string]bool{
 	"/": true,
 }
@@ -53,13 +58,17 @@ func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
 		}
 
 		// Basic Request Logging
-		t := time.Now().Format("15:04:05")
-		fmt.Printf("[%s] [%s] %s: %s\n", t, user.Username, r.Method, r.URL)
-
 		url := r.URL.String()
+		t := time.Now().Format("15:04:05")
+		fmt.Printf("[%s] [%s:%d] %s: %s [%d]\n", t, user.Username, user.Security, r.Method, url, secLevel[url])
 
-		if user.Username == "" && !allowList[url] {
+		// Deny request if URL not explicitly listed in secLevel
+		if secLevel[url] == 0 {
+			http.NotFoundHandler().ServeHTTP(w, r)
+			return
+		}
 
+		if user.Security < secLevel[url] {
 			if !validRedirect[url] {
 				http.NotFoundHandler().ServeHTTP(w, r)
 				return

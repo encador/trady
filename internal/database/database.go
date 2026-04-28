@@ -59,6 +59,7 @@ func Create(path string) error {
 	drop table if exists users;
 	create table users(
 	id integer primary key autoincrement,
+	security integer not null default 1,
 	username text not null unique,
 	password text not null);
 	`
