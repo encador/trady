@@ -6,11 +6,11 @@ templ loginPage() {
 	<div id="msg-container"></div>
 	<div data-signals:toggle="false"></div>
 	<div data-show="!$toggle">
-		<h1 style={ "color: var(--white-2)" }>Login</h1>
+		<h1 style={ "color: var(--white-2); user-select:none;" }>Login</h1>
 		@LoginForm()
 	</div>
 	<div data-show="$toggle" style="display:none">
-		<h1 style={ "color: var(--white-2)" }>Sign Up</h1>
+		<h1 style={ "color: var(--white-2); user-select:none;" }>Sign Up</h1>
 		@SignupForm()
 	</div>
 	<button id="toggle" data-text="$toggle === true ? 'Use Existing' : 'Create Account'" data-on:click="$toggle = !$toggle" type="button"></button>

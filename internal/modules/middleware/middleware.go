@@ -17,10 +17,15 @@ import (
 // 0: invalid urls
 // 1: normal user
 var secLevel = map[string]int{
+	// Static Files
+	"/static/datastar.js": -1,
+	"/static/favicon.ico": -1,
+
+	// Guest Pages
 	"/user/login":         -1,
 	"/user/new":           -1,
-	"/static/datastar.js": -1,
 
+	// Protected Pages
 	"/user":        1,
 	"/user/logout": 1,
 	"/":            1,
