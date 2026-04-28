@@ -30,30 +30,31 @@ func NewHandler(db *sql.DB) *UserHandler {
 
 func (h *UserHandler) HandleUserPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		username := auth.GetUsername(r.Context())
 
-		// Not signed-in
-		if username == "" {
-			opt := layout.Options{
-				Content: loginPage(),
-				URL:     "/user",
-			}
-			layout.Base(opt).Render(r.Context(), w)
-			return
-		}
-
-		user, err := GetUser(username, h.database)
-		if err != nil {
-			fmt.Println(err)
-			http.NotFoundHandler().ServeHTTP(w, r)
-			return
-		}
+		user := auth.GetUser(r.Context())
 
 		opt := layout.Options{
 			Content: userPage(user),
 			URL:     "/user",
 		}
 		layout.Base(opt).Render(r.Context(), w)
+	})
+}
+
+func (h *UserHandler) HandleLoginPage() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "GET" {
+			opt := layout.Options{
+				Content: loginPage(),
+				URL:     "/user/login",
+			}
+			layout.Base(opt).Render(r.Context(), w)
+			return
+
+		} else {
+			h.HandleLogin().ServeHTTP(w, r)
+		}
+
 	})
 }
 
@@ -87,7 +88,6 @@ func (h *UserHandler) HandleLogin() http.Handler {
 			sse.Redirect(url)
 			return
 		}
-		// http.Redirect(w, r, "/user", http.StatusSeeOther)
 		sse := datastar.NewSSE(w, r)
 		sse.Redirect("/user")
 	})
@@ -100,7 +100,9 @@ func (h *UserHandler) HandleLogout() http.Handler {
 			return
 		}
 		auth.RemoveCookie(w)
-		http.Redirect(w, r, "/user", http.StatusSeeOther)
+
+		sse := datastar.NewSSE(w, r)
+		sse.Redirect("/user/login")
 	})
 }
 

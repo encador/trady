@@ -64,7 +64,7 @@ func main() {
 
 	mux.Handle("/user", userH.HandleUserPage())
 	mux.Handle("/user/new", userH.HandleAdd())
-	mux.Handle("/user/login", userH.HandleLogin())
+	mux.Handle("/user/login", userH.HandleLoginPage())
 	mux.Handle("/user/logout", userH.HandleLogout())
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
