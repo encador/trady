@@ -57,6 +57,10 @@ func main() {
 
 	fs := http.FileServer(http.FS(staticFiles))
 	mux.Handle("/static/", middleware.Cache24(fs))
+	mux.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
+		r.URL.Path = "/static/robots.txt"
+		fs.ServeHTTP(w, r)
+	})
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
