@@ -18,6 +18,7 @@ var allowList = map[string]bool{
 	"/user":       true,
 	"/user/new":   true,
 	"/user/login": true,
+	"/static/datastar.js":     true,
 }
 
 // List of protected urls that can be redirected to

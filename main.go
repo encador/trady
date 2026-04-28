@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"flag"
 	"fmt"
 	"net/http"
@@ -19,6 +20,9 @@ type config struct {
 	dbPath  string
 	init    bool
 }
+
+//go:embed static/*
+var staticFiles embed.FS
 
 func main() {
 
@@ -50,6 +54,9 @@ func main() {
 
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
+
+	fs := http.FileServer(http.FS(staticFiles))
+	mux.Handle("/static/", fs)
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
