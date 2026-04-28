@@ -56,7 +56,7 @@ func main() {
 	userH := users.NewHandler(db)
 
 	fs := http.FileServer(http.FS(staticFiles))
-	mux.Handle("/static/", fs)
+	mux.Handle("/static/", middleware.Cache24(fs))
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
