@@ -59,8 +59,8 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			OwnerID: auth.GetUser(r.Context()).ID,
 		}
 
-		err = addItem(file, item, h.imagesDir)
-		if err != nil{
+		err = addItem(h.database, file, item, h.imagesDir)
+		if err != nil {
 			fmt.Println(err)
 			http.Error(w, "invalid form data", http.StatusBadRequest)
 		}

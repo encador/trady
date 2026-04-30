@@ -2,9 +2,9 @@ package inventory
 
 import (
 	"crypto/rand"
+	"database/sql"
 	"encoding/hex"
 	"errors"
-	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -22,14 +22,13 @@ func generateID(n int) (string, error) {
 	return hex.EncodeToString(b), nil
 }
 
-func addItem(f multipart.File, item models.Item, dir string) error {
+func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 
 	var fileName string
 	id, err := generateID(16)
 	if err != nil {
 		return err
 	}
-	item.ID = id
 
 	// Only allow png and jpeg
 	buff := make([]byte, 512)
@@ -43,14 +42,6 @@ func addItem(f multipart.File, item models.Item, dir string) error {
 		return errors.New("[addItem]: invalid file type")
 	}
 
-	fmt.Println(fileName)
-	// Create file on system
-	dst, err := os.Create(filepath.Join(dir, fileName))
-	if err != nil {
-		return err
-	}
-	defer dst.Close()
-
 	// reset file seeker position
 	if seeker, ok := f.(io.Seeker); ok {
 		if _, err := seeker.Seek(0, io.SeekStart); err != nil {
@@ -58,8 +49,28 @@ func addItem(f multipart.File, item models.Item, dir string) error {
 		}
 	}
 
+	// Create file on system
+	path := filepath.Join(dir, fileName)
+	dst, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
 	// Copy image to system file
 	_, err = io.Copy(dst, f)
-	return err
+	if err != nil {
+		return err
+	}
 
+	// Create DB entry
+	item.ID = id
+	item.ImageURL = filepath.Join("images", fileName)
+
+	q := `insert into items(id, owner_id, title, description, image) values (?, ?, ?, ?,?)`
+	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL); err != nil{
+		return err
+	}
+
+	return nil
 }

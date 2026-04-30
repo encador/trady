@@ -61,15 +61,17 @@ func Create(path string) error {
 	id integer primary key autoincrement,
 	security integer not null default 1,
 	username text not null unique,
-	password text not null);
+	password text not null
+	);
 
 	drop table if exists items;
 	create table items(
 	id text primary key,
-	ownerid integer not null,
+	owner_id integer not null,
 	title text not null,
 	description text,
-	listed boolean not null default 0,
+	image text,
+	listed boolean not null default 0
 	);
 	`
 	_, err = db.Exec(q)
