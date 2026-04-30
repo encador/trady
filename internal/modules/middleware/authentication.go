@@ -20,22 +20,25 @@ var secLevel = map[string]int{
 	// Static Files
 	"/static/datastar.js": -1,
 	"/static/favicon.ico": -1,
-	"/robots.txt": -1,
+	"/robots.txt":         -1,
 
 	// Guest Pages
-	"/user/login":         -1,
-	"/user/new":           -1,
+	"/user/login": -1,
+	"/user/new":   -1,
 
 	// Protected Pages
-	"/user":        1,
-	"/user/logout": 1,
-	"/":            1,
+	"/":              1,
+	"/user":          1,
+	"/user/logout":   1,
+	"/inventory":     1,
+	"/inventory/new": 1,
 }
 
 // List of urls that redirect to Login when not logged-in
 var validRedirect = map[string]bool{
-	"/":     true,
-	"/user": true,
+	"/":          true,
+	"/user":      true,
+	"/inventory": true,
 }
 
 func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
@@ -67,7 +70,7 @@ func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
 		// Basic Request Logging
 		url := r.URL.String()
 		t := time.Now().Format("15:04:05")
-		fmt.Printf("[%s] [%s:%d] %s (%d): %s\n", t, user.Username, user.Security, r.Method, secLevel[url], url)
+		fmt.Printf("[%s] %s (%d) [%s] %s (%d): %s\n", t, user.Username, user.Security, r.RemoteAddr, r.Method, secLevel[url], url)
 
 		// Deny request if URL not explicitly listed in secLevel
 		if secLevel[url] == 0 {

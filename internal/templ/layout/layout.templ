@@ -7,7 +7,7 @@ type Options struct {
 	URL     string
 }
 
-templ Base(opt Options) {
+templ Base(opts Options) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -47,10 +47,10 @@ templ Base(opt Options) {
 		<body>
 			<div id="outerbox">
 				<div id="box">
-					@opt.Content
+					@opts.Content
 				</div>
 			</div>
-			@component.Navbar(opt.URL)
+			@component.Navbar(opts.URL)
 		</body>
 		<style>
 			body {

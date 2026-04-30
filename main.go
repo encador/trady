@@ -10,6 +10,7 @@ import (
 	"github.com/encador/trady/internal/database"
 	"github.com/encador/trady/internal/modules/middleware"
 	"github.com/encador/trady/internal/modules/users"
+	"github.com/encador/trady/internal/modules/inventory"
 	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
 )
@@ -54,6 +55,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
+	invH := inventory.NewHandler(db)
 
 	fs := http.FileServer(http.FS(staticFiles))
 	mux.Handle("/static/", middleware.Cache24(fs))
@@ -61,6 +63,7 @@ func main() {
 		r.URL.Path = "/static/robots.txt"
 		fs.ServeHTTP(w, r)
 	})
+
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
 		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
@@ -70,6 +73,10 @@ func main() {
 	mux.Handle("/user/new", userH.HandleAdd())
 	mux.Handle("/user/login", userH.HandleLoginPage())
 	mux.Handle("/user/logout", userH.HandleLogout())
+
+	mux.Handle("/inventory", invH.InventoryPage())
+	mux.Handle("/inventory/new", invH.HandleNew())
+	// http.Handle("/uploads/", http.StripPrefix("/uploads/", http.FileServer(http.Dir("./userUploads"))))
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 

@@ -30,3 +30,4 @@ go.work.sum
 # build
 bin/
 *.db
+images/
