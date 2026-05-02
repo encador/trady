@@ -44,7 +44,7 @@ func InventoryPage(items []models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\">Inventory</h1><form enctype=\"multipart/form-data\"><input data-bind:title type=\"text\"> <input required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\">Inventory</h1><form enctype=\"multipart/form-data\"><input name=\"title\" required type=\"text\"> <input required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -50,6 +50,10 @@ func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
 
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 
+	if item.Title == ""{
+		return errors.New("No Item Title Provided")
+	}
+
 	var fileName string
 	id, err := generateID(16)
 	if err != nil {

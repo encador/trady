@@ -60,6 +60,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 
 		item := models.Item{
 			OwnerID: auth.GetUser(r.Context()).ID,
+			Title: r.FormValue("title"),
 		}
 
 		err = addItem(h.database, file, item, h.imagesDir)
