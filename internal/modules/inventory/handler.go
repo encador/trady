@@ -24,8 +24,9 @@ func NewHandler(db *sql.DB) *InventoryHandler {
 
 func (h *InventoryHandler) InventoryPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
 		opts := layout.Options{
-			Content: InventoryPage(),
+			Content: InventoryPage(items),
 			URL:     "/inventory",
 		}
 		layout.Base(opts).Render(r.Context(), w)
@@ -33,6 +34,7 @@ func (h *InventoryHandler) InventoryPage() http.Handler {
 }
 
 const (
+	// 5 MB image limit
 	maxImgSize = 5 << 20
 )
 

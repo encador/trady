@@ -22,6 +22,32 @@ func generateID(n int) (string, error) {
 	return hex.EncodeToString(b), nil
 }
 
+func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
+	q := `select id, owner_id, title, description, image, listed from items where owner_id = ?`
+
+	items := []models.Item{}
+
+	rows, err := db.Query(q, user.ID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		item := models.Item{}
+		if err := rows.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return items, nil
+}
+
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 
 	var fileName string
@@ -68,7 +94,7 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 	item.ImageURL = filepath.Join("images", fileName)
 
 	q := `insert into items(id, owner_id, title, description, image) values (?, ?, ?, ?,?)`
-	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL); err != nil{
+	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL); err != nil {
 		return err
 	}
 

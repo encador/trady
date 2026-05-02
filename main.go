@@ -58,7 +58,7 @@ func main() {
 	invH := inventory.NewHandler(db)
 
 	fs := http.FileServer(http.FS(staticFiles))
-	mux.Handle("/static/", middleware.Cache24(fs))
+	mux.Handle("/static/", middleware.Cache1(fs))
 	mux.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		r.URL.Path = "/static/robots.txt"
 		fs.ServeHTTP(w, r)
@@ -76,7 +76,7 @@ func main() {
 
 	mux.Handle("/inventory", invH.InventoryPage())
 	mux.Handle("/inventory/new", invH.HandleNew())
-	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./images"))))
+	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir("./images")))))
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
