@@ -76,7 +76,7 @@ func main() {
 
 	mux.Handle("/inventory", invH.InventoryPage())
 	mux.Handle("/inventory/new", invH.HandleNew())
-	// http.Handle("/uploads/", http.StripPrefix("/uploads/", http.FileServer(http.Dir("./userUploads"))))
+	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./images"))))
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 

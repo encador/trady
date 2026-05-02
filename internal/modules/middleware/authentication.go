@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/encador/trady/internal/models"
@@ -72,6 +73,12 @@ func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
 		t := time.Now().Format("15:04:05")
 		fmt.Printf("[%s] %s (%d) [%s] %s (%d): %s\n", t, user.Username, user.Security, r.RemoteAddr, r.Method, secLevel[url], url)
 
+		// Allow all requests to user uploaded images
+		// Handle image request permissions in another middleware
+		if strings.HasPrefix(url, "/images/") {
+			goto next
+		}
+
 		// Deny request if URL not explicitly listed in secLevel
 		if secLevel[url] == 0 {
 			http.NotFoundHandler().ServeHTTP(w, r)
@@ -89,6 +96,7 @@ func AuthHandler(next http.Handler, db *sql.DB) http.Handler {
 			return
 		}
 
+	next:
 		ctx := auth.UpdateContext(r.Context(), user)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

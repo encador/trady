@@ -46,6 +46,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		r.Body = http.MaxBytesReader(w, r.Body, maxImgSize+1024)
 		if err := r.ParseMultipartForm(maxImgSize); err != nil {
 			http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
+			fmt.Println("[Inventory]: Image File Too Large")
 			return
 		}
 		file, _, err := r.FormFile("image")

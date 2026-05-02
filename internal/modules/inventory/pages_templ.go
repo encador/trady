@@ -42,14 +42,14 @@ func InventoryPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\">Inventory</h1><form enctype=\"multipart/form-data\"><input data-bind:title type=\"text\"> <input required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\">Inventory</h1><img src=\"/images/8297d8e219202be23bea53e90486a5c7.jpeg\"><form enctype=\"multipart/form-data\"><input data-bind:title type=\"text\"> <input required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/pages.templ`, Line: 7, Col: 105}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/pages.templ`, Line: 8, Col: 105}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
