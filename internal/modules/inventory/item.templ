@@ -26,17 +26,7 @@ templ ItemList(items []models.Item) {
 
 			overflow: auto;
 		}
-	</style>
-}
 
-templ Item(item models.Item) {
-	<div class="inventory-item">
-		<div class="info">
-			<img src={ item.ImageURL } alt="Item Image"/>
-			<p class="name">{ item.Title }</p>
-		</div>
-	</div>
-	<style>
 		.inventory-item .name {
 			overflow: hidden;
 			height: 20px;
@@ -83,4 +73,13 @@ templ Item(item models.Item) {
 			background: none;
 		}
 	</style>
+}
+
+templ Item(item models.Item) {
+	<div class="inventory-item">
+		<div class="info">
+			<img src={ item.ImageURL } alt="Item Image"/>
+			<p class="name">{ item.Title }</p>
+		</div>
+	</div>
 }

@@ -41,7 +41,7 @@ func ItemList(items []models.Item) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-5);\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-1);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-5);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,7 +77,7 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 35, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 81, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -90,13 +90,13 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 36, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 82, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</p></div></div><style>\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-5);\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-1);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-5);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</p></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

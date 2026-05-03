@@ -4,10 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
 	"github.com/encador/trady/internal/templ/layout"
+	"github.com/starfederation/datastar-go/datastar"
 )
 
 type InventoryHandler struct {
@@ -60,14 +62,19 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 
 		item := models.Item{
 			OwnerID: auth.GetUser(r.Context()).ID,
-			Title: r.FormValue("title"),
+			Title:   r.FormValue("title"),
 		}
 
-		err = addItem(h.database, file, item, h.imagesDir)
+		item, err = addItem(h.database, file, item, h.imagesDir)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, "invalid form data", http.StatusBadRequest)
+			return
 		}
+		sse := datastar.NewSSE(w, r)
+		// sse.PatchElementTempl(ItemList([]models.Item{item}), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		time.Sleep(time.Second)
 
 	})
 }

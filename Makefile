@@ -2,6 +2,7 @@
 
 clean:
 	- rm -rf bin
+	- rm images/*
 
 build:
 	go tool templ generate

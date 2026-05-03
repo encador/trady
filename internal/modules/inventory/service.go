@@ -48,16 +48,16 @@ func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
 	return items, nil
 }
 
-func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
+func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models.Item, error) {
 
 	if item.Title == ""{
-		return errors.New("No Item Title Provided")
+		return item, errors.New("No Item Title Provided")
 	}
 
 	var fileName string
 	id, err := generateID(16)
 	if err != nil {
-		return err
+		return item, err
 	}
 
 	// Only allow png and jpeg
@@ -69,13 +69,13 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 	case "image/png":
 		fileName = id + ".png"
 	default:
-		return errors.New("[addItem]: invalid file type")
+		return item, errors.New("[addItem]: invalid file type")
 	}
 
 	// reset file seeker position
 	if seeker, ok := f.(io.Seeker); ok {
 		if _, err := seeker.Seek(0, io.SeekStart); err != nil {
-			return err
+			return item, err
 		}
 	}
 
@@ -83,14 +83,14 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 	path := filepath.Join(dir, fileName)
 	dst, err := os.Create(path)
 	if err != nil {
-		return err
+		return item, err
 	}
 	defer dst.Close()
 
 	// Copy image to system file
 	_, err = io.Copy(dst, f)
 	if err != nil {
-		return err
+		return item, err
 	}
 
 	// Create DB entry
@@ -99,8 +99,8 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) error {
 
 	q := `insert into items(id, owner_id, title, description, image) values (?, ?, ?, ?,?)`
 	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL); err != nil {
-		return err
+		return item, err
 	}
 
-	return nil
+	return item, nil
 }
