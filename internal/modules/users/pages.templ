@@ -6,11 +6,11 @@ templ loginPage() {
 	<div id="msg-container"></div>
 	<div data-signals:toggle="false"></div>
 	<div data-show="!$toggle">
-		<h1 style={ "color: var(--white-2)" }>Login</h1>
+		<h1 style={ "color: var(--white-2); user-select:none;" }>Login</h1>
 		@LoginForm()
 	</div>
 	<div data-show="$toggle" style="display:none">
-		<h1 style={ "color: var(--white-2)" }>Sign Up</h1>
+		<h1 style={ "color: var(--white-2); user-select:none;" }>Sign Up</h1>
 		@SignupForm()
 	</div>
 	<button id="toggle" data-text="$toggle === true ? 'Use Existing' : 'Create Account'" data-on:click="$toggle = !$toggle" type="button"></button>
@@ -74,8 +74,8 @@ templ userPage(user models.User) {
 		#logout {
 			text-decoration: none;
 			color: var(--red-1);
-      background: none;
-      border: var(--red-2) solid 3px;
+			background: none;
+			border: var(--red-2) solid 3px;
 			margin-left: 5px;
 			margin-right: 5px;
 			border-radius: 5px;
@@ -93,7 +93,7 @@ templ userPage(user models.User) {
 
 		#logout:hover {
 			background: var(--red-2);
-      border-color: var(--red-3);
+			border-color: var(--red-3);
 			cursor: pointer;
 		}
 	</style>

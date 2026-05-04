@@ -40,11 +40,11 @@ func Create(path string) error {
 		return fmt.Errorf("[ERROR] DB File (%s) Already Exists", path)
 	}
 
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 		return err
 	}
 
-	err := os.WriteFile(path, nil, 0o644)
+	err := os.WriteFile(path, nil, 0644)
 	if err != nil {
 		return err
 	}
@@ -59,8 +59,20 @@ func Create(path string) error {
 	drop table if exists users;
 	create table users(
 	id integer primary key autoincrement,
+	security integer not null default 1,
 	username text not null unique,
-	password text not null);
+	password text not null
+	);
+
+	drop table if exists items;
+	create table items(
+	id text primary key,
+	owner_id integer not null,
+	title text not null,
+	description text,
+	image text,
+	listed boolean not null default 0
+	);
 	`
 	_, err = db.Exec(q)
 	return err

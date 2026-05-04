@@ -36,9 +36,9 @@ func loginPage() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2); user-select:none;")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 9, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 9, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -57,9 +57,9 @@ func loginPage() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2); user-select:none;")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 13, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 13, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -115,7 +115,7 @@ func userPage(user models.User) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</p></div><button id=\"logout\" data-on:click=\"@post('/user/logout')\">Log Out</button><style>\n\t\th1 {\n\t\t\tcolor: var(--white-2);\n\t\t}\n\t\t#account-box {\n\t\t\tborder: 3px solid var(--blue-2);\n\t\t\tborder-radius: 5px;\n\t\t\tmin-width: 200px;\n\t\t\twidth: fit-content;\n\t\t\tmax-width: 90%;\n\t\t\tpadding: 5px;\n\t\t\theight: 100px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t#account-box p {\n\t\t\tfont-weight: bold;\n\t\t\tcolor: var(--white-2);\n\t\t\tfont-size: 1.5em;\n\t\t}\n\n\t\t#logout {\n\t\t\ttext-decoration: none;\n\t\t\tcolor: var(--red-1);\n      background: none;\n      border: var(--red-2) solid 3px;\n\t\t\tmargin-left: 5px;\n\t\t\tmargin-right: 5px;\n\t\t\tborder-radius: 5px;\n\t\t\tfont-weight: bolder;\n\t\t\theight: auto;\n\t\t\twidth: fit-content;\n\t\t\tfont-size: 16px;\n\t\t\ttext-align: center;\n\t\t\tpadding-top: 5px;\n\t\t\tpadding-bottom: 2px;\n\t\t\tpadding-left: 10px;\n\t\t\tpadding-right: 10px;\n\t\t\tmargin: 10px;\n\t\t}\n\n\t\t#logout:hover {\n\t\t\tbackground: var(--red-2);\n      border-color: var(--red-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</p></div><button id=\"logout\" data-on:click=\"@post('/user/logout')\">Log Out</button><style>\n\t\th1 {\n\t\t\tcolor: var(--white-2);\n\t\t}\n\t\t#account-box {\n\t\t\tborder: 3px solid var(--blue-2);\n\t\t\tborder-radius: 5px;\n\t\t\tmin-width: 200px;\n\t\t\twidth: fit-content;\n\t\t\tmax-width: 90%;\n\t\t\tpadding: 5px;\n\t\t\theight: 100px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t#account-box p {\n\t\t\tfont-weight: bold;\n\t\t\tcolor: var(--white-2);\n\t\t\tfont-size: 1.5em;\n\t\t}\n\n\t\t#logout {\n\t\t\ttext-decoration: none;\n\t\t\tcolor: var(--red-1);\n\t\t\tbackground: none;\n\t\t\tborder: var(--red-2) solid 3px;\n\t\t\tmargin-left: 5px;\n\t\t\tmargin-right: 5px;\n\t\t\tborder-radius: 5px;\n\t\t\tfont-weight: bolder;\n\t\t\theight: auto;\n\t\t\twidth: fit-content;\n\t\t\tfont-size: 16px;\n\t\t\ttext-align: center;\n\t\t\tpadding-top: 5px;\n\t\t\tpadding-bottom: 2px;\n\t\t\tpadding-left: 10px;\n\t\t\tpadding-right: 10px;\n\t\t\tmargin: 10px;\n\t\t}\n\n\t\t#logout:hover {\n\t\t\tbackground: var(--red-2);\n\t\t\tborder-color: var(--red-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

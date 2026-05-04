@@ -1,11 +1,15 @@
----
-Title: Trady
-Description: Simple Trading Web-App
----
+> [!WARNING]
+> Project is Work-In-Progress
 
-## Status
-The project is work-in-progress
-- Working: ❌
+# Trady
+An online trading application for physical items
+
+## Screenshots
+### Login Page
+![Login Page](https://github.com/encador/trady/blob/dev/images/login.png)
+
+### Account Page
+![Account Page](https://github.com/encador/trady/blob/dev/images/account.png)
 
 
 ## Download Trady
