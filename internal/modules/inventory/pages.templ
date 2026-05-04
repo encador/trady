@@ -3,7 +3,6 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ InventoryPage(items []models.Item) {
-	<h1 style={ "color: var(--white-2)" }>Inventory</h1>
 	<form enctype="multipart/form-data">
 		<input name="title" required type="text"/>
 		<input required type="file" name="image" accept="image/png, image/jpeg" style={ "color: var(--white-2)" }/>

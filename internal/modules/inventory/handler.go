@@ -2,8 +2,10 @@ package inventory
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/encador/trady/internal/models"
@@ -14,14 +16,18 @@ import (
 
 type InventoryHandler struct {
 	database  *sql.DB
-	imagesDir string
+	uploadDir string
 }
 
-func NewHandler(db *sql.DB) *InventoryHandler {
+func NewHandler(db *sql.DB, uploadDir string) (*InventoryHandler, error) {
+	if info, err := os.Stat(uploadDir); err != nil || !info.IsDir() {
+		return nil, errors.New("[NewHandler]: Invalid uploadDir path")
+	}
+
 	return &InventoryHandler{
 		database:  db,
-		imagesDir: "./images",
-	}
+		uploadDir: uploadDir,
+	}, nil
 }
 
 func (h *InventoryHandler) InventoryPage() http.Handler {
@@ -65,7 +71,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			Title:   r.FormValue("title"),
 		}
 
-		item, err = addItem(h.database, file, item, h.imagesDir)
+		item, err = addItem(h.database, file, item, h.uploadDir)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, "invalid form data", http.StatusBadRequest)

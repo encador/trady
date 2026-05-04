@@ -20,6 +20,7 @@ type config struct {
 	port    int
 	dbPath  string
 	init    bool
+	uploadDir string
 }
 
 //go:embed static/*
@@ -30,8 +31,9 @@ func main() {
 	var cnf config
 	flag.StringVar(&cnf.address, "address", "localhost", "address on which the application runs")
 	flag.IntVar(&cnf.port, "port", 55000, "Port # for the application")
-	flag.StringVar(&cnf.dbPath, "db-path", "trady.db", "sqlite3 database file")
+	flag.StringVar(&cnf.dbPath, "db", "trady.db", "sqlite3 database file")
 	flag.BoolVar(&cnf.init, "init", true, "initialize application files when missing")
+	flag.StringVar(&cnf.uploadDir, "uploads", "./uploads", "directory for user uploaded item-images")
 	flag.Parse()
 
 	if cnf.init {
@@ -39,6 +41,13 @@ func main() {
 		if err == nil {
 			fmt.Println("[LOG] DB Created")
 		}
+		err = os.MkdirAll(cnf.uploadDir, 0755)
+		if err != nil{
+			fmt.Println(err)
+			fmt.Println("[ERROR] UploadDir Not Created")
+			os.Exit(0)
+		}
+		fmt.Println("[LOG] UploadDir Verified")
 	}
 
 	db, err := database.Open(cnf.dbPath)
@@ -55,7 +64,11 @@ func main() {
 
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
-	invH := inventory.NewHandler(db)
+	invH, err := inventory.NewHandler(db, cnf.uploadDir)
+	if err != nil{
+		fmt.Println(err)
+		os.Exit(0)
+	}
 
 	fs := http.FileServer(http.FS(staticFiles))
 	mux.Handle("/static/", middleware.Cache1(fs))
@@ -76,7 +89,8 @@ func main() {
 
 	mux.Handle("/inventory", invH.InventoryPage())
 	mux.Handle("/inventory/new", invH.HandleNew())
-	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir("./images")))))
+	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
+	// mux.Handle("/images/", middleware.Cache1(http.FileServer(http.Dir("./images"))))
 
 	adr := fmt.Sprintf("%s:%d", cnf.address, cnf.port)
 
