@@ -1,11 +1,8 @@
----
-Title: Trady
-Description: Simple Trading Web-App
----
-
-## Status
-> [!NOTE]
+> [!WARNING]
 > Project is Work-In-Progress
+
+# Trady
+An online trading application for physical items
 
 ## Screenshots
 ### Login Page
