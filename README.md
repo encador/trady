@@ -8,6 +8,9 @@ An online trading application for physical items
 ### Login Page
 ![Login Page](https://github.com/encador/trady/blob/dev/images/login.png)
 
+### Account Page
+![Account Page](https://github.com/encador/trady/blob/dev/images/account.png)
+
 
 ## Download Trady
 ```sh
