@@ -11,11 +11,12 @@ import templruntime "github.com/a-h/templ/runtime"
 import "github.com/encador/trady/internal/templ/component"
 
 type Options struct {
-	Content templ.Component
-	URL     string
+	Content  templ.Component
+	Contorls templ.Component
+	URL      string
 }
 
-func Base(opts Options) templ.Component {
+func colors() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,15 +37,132 @@ func Base(opts Options) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title>Trady</title><link rel=\"icon\" href=\"/static/favicon.ico\"><style>\n\t\t\t\t* {\n\t\t\t\t\tmargin: 0;\n\t\t\t\t\tpadding: 0;\n\t\t\t\t}\n\t\t\t\t:where(html) {\n\t\t\t\t\t--dark-1: rgb(58, 69, 74);\n\t\t\t\t\t--dark-2: rgb(32, 45, 56);\n\t\t\t\t\t--dark-3: rgb(30, 37, 45);\n\t\t\t\t\t--dark-4: rgb(20, 24, 33);\n\t\t\t\t\t--dark-5: rgb(14, 17, 26);\n\t\t\t\t\t--orange-1: rgb(186, 133, 70);\n\t\t\t\t\t--orange-2: rgb(128, 78, 57);\n\t\t\t\t\t--orange-3: rgb(75, 42, 42);\n\t\t\t\t\t--green-1: rgb(141, 173, 94);\n\t\t\t\t\t--green-2: rgb(74, 120, 78);\n\t\t\t\t\t--green-3: rgb(39, 73, 59);\n\t\t\t\t\t--blue-1: rgb(102, 154, 189);\n\t\t\t\t\t--blue-2: rgb(70, 96, 129);\n\t\t\t\t\t--blue-3: rgb(40, 53, 82);\n\t\t\t\t\t--red-1: rgb(172, 71, 64);\n\t\t\t\t\t--red-2: rgb(102, 40, 64);\n\t\t\t\t\t--red-3: rgb(52, 28, 50);\n\t\t\t\t\t--white-1: rgb(255, 255, 255);\n\t\t\t\t\t--white-2: rgb(230, 230, 230);\n\t\t\t\t\t--white-3: rgb(200, 200, 200);\n\t\t\t\t\t--white-4: rgb(150, 150, 150);\n\t\t\t\t}\n\t\t\t</style><script type=\"module\" src=\"/static/datastar.js\"></script></head><body><div id=\"outerbox\"><div id=\"box\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n\t\t* {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t}\n\t\t:where(html) {\n\t\t\t--dark-1: rgb(58, 69, 74);\n\t\t\t--dark-2: rgb(32, 45, 56);\n\t\t\t--dark-3: rgb(30, 37, 45);\n\t\t\t--dark-4: rgb(20, 24, 33);\n\t\t\t--dark-5: rgb(14, 17, 26);\n\t\t\t--orange-1: rgb(186, 133, 70);\n\t\t\t--orange-2: rgb(128, 78, 57);\n\t\t\t--orange-3: rgb(75, 42, 42);\n\t\t\t--green-1: rgb(141, 173, 94);\n\t\t\t--green-2: rgb(74, 120, 78);\n\t\t\t--green-3: rgb(39, 73, 59);\n\t\t\t--blue-1: rgb(102, 154, 189);\n\t\t\t--blue-2: rgb(70, 96, 129);\n\t\t\t--blue-3: rgb(40, 53, 82);\n\t\t\t--red-1: rgb(172, 71, 64);\n\t\t\t--red-2: rgb(102, 40, 64);\n\t\t\t--red-3: rgb(52, 28, 50);\n\t\t\t--white-1: rgb(255, 255, 255);\n\t\t\t--white-2: rgb(230, 230, 230);\n\t\t\t--white-3: rgb(200, 200, 200);\n\t\t\t--white-4: rgb(150, 150, 150);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = opts.Content.Render(ctx, templ_7745c5c3_Buffer)
+		return nil
+	})
+}
+
+func mainContent(content templ.Component) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"outerbox\"><div id=\"box\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div>")
+		templ_7745c5c3_Err = content.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div><style>\n\t\t#outerbox {\n\t\t\twidth: 60vw;\n\t\t\theight: 75vh;\n\t\t\t/* border: var(--dark-1) solid 2px; */\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tborder-radius: 10px;\n\t\t\talign-items: center;\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t#box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\n\t\t\twidth: 100%;\n\t\t\theight: fit-content;\n\t\t\tmax-height: 100%;\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func controlBox(controls templ.Component) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"ctrlBox\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = controls.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ctrlBox {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 75vh;\n\t\t\twidth: 25vw;\n\t\t\tborder-radius: 10px;\n      display:flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func Base(opts Options) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!doctype html><html><head><title>Trady</title><link rel=\"icon\" href=\"/static/favicon.ico\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = colors().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<script type=\"module\" src=\"/static/datastar.js\"></script></head><body><div id=\"yab\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = mainContent(opts.Content).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if opts.Contorls != nil {
+			templ_7745c5c3_Err = controlBox(opts.Contorls).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -52,7 +170,7 @@ func Base(opts Options) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</body><style>\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\t#outerbox {\n\t\t\t\twidth: 60vw;\n\t\t\t\theight: 75vh;\n\t\t\t\t/* border: var(--dark-1) solid 2px; */\n\t\t\t\tbackground-color: var(--dark-2);\n\t\t\t\tborder-radius: 10px;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\talign-items: center;\n\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\tjustify-content: center;\n\t\t\t\toverflow: hidden;\n\t\t\t}\n\n\t\t\t#box {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\toverflow: auto;\n\n\t\t\t\twidth: 100%;\n\t\t\t\theight: fit-content;\n\t\t\t\tmax-height: 100%;\n\t\t\t\toverflow: auto;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n\t\t</style></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</body><style>\n\t\t\t#yab {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: row;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\tgap: 20px;\n\t\t\t}\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n\t\t</style></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

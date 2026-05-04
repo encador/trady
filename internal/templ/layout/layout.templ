@@ -3,8 +3,93 @@ package layout
 import "github.com/encador/trady/internal/templ/component"
 
 type Options struct {
-	Content templ.Component
-	URL     string
+	Content  templ.Component
+	Contorls templ.Component
+	URL      string
+}
+
+templ colors() {
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		:where(html) {
+			--dark-1: rgb(58, 69, 74);
+			--dark-2: rgb(32, 45, 56);
+			--dark-3: rgb(30, 37, 45);
+			--dark-4: rgb(20, 24, 33);
+			--dark-5: rgb(14, 17, 26);
+			--orange-1: rgb(186, 133, 70);
+			--orange-2: rgb(128, 78, 57);
+			--orange-3: rgb(75, 42, 42);
+			--green-1: rgb(141, 173, 94);
+			--green-2: rgb(74, 120, 78);
+			--green-3: rgb(39, 73, 59);
+			--blue-1: rgb(102, 154, 189);
+			--blue-2: rgb(70, 96, 129);
+			--blue-3: rgb(40, 53, 82);
+			--red-1: rgb(172, 71, 64);
+			--red-2: rgb(102, 40, 64);
+			--red-3: rgb(52, 28, 50);
+			--white-1: rgb(255, 255, 255);
+			--white-2: rgb(230, 230, 230);
+			--white-3: rgb(200, 200, 200);
+			--white-4: rgb(150, 150, 150);
+		}
+	</style>
+}
+
+templ mainContent(content templ.Component) {
+	<div id="outerbox">
+		<div id="box">
+			@content
+		</div>
+	</div>
+	<style>
+		#outerbox {
+			width: 60vw;
+			height: 75vh;
+			/* border: var(--dark-1) solid 2px; */
+			background-color: var(--dark-2);
+			border-radius: 10px;
+			align-items: center;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		#box {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			overflow: auto;
+
+			width: 100%;
+			height: fit-content;
+			max-height: 100%;
+			overflow: auto;
+		}
+	</style>
+}
+
+templ controlBox(controls templ.Component) {
+	<div id="ctrlBox">
+		@controls
+	</div>
+	<style>
+		#ctrlBox {
+			background-color: var(--dark-2);
+			height: 75vh;
+			width: 25vw;
+			border-radius: 10px;
+      display:flex;
+			align-items: center;
+			justify-content: center;
+		}
+	</style>
 }
 
 templ Base(opts Options) {
@@ -13,78 +98,31 @@ templ Base(opts Options) {
 		<head>
 			<title>Trady</title>
 			<link rel="icon" href="/static/favicon.ico"/>
-			<style>
-				* {
-					margin: 0;
-					padding: 0;
-				}
-				:where(html) {
-					--dark-1: rgb(58, 69, 74);
-					--dark-2: rgb(32, 45, 56);
-					--dark-3: rgb(30, 37, 45);
-					--dark-4: rgb(20, 24, 33);
-					--dark-5: rgb(14, 17, 26);
-					--orange-1: rgb(186, 133, 70);
-					--orange-2: rgb(128, 78, 57);
-					--orange-3: rgb(75, 42, 42);
-					--green-1: rgb(141, 173, 94);
-					--green-2: rgb(74, 120, 78);
-					--green-3: rgb(39, 73, 59);
-					--blue-1: rgb(102, 154, 189);
-					--blue-2: rgb(70, 96, 129);
-					--blue-3: rgb(40, 53, 82);
-					--red-1: rgb(172, 71, 64);
-					--red-2: rgb(102, 40, 64);
-					--red-3: rgb(52, 28, 50);
-					--white-1: rgb(255, 255, 255);
-					--white-2: rgb(230, 230, 230);
-					--white-3: rgb(200, 200, 200);
-					--white-4: rgb(150, 150, 150);
-				}
-			</style>
+			@colors()
 			<script type="module" src="/static/datastar.js"></script>
 		</head>
 		<body>
-			<div id="outerbox">
-				<div id="box">
-					@opts.Content
-				</div>
+			<div id="yab">
+				@mainContent(opts.Content)
+				if opts.Contorls != nil {
+					@controlBox(opts.Contorls)
+				}
 			</div>
 			@component.Navbar(opts.URL)
 		</body>
 		<style>
+			#yab {
+				display: flex;
+				flex-direction: row;
+				margin: 20px 0 10px 0;
+				gap: 20px;
+			}
 			body {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 				background-color: var(--dark-3);
-			}
-			#outerbox {
-				width: 60vw;
-				height: 75vh;
-				/* border: var(--dark-1) solid 2px; */
-				background-color: var(--dark-2);
-				border-radius: 10px;
-				margin: 20px 0 10px 0;
-				align-items: center;
-
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				overflow: hidden;
-			}
-
-			#box {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				overflow: auto;
-
-				width: 100%;
-				height: fit-content;
-				max-height: 100%;
-				overflow: auto;
 			}
 			button {
 				user-select: none;
