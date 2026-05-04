@@ -4,8 +4,12 @@ Description: Simple Trading Web-App
 ---
 
 ## Status
-The project is work-in-progress
-- Working: ❌
+> [!NOTE]
+> Project is Work-In-Progress
+
+## Screenshots
+### Login Page
+![Login Page](https://github.com/encador/trady/blob/dev/images/login.png)
 
 
 ## Download Trady
