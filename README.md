@@ -2,7 +2,7 @@
 > Project is Work-In-Progress
 
 # Trady
-An online trading application for physical items
+An online trading application for physical goods
 
 ## Screenshots
 ### Login Page
