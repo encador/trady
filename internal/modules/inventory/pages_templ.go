@@ -77,7 +77,7 @@ func NewItemForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"> <input required type=\"text\" name=\"description\" placeholder=\"Item Description\"> <button data-on:click=\"@post('/inventory/new', {contentType: 'form'})\">Upload</button></form><style>\n\t\t#newItemForm {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: 10px;\n\t\t\twidth: 200px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"> <input required type=\"text\" name=\"description\" placeholder=\"Item Description\"> <button data-on:click=\"@post('/inventory/new', {contentType: 'form'})\">Upload</button></form><style>\n\t\t#newItemForm {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: 10px;\n\t\t\twidth: 70%;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
