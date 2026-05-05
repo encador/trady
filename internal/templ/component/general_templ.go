@@ -226,11 +226,11 @@ func MsgBox(msg []string, level int) templ.Component {
 func msgBoxColor(level int) string {
 	switch level {
 	case 1:
-		return "border-color: var(--green-1); color: var(--green-1)"
+		return "border-color: var(--green-1); color: var(--green-1); background-color: var(--green-3)"
 	case 2:
-		return "border-color: var(--orange-1); color: var(--orange-1)"
+		return "border-color: var(--orange-1); color: var(--orange-1); background-color: var(--orange-3)"
 	case 3:
-		return "border-color: var(--red-1); color: var(--red-1)"
+		return "border-color: var(--red-1); color: var(--red-1); background-color: var(--red-3)"
 	}
 	return ""
 }
