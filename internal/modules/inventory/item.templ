@@ -7,6 +7,9 @@ templ ItemList(items []models.Item) {
 		for _, item := range items {
 			@Item(item)
 		}
+		if len(items) == 0 {
+			<h1 style="color: var(--white-2);">No Items</h1>
+		}
 	</div>
 	<style>
 		#item-list {

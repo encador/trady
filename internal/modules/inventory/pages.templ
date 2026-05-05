@@ -3,7 +3,6 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ InventoryPage(items []models.Item) {
-	@NewItemForm()
 	@ItemList(items)
 	<style>
 		#item-list {
