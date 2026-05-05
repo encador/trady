@@ -3,18 +3,9 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ InventoryPage(items []models.Item) {
-	<form enctype="multipart/form-data">
-		<input name="title" required type="text"/>
-		<input required type="file" name="image" accept="image/png, image/jpeg" style={ "color: var(--white-2)" }/>
-		<button data-on:click="@post('/inventory/new', {contentType: 'form'})">Upload</button>
-	</form>
+	@NewItemForm()
 	@ItemList(items)
 	<style>
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
 		#item-list {
 			display: flex;
 			flex-wrap: wrap;
@@ -31,6 +22,23 @@ templ InventoryPage(items []models.Item) {
 			min-height: auto;
 
 			overflow: auto;
+		}
+	</style>
+}
+
+templ NewItemForm() {
+	<form id="newItemForm" enctype="multipart/form-data">
+		<input name="title" required type="text" placeholder="Item Name"/>
+		<input required type="file" name="image" accept="image/png, image/jpeg" style={ "color: var(--white-2)" }/>
+		<input required type="text" name="description" placeholder="Item Description"/>
+		<button data-on:click="@post('/inventory/new', {contentType: 'form'})">Upload</button>
+	</form>
+	<style>
+		#newItemForm {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			width: 200px;
 		}
 	</style>
 }

@@ -69,6 +69,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		item := models.Item{
 			OwnerID: auth.GetUser(r.Context()).ID,
 			Title:   r.FormValue("title"),
+			Description: r.FormValue("description"),
 		}
 
 		item, err = addItem(h.database, file, item, h.uploadDir)
@@ -78,8 +79,8 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			return
 		}
 		sse := datastar.NewSSE(w, r)
-		// sse.PatchElementTempl(ItemList([]models.Item{item}), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("newItemForm"))
 		time.Sleep(time.Second)
 
 	})
