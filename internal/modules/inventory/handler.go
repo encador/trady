@@ -81,7 +81,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		}
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
-		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("newItemForm"))
+		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("form-container"))
 		time.Sleep(time.Second)
 
 	})
