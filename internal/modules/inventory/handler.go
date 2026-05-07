@@ -35,7 +35,7 @@ func (h *InventoryHandler) InventoryPage() http.Handler {
 		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
 		opts := layout.Options{
 			Content: InventoryPage(items),
-			Contorls: NewItemForm(),
+			Contorls: InventoryControl(),
 			URL:     "/inventory",
 		}
 		layout.Base(opts).Render(r.Context(), w)

@@ -25,6 +25,23 @@ templ InventoryPage(items []models.Item) {
 	</style>
 }
 
+templ InventoryControl() {
+	<div id="ic-box">
+		@NewItemForm()
+	</div>
+	<style>
+		#ic-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			align-items: center;
+      /* justify-content: center; */
+      /* background-color: red; */
+		}
+	</style>
+}
+
 templ NewItemForm() {
 	@itemFormCSS()
 	<div id="form-container">
@@ -64,6 +81,7 @@ templ itemFormCSS() {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+      justify-content: center;
 			width: 100%;
 			height: 100%;
 			margin: 20px;
