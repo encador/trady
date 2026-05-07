@@ -111,7 +111,7 @@ func controlBox(controls templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ctrlBox {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 75vh;\n\t\t\twidth: 20vw;\n\t\t\tborder-radius: 10px;\n      display:flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n      overflow: auto;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ctrlBox {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 75vh;\n\t\t\twidth: 20vw;\n\t\t\tborder-radius: 10px;\n      display:flex;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n      overflow: auto;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
