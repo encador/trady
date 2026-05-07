@@ -26,6 +26,7 @@ templ InventoryPage(items []models.Item) {
 }
 
 templ NewItemForm() {
+	@itemFormCSS()
 	<div id="form-container">
 		<div data-signals:toggle="0"></div>
 		<button id="toggle" data-show="!$toggle" data-on:click="$toggle = !$toggle">New Item</button>
@@ -55,6 +56,9 @@ templ NewItemForm() {
 			}
 		});
 	</script>
+}
+
+templ itemFormCSS() {
 	<style>
 		#form-container {
 			display: flex;
@@ -74,11 +78,11 @@ templ NewItemForm() {
 			font-size: 15px;
 			font-weight: bolder;
 		}
-    #toggle:hover {
-      cursor: pointer;
-      background-color: var(--green-2);
-      border-color: var(--green-3);
-    }
+		#toggle:hover {
+			cursor: pointer;
+			background-color: var(--green-2);
+			border-color: var(--green-3);
+		}
 		#newItemForm .buttons {
 			display: flex;
 			align-items: center;
