@@ -3,18 +3,8 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ InventoryPage(items []models.Item) {
-	<form enctype="multipart/form-data">
-		<input name="title" required type="text"/>
-		<input required type="file" name="image" accept="image/png, image/jpeg" style={ "color: var(--white-2)" }/>
-		<button data-on:click="@post('/inventory/new', {contentType: 'form'})">Upload</button>
-	</form>
 	@ItemList(items)
 	<style>
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
 		#item-list {
 			display: flex;
 			flex-wrap: wrap;
@@ -31,6 +21,210 @@ templ InventoryPage(items []models.Item) {
 			min-height: auto;
 
 			overflow: auto;
+		}
+	</style>
+}
+
+templ InventoryControl() {
+	<div id="ic-box">
+		@NewItemForm()
+	</div>
+	<style>
+		#ic-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			align-items: center;
+      /* justify-content: center; */
+      /* background-color: red; */
+		}
+	</style>
+}
+
+templ NewItemForm() {
+	@itemFormCSS()
+	<div id="form-container">
+		<div data-signals:toggle="0"></div>
+		<button id="toggle" data-show="!$toggle" data-on:click="$toggle = !$toggle">New Item</button>
+		<form data-show="$toggle" id="newItemForm" enctype="multipart/form-data" style="display:none">
+			<label id="file-name" for="file-upload">Select Image</label>
+			<input id="file-upload" required type="file" name="image" accept="image/png, image/jpeg" style={ "color: var(--white-2)" }/>
+			<label for="title">Item Title</label>
+			<input id="title" name="title" required type="text" placeholder="Enter Title"/>
+			<label for="description">Item Description</label>
+			<textarea id="description" required type="text" name="description" placeholder="Enter Description"></textarea>
+			<div class="buttons">
+				<button id="upload" data-on:click="@post('/inventory/new', {contentType: 'form'})">Upload</button>
+				<button id="cancel" data-on:click="$toggle = !$toggle">Cancel</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		const fileUpload = document.getElementById("file-upload");
+		const fileName = document.getElementById("file-name");
+
+		fileUpload.addEventListener("change", (e) => {
+			const selectedFile = e.target.files[0];
+			if (selectedFile) {
+				fileName.textContent = selectedFile.name;
+			} else {
+				fileName.textContent = "No file selected";
+			}
+		});
+	</script>
+}
+
+templ itemFormCSS() {
+	<style>
+		#form-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+      justify-content: center;
+			width: 100%;
+			height: 100%;
+			margin: 20px;
+		}
+		#toggle {
+			border: 3px solid var(--green-2);
+			border-radius: 10px;
+			background: none;
+			color: var(--green-1);
+			width: 80%;
+			height: 35px;
+			font-size: 15px;
+			font-weight: bolder;
+		}
+		#toggle:hover {
+			cursor: pointer;
+			background-color: var(--green-2);
+			border-color: var(--green-3);
+		}
+		#newItemForm .buttons {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-top: 10px;
+			margin-bottom: 5px;
+			gap: 20px;
+			overflow: hidden;
+			width: 90%;
+		}
+		.buttons button {
+			border-radius: 8px;
+			background: none;
+			font-weight: bolder;
+			margin: 0px;
+			height: 30px;
+			width: 90px;
+			font-size: 15px;
+		}
+		.buttons #upload {
+			border: var(--green-2) solid 3px;
+			color: var(--green-1);
+		}
+		.buttons #upload:hover {
+			background: var(--green-2);
+			border: var(--green-3) solid 3px;
+			cursor: pointer;
+		}
+		.buttons #cancel {
+			border: var(--red-1) solid 3px;
+			color: var(--red-1);
+		}
+		.buttons #cancel:hover {
+			background: var(--red-2);
+			border: var(--red-3) solid 3px;
+			cursor: pointer;
+		}
+		#newItemForm {
+			background-color: var(--dark-3);
+			border-radius: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 5px;
+			width: 80%;
+			height: fit-content;
+			padding: 5px;
+		}
+		#file-name {
+			color: var(--blue-1);
+			border: 3px solid var(--dark-2);
+			background-color: var(--dark-3);
+			margin: 10px 0 10px 0;
+			width: 60%;
+			height: 20px;
+			border-radius: 15px;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+			overflow: auto;
+		}
+		#file-name:hover {
+			border: 3px solid var(--dark-1);
+			background-color: var(--dark-2);
+
+			cursor: pointer;
+		}
+		label {
+			color: var(--blue-1);
+			width: fit-content;
+			text-align: center;
+			padding: 0 5px 0 5px;
+			font-weight: 600;
+		}
+		input[type="file"] {
+			/* display:none; */
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			border: 0;
+		}
+		textarea {
+			background-color: var(--dark-2);
+			border: 2px solid var(--dark-2);
+			border-radius: 5px;
+			color: var(--white-2);
+			padding: 5px;
+			height: 60px;
+			width: 80%;
+			resize: none;
+			overflow: auto;
+			outline: none;
+		}
+		textarea:hover {
+			border: 2px dashed var(--blue-2);
+		}
+		textarea:focus {
+			border: 2px solid var(--blue-2);
+		}
+		input {
+			border: var(--dark-2) solid 2px;
+			background-color: var(--dark-2);
+			color: var(--white-2);
+			/* caret-color: var(--white-1); */
+			border-radius: 15px;
+			padding: 2px;
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			width: 70%;
+			height: auto;
+			font-weight: 500;
+			margin-bottom: 10px;
+		}
+		input:hover {
+			border: var(--blue-2) dashed 2px;
+			cursor: pointer;
+		}
+		input:focus {
+			border: var(--blue-2) solid 2px;
 		}
 	</style>
 }

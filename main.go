@@ -8,18 +8,18 @@ import (
 	"os"
 
 	"github.com/encador/trady/internal/database"
+	"github.com/encador/trady/internal/modules/inventory"
 	"github.com/encador/trady/internal/modules/middleware"
 	"github.com/encador/trady/internal/modules/users"
-	"github.com/encador/trady/internal/modules/inventory"
 	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
 )
 
 type config struct {
-	address string
-	port    int
-	dbPath  string
-	init    bool
+	address   string
+	port      int
+	dbPath    string
+	init      bool
 	uploadDir string
 }
 
@@ -42,7 +42,7 @@ func main() {
 			fmt.Println("[LOG] DB Created")
 		}
 		err = os.MkdirAll(cnf.uploadDir, 0755)
-		if err != nil{
+		if err != nil {
 			fmt.Println(err)
 			fmt.Println("[ERROR] UploadDir Not Created")
 			os.Exit(0)
@@ -65,7 +65,7 @@ func main() {
 	mux := http.NewServeMux()
 	userH := users.NewHandler(db)
 	invH, err := inventory.NewHandler(db, cnf.uploadDir)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
 	}
@@ -77,9 +77,8 @@ func main() {
 		fs.ServeHTTP(w, r)
 	})
 
-
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(layout.Options{Content: component.Hello(""), URL: "/", Contorls: component.Hello("")}).Render(r.Context(), w)
+		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())

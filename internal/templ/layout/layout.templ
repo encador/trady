@@ -82,12 +82,13 @@ templ controlBox(controls templ.Component) {
 	<style>
 		#ctrlBox {
 			background-color: var(--dark-2);
-			height: 75vh;
-			width: 25vw;
+			height: 60vh;
+			width: 20vw;
 			border-radius: 10px;
       display:flex;
-			align-items: center;
+			/* align-items: center; */
 			justify-content: center;
+      overflow: auto;
 		}
 	</style>
 }
@@ -114,6 +115,7 @@ templ Base(opts Options) {
 			#yab {
 				display: flex;
 				flex-direction: row;
+        align-items: center;
 				margin: 20px 0 10px 0;
 				gap: 20px;
 			}

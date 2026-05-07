@@ -31,28 +31,123 @@ func InventoryPage(items []models.Item) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form enctype=\"multipart/form-data\"><input name=\"title\" required type=\"text\"> <input required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/pages.templ`, Line: 8, Col: 105}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"> <button data-on:click=\"@post('/inventory/new', {contentType: 'form'})\">Upload</button></form>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		templ_7745c5c3_Err = ItemList(items).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\n\t\tform {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: 10px;\n\t\t}\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func InventoryControl() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"ic-box\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NewItemForm().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\talign-items: center;\n      /* justify-content: center; */\n      /* background-color: red; */\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func NewItemForm() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = itemFormCSS().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"form-container\"><div data-signals:toggle=\"0\"></div><button id=\"toggle\" data-show=\"!$toggle\" data-on:click=\"$toggle = !$toggle\">New Item</button><form data-show=\"$toggle\" id=\"newItemForm\" enctype=\"multipart/form-data\" style=\"display:none\"><label id=\"file-name\" for=\"file-upload\">Select Image</label> <input id=\"file-upload\" required type=\"file\" name=\"image\" accept=\"image/png, image/jpeg\" style=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("color: var(--white-2)")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/pages.templ`, Line: 52, Col: 123}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"> <label for=\"title\">Item Title</label> <input id=\"title\" name=\"title\" required type=\"text\" placeholder=\"Enter Title\"> <label for=\"description\">Item Description</label> <textarea id=\"description\" required type=\"text\" name=\"description\" placeholder=\"Enter Description\"></textarea><div class=\"buttons\"><button id=\"upload\" data-on:click=\"@post('/inventory/new', {contentType: 'form'})\">Upload</button> <button id=\"cancel\" data-on:click=\"$toggle = !$toggle\">Cancel</button></div></form></div><script>\n\t\tconst fileUpload = document.getElementById(\"file-upload\");\n\t\tconst fileName = document.getElementById(\"file-name\");\n\n\t\tfileUpload.addEventListener(\"change\", (e) => {\n\t\t\tconst selectedFile = e.target.files[0];\n\t\t\tif (selectedFile) {\n\t\t\t\tfileName.textContent = selectedFile.name;\n\t\t\t} else {\n\t\t\t\tfileName.textContent = \"No file selected\";\n\t\t\t}\n\t\t});\n\t</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func itemFormCSS() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<style>\n\t\t#form-container {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n      justify-content: center;\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tmargin: 20px;\n\t\t}\n\t\t#toggle {\n\t\t\tborder: 3px solid var(--green-2);\n\t\t\tborder-radius: 10px;\n\t\t\tbackground: none;\n\t\t\tcolor: var(--green-1);\n\t\t\twidth: 80%;\n\t\t\theight: 35px;\n\t\t\tfont-size: 15px;\n\t\t\tfont-weight: bolder;\n\t\t}\n\t\t#toggle:hover {\n\t\t\tcursor: pointer;\n\t\t\tbackground-color: var(--green-2);\n\t\t\tborder-color: var(--green-3);\n\t\t}\n\t\t#newItemForm .buttons {\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 5px;\n\t\t\tgap: 20px;\n\t\t\toverflow: hidden;\n\t\t\twidth: 90%;\n\t\t}\n\t\t.buttons button {\n\t\t\tborder-radius: 8px;\n\t\t\tbackground: none;\n\t\t\tfont-weight: bolder;\n\t\t\tmargin: 0px;\n\t\t\theight: 30px;\n\t\t\twidth: 90px;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t.buttons #upload {\n\t\t\tborder: var(--green-2) solid 3px;\n\t\t\tcolor: var(--green-1);\n\t\t}\n\t\t.buttons #upload:hover {\n\t\t\tbackground: var(--green-2);\n\t\t\tborder: var(--green-3) solid 3px;\n\t\t\tcursor: pointer;\n\t\t}\n\t\t.buttons #cancel {\n\t\t\tborder: var(--red-1) solid 3px;\n\t\t\tcolor: var(--red-1);\n\t\t}\n\t\t.buttons #cancel:hover {\n\t\t\tbackground: var(--red-2);\n\t\t\tborder: var(--red-3) solid 3px;\n\t\t\tcursor: pointer;\n\t\t}\n\t\t#newItemForm {\n\t\t\tbackground-color: var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tgap: 5px;\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\tpadding: 5px;\n\t\t}\n\t\t#file-name {\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder: 3px solid var(--dark-2);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\twidth: 60%;\n\t\t\theight: 20px;\n\t\t\tborder-radius: 15px;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tdisplay: flex;\n\t\t\toverflow: auto;\n\t\t}\n\t\t#file-name:hover {\n\t\t\tborder: 3px solid var(--dark-1);\n\t\t\tbackground-color: var(--dark-2);\n\n\t\t\tcursor: pointer;\n\t\t}\n\t\tlabel {\n\t\t\tcolor: var(--blue-1);\n\t\t\twidth: fit-content;\n\t\t\ttext-align: center;\n\t\t\tpadding: 0 5px 0 5px;\n\t\t\tfont-weight: 600;\n\t\t}\n\t\tinput[type=\"file\"] {\n\t\t\t/* display:none; */\n\t\t\tposition: absolute;\n\t\t\twidth: 1px;\n\t\t\theight: 1px;\n\t\t\tpadding: 0;\n\t\t\tmargin: -1px;\n\t\t\toverflow: hidden;\n\t\t\tclip: rect(0, 0, 0, 0);\n\t\t\tborder: 0;\n\t\t}\n\t\ttextarea {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tborder: 2px solid var(--dark-2);\n\t\t\tborder-radius: 5px;\n\t\t\tcolor: var(--white-2);\n\t\t\tpadding: 5px;\n\t\t\theight: 60px;\n\t\t\twidth: 80%;\n\t\t\tresize: none;\n\t\t\toverflow: auto;\n\t\t\toutline: none;\n\t\t}\n\t\ttextarea:hover {\n\t\t\tborder: 2px dashed var(--blue-2);\n\t\t}\n\t\ttextarea:focus {\n\t\t\tborder: 2px solid var(--blue-2);\n\t\t}\n\t\tinput {\n\t\t\tborder: var(--dark-2) solid 2px;\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-2);\n\t\t\t/* caret-color: var(--white-1); */\n\t\t\tborder-radius: 15px;\n\t\t\tpadding: 2px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\twidth: 70%;\n\t\t\theight: auto;\n\t\t\tfont-weight: 500;\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\t\tinput:hover {\n\t\t\tborder: var(--blue-2) dashed 2px;\n\t\t\tcursor: pointer;\n\t\t}\n\t\tinput:focus {\n\t\t\tborder: var(--blue-2) solid 2px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

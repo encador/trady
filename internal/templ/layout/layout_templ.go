@@ -111,7 +111,7 @@ func controlBox(controls templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ctrlBox {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 75vh;\n\t\t\twidth: 25vw;\n\t\t\tborder-radius: 10px;\n      display:flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ctrlBox {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 60vh;\n\t\t\twidth: 20vw;\n\t\t\tborder-radius: 10px;\n      display:flex;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n      overflow: auto;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -170,7 +170,7 @@ func Base(opts Options) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</body><style>\n\t\t\t#yab {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: row;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\tgap: 20px;\n\t\t\t}\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n\t\t</style></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</body><style>\n\t\t\t#yab {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: row;\n        align-items: center;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\tgap: 20px;\n\t\t\t}\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n\t\t</style></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
