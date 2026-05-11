@@ -86,8 +86,8 @@ templ controlBox(controls templ.Component) {
 			width: 20vw;
 			border-radius: 10px;
       display:flex;
-			/* align-items: center; */
-			justify-content: center;
+			align-items: center;
+			/* justify-content: center; */
       overflow: auto;
 		}
 	</style>
@@ -125,6 +125,7 @@ templ Base(opts Options) {
 				align-items: center;
 				justify-content: center;
 				background-color: var(--dark-3);
+        overflow: hidden;
 			}
 			button {
 				user-select: none;

@@ -3,7 +3,7 @@ package users
 import "github.com/encador/trady/internal/models"
 
 templ loginPage() {
-	<div id="msg-container"></div>
+	<div id="errors" style="width:100%;"></div>
 	<div data-signals:toggle="false"></div>
 	<div data-show="!$toggle">
 		<h1 style={ "color: var(--white-2); user-select:none;" }>Login</h1>

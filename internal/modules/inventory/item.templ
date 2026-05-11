@@ -3,12 +3,13 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ ItemList(items []models.Item) {
-	<div id="item-list">
+	<div id="item-list" data-ref="item-list">
+		<div data-init="$itemCount = 0"></div>
+		if len(items) == 0 {
+			<h1 data-show="$itemCount == 0" style="color: var(--white-2);">No Items</h1>
+		}
 		for _, item := range items {
 			@Item(item)
-		}
-		if len(items) == 0 {
-			<h1 style="color: var(--white-2);">No Items</h1>
 		}
 	</div>
 	<style>

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
+	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
 	"github.com/starfederation/datastar-go/datastar"
 )
@@ -34,9 +34,9 @@ func (h *InventoryHandler) InventoryPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
 		opts := layout.Options{
-			Content: InventoryPage(items),
+			Content:  InventoryPage(items),
 			Contorls: InventoryControl(),
-			URL:     "/inventory",
+			URL:      "/inventory",
 		}
 		layout.Base(opts).Render(r.Context(), w)
 	})
@@ -56,8 +56,10 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 
 		r.Body = http.MaxBytesReader(w, r.Body, maxImgSize+1024)
 		if err := r.ParseMultipartForm(maxImgSize); err != nil {
-			http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
 			fmt.Println("[Inventory]: Image File Too Large")
+			// http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"Image Too Large"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		file, _, err := r.FormFile("image")
@@ -68,21 +70,24 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		defer file.Close()
 
 		item := models.Item{
-			OwnerID: auth.GetUser(r.Context()).ID,
-			Title:   r.FormValue("title"),
+			OwnerID:     auth.GetUser(r.Context()).ID,
+			Title:       r.FormValue("title"),
 			Description: r.FormValue("description"),
 		}
 
 		item, err = addItem(h.database, file, item, h.uploadDir)
 		if err != nil {
 			fmt.Println(err)
-			http.Error(w, "invalid form data", http.StatusBadRequest)
+			// http.Error(w, "invalid form data", http.StatusBadRequest)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("form-container"))
-		time.Sleep(time.Second)
+		sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
+		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 
 	})
 }
