@@ -179,14 +179,14 @@ func MsgBox(msg []string, level int) templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div id=\"msg-container\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div id=\"msg-container\" data-on-interval__duration.3s=\"el.remove()\" data-on:click=\"el.remove()\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(msgBoxColor(level))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templ/component/general.templ`, Line: 23, Col: 51}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templ/component/general.templ`, Line: 23, Col: 123}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -215,7 +215,7 @@ func MsgBox(msg []string, level int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<style>\n\t\t\t#msg-container {\n\t\t\t\tborder: 3px solid;\n\t\t\t\tborder-radius: 10px;\n\t\t\t\twidth: auto;\n\t\t\t\tmax-width: 80%;\n\t\t\t\tmin-width: 100px;\n\t\t\t\ttext-align: center;\n\t\t\t\theight: auto;\n\t\t\t\tmargin: 10px;\n\t\t\t\tpadding: 5px;\n\t\t\t}\n\t\t\tp {\n\t\t\t\tfont-weight: bold;\n\t\t\t\tmargin: 3px;\n\t\t\t}\n\t\t</style></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<style>\n\t\t\t#msg-container {\n\t\t\t\tborder: 3px solid;\n\t\t\t\tborder-radius: 10px;\n\t\t\t\twidth: auto;\n\t\t\t\tmax-width: 80%;\n\t\t\t\tmin-width: 100px;\n\t\t\t\ttext-align: center;\n\t\t\t\theight: auto;\n\t\t\t\tmargin: 10px;\n\t\t\t\tpadding: 5px;\n\t\t\t}\n\t\t\t#msg-container p {\n\t\t\t\tfont-weight: bold;\n\t\t\t\tmargin: 3px;\n\t\t\t}\n\t\t</style></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

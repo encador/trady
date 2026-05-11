@@ -20,7 +20,7 @@ css button() {
 }
 
 templ MsgBox(msg []string, level int) {
-	<div id="msg-container" style={ msgBoxColor(level) }>
+	<div id="msg-container" data-on-interval__duration.3s="el.remove()" data-on:click="el.remove()" style={ msgBoxColor(level) }>
 		for _, m := range msg {
 			<p>{ m }</p>
 		}
@@ -36,7 +36,7 @@ templ MsgBox(msg []string, level int) {
 				margin: 10px;
 				padding: 5px;
 			}
-			p {
+			#msg-container p {
 				font-weight: bold;
 				margin: 3px;
 			}
