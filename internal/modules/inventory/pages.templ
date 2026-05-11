@@ -36,7 +36,7 @@ templ InventoryControl() {
 			width: 100%;
 			height: 100%;
 			align-items: center;
-			/* justify-content: center; */
+      justify-content: center;
 			/* background-color: red; */
 		}
 	</style>
@@ -46,7 +46,7 @@ templ NewItemForm() {
 	@itemFormCSS()
 	<div id="form-container">
 		<button id="toggle" data-show="!$formToggle" data-on:click="$formToggle = !$form-Toggle">New Item</button>
-		<form data-show="$formToggle" id="newItemForm" enctype="multipart/form-data" style="display:none">
+		<form id="newItemForm" data-show="$formToggle" enctype="multipart/form-data" style="display:none">
 			<h2 style="color: var(--blue-1)">New Item</h2>
 			<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
 			<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
@@ -68,9 +68,8 @@ templ itemFormCSS() {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: center;
 			width: 100%;
-			height: 100%;
+			height: fit-content;
 			margin: 20px;
 		}
 		#toggle {
@@ -136,7 +135,7 @@ templ itemFormCSS() {
 		}
 		#newItemForm {
 			background-color: var(--dark-3);
-      border: 2px solid var(--dark-1);
+			border: 2px solid var(--dark-1);
 			border-radius: 10px;
 			display: flex;
 			flex-direction: column;

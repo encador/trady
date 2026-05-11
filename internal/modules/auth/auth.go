@@ -40,7 +40,7 @@ func genToken(user models.User) (string, error) {
 	claims := jwt.RegisteredClaims{
 		Subject:   user.Username,
 		IssuedAt:  jwt.NewNumericDate(time.Now()),
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 1)),
+		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
 	}
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret_key)
 }
@@ -67,7 +67,7 @@ func SetCookie(user models.User, w http.ResponseWriter) error {
 		Name:     "auth",
 		Value:    token,
 		Path:     "/",
-		Expires:  time.Now().Add(time.Hour * 1),
+		Expires:  time.Now().Add(time.Hour * 24),
 		Secure:   true,
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
