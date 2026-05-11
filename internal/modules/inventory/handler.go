@@ -9,6 +9,7 @@ import (
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
+	"github.com/encador/trady/internal/templ/component"
 	"github.com/encador/trady/internal/templ/layout"
 	"github.com/starfederation/datastar-go/datastar"
 )
@@ -55,8 +56,10 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 
 		r.Body = http.MaxBytesReader(w, r.Body, maxImgSize+1024)
 		if err := r.ParseMultipartForm(maxImgSize); err != nil {
-			http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
 			fmt.Println("[Inventory]: Image File Too Large")
+			// http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"Image Too Large"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner() )
 			return
 		}
 		file, _, err := r.FormFile("image")
@@ -75,7 +78,9 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		item, err = addItem(h.database, file, item, h.uploadDir)
 		if err != nil {
 			fmt.Println(err)
-			http.Error(w, "invalid form data", http.StatusBadRequest)
+			// http.Error(w, "invalid form data", http.StatusBadRequest)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner() )
 			return
 		}
 		sse := datastar.NewSSE(w, r)

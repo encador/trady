@@ -51,7 +51,10 @@ func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models.Item, error) {
 
 	if item.Title == ""{
-		return item, errors.New("No Item Title Provided")
+		return item, errors.New("[addItem] No Item Title Provided")
+	}
+	if item.Description == ""{
+		return item, errors.New("[addItem] No Item Description Provided")
 	}
 
 	var fileName string

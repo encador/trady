@@ -36,7 +36,7 @@ templ InventoryControl() {
 			width: 100%;
 			height: 100%;
 			align-items: center;
-      justify-content: center;
+			justify-content: center;
 			/* background-color: red; */
 		}
 	</style>
@@ -45,6 +45,7 @@ templ InventoryControl() {
 templ NewItemForm() {
 	@itemFormCSS()
 	<div id="form-container">
+		<div id="form-errors"></div>
 		<button id="toggle" data-show="!$formToggle" data-on:click="$formToggle = !$form-Toggle">New Item</button>
 		<form id="newItemForm" data-show="$formToggle" enctype="multipart/form-data" style="display:none">
 			<h2 style="color: var(--blue-1)">New Item</h2>
