@@ -4,7 +4,7 @@ import "github.com/encador/trady/internal/models"
 
 templ ItemList(items []models.Item) {
 	<div id="item-list" data-ref="item-list">
-		<div data-init="$itemCount = 0"></div>
+		<div data-init="$itemCount = 0" data-init="$selectedItem = ''"></div>
 		if len(items) == 0 {
 			<h1 data-show="$itemCount == 0" style="color: var(--white-2);">No Items</h1>
 		}
@@ -54,6 +54,10 @@ templ ItemList(items []models.Item) {
 			background: var(--orange-1);
 		}
 
+		.inventory-item .info:hover img {
+			border-color: var(--orange-2);
+		}
+
 		.inventory-item {
 			display: flex;
 			flex-direction: column;
@@ -69,6 +73,15 @@ templ ItemList(items []models.Item) {
 			height: auto;
 			user-select: none;
 		}
+		.inventory-item.selected .info {
+			/* border: 3px solid var(--blue-3); */
+			border-color: var(--blue-3);
+			background: var(--blue-2);
+		}
+		.inventory-item.selected .info img {
+			border-color: var(--blue-3);
+		}
+
 		.inventory-item img {
 			width: 100%;
 			height: 100px;
@@ -80,7 +93,7 @@ templ ItemList(items []models.Item) {
 }
 
 templ Item(item models.Item) {
-	<div class="inventory-item">
+	<div class="inventory-item" data-on:click={ "$selectedItem = '" + item.ID + "'" } data-class:selected={ "$selectedItem == '" + item.ID + "'" }>
 		<div class="info">
 			<img src={ item.ImageURL } alt="Item Image"/>
 			<p class="name">{ item.Title }</p>
