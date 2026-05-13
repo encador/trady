@@ -110,7 +110,7 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
 		time.Sleep(time.Second)
 
 	})
