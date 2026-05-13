@@ -15,7 +15,7 @@ import (
 )
 
 type InventorySignals struct {
-	SelectedItem string `json:"selectedItem"`
+	SelectedItemID string `json:"selectedItem"`
 }
 
 type InventoryHandler struct {
@@ -102,6 +102,8 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		if err := datastar.ReadSignals(r, signals); err != nil {
 			return
 		}
-		fmt.Println(signals.SelectedItem)
+
+		fmt.Println(isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())))
+
 	})
 }

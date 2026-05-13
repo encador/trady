@@ -48,12 +48,32 @@ func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
 	return items, nil
 }
 
+func getItem(db *sql.DB, itemID string) (models.Item, error) {
+	q := `select id, owner_id, title, description, image, listed from items where id = ?`
+	item := models.Item{}
+
+	row := db.QueryRow(q, itemID)
+	if err := row.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
+		return item, err
+	}
+
+	return item, nil
+}
+
+func isOwner(db *sql.DB, itemID string, user models.User) bool {
+	item, err := getItem(db, itemID)
+	if err != nil {
+		return false
+	}
+	return item.OwnerID == user.ID
+}
+
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models.Item, error) {
 
-	if item.Title == ""{
+	if item.Title == "" {
 		return item, errors.New("[addItem] No Item Title Provided")
 	}
-	if item.Description == ""{
+	if item.Description == "" {
 		return item, errors.New("[addItem] No Item Description Provided")
 	}
 
