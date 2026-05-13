@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
@@ -103,7 +104,14 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		fmt.Println(isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())))
+		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+			http.Error(w, "auth error", http.StatusUnauthorized)
+			return
+		}
+
+		sse := datastar.NewSSE(w, r)
+		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		time.Sleep(time.Second)
 
 	})
 }

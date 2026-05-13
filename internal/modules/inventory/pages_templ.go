@@ -72,7 +72,7 @@ func InventoryControl() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\theight: fit-content;\n\t\t\tmin-height: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
