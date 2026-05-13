@@ -93,7 +93,7 @@ templ ItemList(items []models.Item) {
 }
 
 templ Item(item models.Item) {
-	<div class="inventory-item" data-on:click={ "$selectedItem = '" + item.ID + "'" } data-class:selected={ "$selectedItem == '" + item.ID + "'" }>
+	<div class="inventory-item" data-on:click={ "$selectedItem == '" + item.ID + "' ? $selectedItem = '' : $selectedItem = '" + item.ID + "'" } data-class:selected={ "$selectedItem == '" + item.ID + "'" }>
 		<div class="info">
 			<img src={ item.ImageURL } alt="Item Image"/>
 			<p class="name">{ item.Title }</p>
