@@ -31,7 +31,7 @@ func ItemList(items []models.Item) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"item-list\" data-ref=\"item-list\"><div data-init=\"$itemCount = 0\" data-init=\"$selectedItem = ''\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"item-list\"><div data-init=\"$itemCount = 0\" data-init=\"$selectedItem = ''\" data-init=\"$showControls = false\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -47,7 +47,7 @@ func ItemList(items []models.Item) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tcolor: var(--white-2);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--orange-2);\n\t\t\tbackground: var(--orange-1);\n\t\t}\n\n\t\t.inventory-item .info:hover img {\n\t\t\tborder-color: var(--orange-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\t\t.inventory-item.selected .info {\n\t\t\t/* border: 3px solid var(--blue-3); */\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\t\t.inventory-item.selected .info img {\n\t\t\tborder-color: var(--blue-3);\n\t\t}\n\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tcolor: var(--white-2);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--orange-2);\n\t\t\tbackground: var(--orange-1);\n\t\t}\n\n\t\t.inventory-item .info:hover img {\n\t\t\tborder-color: var(--orange-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\n\t\t.inventory-item.selected .info {\n\t\t\t/* border: 3px solid var(--blue-3); */\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\n\t\t.inventory-item.selected .info img {\n\t\t\tborder-color: var(--blue-3);\n\t\t}\n\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -81,9 +81,11 @@ func Item(item models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("$selectedItem == '" + item.ID + "' ? $selectedItem = '' : $selectedItem = '" + item.ID + "'")
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === '` + item.ID + `') { 
+      $selectedItem = ''; $showControls = false}
+    else { $selectedItem = '` + item.ID + `'; @post('/inventory/select') }`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 96, Col: 138}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 106, Col: 75}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -96,7 +98,7 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("$selectedItem == '" + item.ID + "'")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 96, Col: 199}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 107, Col: 60}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -109,7 +111,7 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 98, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 110, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -122,7 +124,7 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 99, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 111, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {

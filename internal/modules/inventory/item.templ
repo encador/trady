@@ -3,8 +3,12 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ ItemList(items []models.Item) {
-	<div id="item-list" data-ref="item-list">
-		<div data-init="$itemCount = 0" data-init="$selectedItem = ''"></div>
+	<div id="item-list">
+		<div
+			data-init="$itemCount = 0"
+			data-init="$selectedItem = ''"
+			data-init="$showControls = false"
+		></div>
 		if len(items) == 0 {
 			<h1 data-show="$itemCount == 0" style="color: var(--white-2);">No Items</h1>
 		}
@@ -73,11 +77,13 @@ templ ItemList(items []models.Item) {
 			height: auto;
 			user-select: none;
 		}
+
 		.inventory-item.selected .info {
 			/* border: 3px solid var(--blue-3); */
 			border-color: var(--blue-3);
 			background: var(--blue-2);
 		}
+
 		.inventory-item.selected .info img {
 			border-color: var(--blue-3);
 		}
@@ -93,7 +99,13 @@ templ ItemList(items []models.Item) {
 }
 
 templ Item(item models.Item) {
-	<div class="inventory-item" data-on:click={ "$selectedItem == '" + item.ID + "' ? $selectedItem = '' : $selectedItem = '" + item.ID + "'" } data-class:selected={ "$selectedItem == '" + item.ID + "'" }>
+	<div
+		class="inventory-item"
+		data-on:click={ ` if ($selectedItem === '` + item.ID + `') { 
+      $selectedItem = ''; $showControls = false}
+    else { $selectedItem = '` + item.ID + `'; @post('/inventory/select') }` }
+		data-class:selected={ "$selectedItem == '" + item.ID + "'" }
+	>
 		<div class="info">
 			<img src={ item.ImageURL } alt="Item Image"/>
 			<p class="name">{ item.Title }</p>

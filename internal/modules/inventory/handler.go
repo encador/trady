@@ -14,6 +14,10 @@ import (
 	"github.com/starfederation/datastar-go/datastar"
 )
 
+type InventorySignals struct {
+	SelectedItem string `json:"selectedItem"`
+}
+
 type InventoryHandler struct {
 	database  *sql.DB
 	uploadDir string
@@ -89,5 +93,15 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 
+	})
+}
+
+func (h *InventoryHandler) HandleSelect() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := &InventorySignals{}
+		if err := datastar.ReadSignals(r, signals); err != nil {
+			return
+		}
+		fmt.Println(signals.SelectedItem)
 	})
 }
