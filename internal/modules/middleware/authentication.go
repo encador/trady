@@ -28,11 +28,12 @@ var secLevel = map[string]int{
 	"/user/new":   -1,
 
 	// Protected Pages
-	"/":              1,
-	"/user":          1,
-	"/user/logout":   1,
-	"/inventory":     1,
-	"/inventory/new": 1,
+	"/":               1,
+	"/user":           1,
+	"/user/logout":    1,
+	"/inventory":      1,
+	"/inventory/new":  1,
+	"/inventory/select": 1,
 }
 
 // List of urls that redirect to Login when not logged-in

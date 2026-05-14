@@ -27,6 +27,8 @@ templ InventoryPage(items []models.Item) {
 
 templ InventoryControl() {
 	<div id="ic-box">
+		<div id="form-errors"></div>
+		@itemFormCSS()
 		@NewItemForm()
 	</div>
 	<style>
@@ -34,7 +36,8 @@ templ InventoryControl() {
 			display: flex;
 			flex-direction: column;
 			width: 100%;
-			height: 100%;
+			height: fit-content;
+			min-height: 100%;
 			align-items: center;
 			justify-content: center;
 			/* background-color: red; */
@@ -43,50 +46,34 @@ templ InventoryControl() {
 }
 
 templ NewItemForm() {
-	@itemFormCSS()
-	<div id="form-container">
-		<div id="form-errors"></div>
-		<button id="toggle" data-show="!$formToggle" data-on:click="$formToggle = !$form-Toggle">New Item</button>
-		<form id="newItemForm" data-show="$formToggle" enctype="multipart/form-data" style="display:none">
-			<h2 style="color: var(--blue-1)">New Item</h2>
-			<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
-			<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
-			<label for="title">Item Title</label>
-			<input id="title" data-bind:title name="title" type="text" placeholder="Enter Title"/>
-			<label for="description">Item Description</label>
-			<textarea id="description" data-bind:description type="text" name="description" placeholder="Enter Description"></textarea>
-			<div class="buttons">
-				<button id="upload" disabled data-attr:disabled="!$fileName || !$title || !$description" data-on:click="@post('/inventory/new', {contentType: 'form'})">Add</button>
-				<button id="cancel" onclick="event.preventDefault()" data-on:click="$formToggle = !$formToggle">Close</button>
-			</div>
-		</form>
-	</div>
+	<form id="newItemForm" data-show="$selectedItem == 'new'" enctype="multipart/form-data">
+		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
+		<h2 style="color: var(--blue-1)">New Item</h2>
+		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
+		<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
+		<label for="title">Item Title</label>
+		<input id="title" data-bind:title name="title" type="text" placeholder="Enter Title"/>
+		<label for="description">Item Description</label>
+		<textarea id="description" data-bind:description type="text" name="description" placeholder="Enter Description"></textarea>
+		<div class="buttons">
+			<button id="upload" disabled data-attr:disabled="!$fileName || !$title || !$description" data-on:click="@post('/inventory/new', {contentType: 'form'})">Add</button>
+		</div>
+	</form>
 }
 
 templ itemFormCSS() {
 	<style>
-		#form-container {
+		#newItemForm {
+			background-color: var(--dark-3);
+			border: 2px solid var(--dark-4);
+			border-radius: 10px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			width: 100%;
-			height: fit-content;
-			margin: 20px;
-		}
-		#toggle {
-			border: 3px solid var(--green-2);
-			border-radius: 10px;
-			background: none;
-			color: var(--green-1);
+			gap: 5px;
 			width: 80%;
-			height: 35px;
-			font-size: 15px;
-			font-weight: bolder;
-		}
-		#toggle:hover {
-			cursor: pointer;
-			background-color: var(--green-2);
-			border-color: var(--green-3);
+			height: fit-content;
+			padding: 10px 5px 5px 5px;
 		}
 		#newItemForm .buttons {
 			display: flex;
@@ -104,7 +91,7 @@ templ itemFormCSS() {
 			font-weight: bolder;
 			margin: 0px;
 			height: 30px;
-			width: 90px;
+			width: 130px;
 			font-size: 15px;
 		}
 		.buttons #upload {
@@ -125,27 +112,7 @@ templ itemFormCSS() {
 			background: var(--dark-3);
 			cursor: default;
 		}
-		.buttons #cancel {
-			border: var(--red-1) solid 3px;
-			color: var(--red-1);
-		}
-		.buttons #cancel:hover {
-			background: var(--red-2);
-			border: var(--red-3) solid 3px;
-			cursor: pointer;
-		}
-		#newItemForm {
-			background-color: var(--dark-3);
-			border: 2px solid var(--dark-1);
-			border-radius: 10px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 5px;
-			width: 80%;
-			height: fit-content;
-			padding: 10px 5px 5px 5px;
-		}
+
 		#file-name {
 			color: var(--orange-1);
 			border: 3px solid var(--dark-2);

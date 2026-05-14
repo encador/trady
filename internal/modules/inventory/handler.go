@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
@@ -13,6 +14,10 @@ import (
 	"github.com/encador/trady/internal/templ/layout"
 	"github.com/starfederation/datastar-go/datastar"
 )
+
+type InventorySignals struct {
+	SelectedItemID string `json:"selectedItem"`
+}
 
 type InventoryHandler struct {
 	database  *sql.DB
@@ -64,7 +69,9 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		}
 		file, _, err := r.FormFile("image")
 		if err != nil {
-			http.Error(w, "missing image", http.StatusBadRequest)
+			// http.Error(w, "missing image", http.StatusBadRequest)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"No Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		defer file.Close()
@@ -80,14 +87,38 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println(err)
 			// http.Error(w, "invalid form data", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Img Format"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
+		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
-		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("form-container"))
-		sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
+		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+		sse.RemoveElementByID("new-item")
+		sse.PatchElementTempl(NewItem(), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		// time.Sleep(time.Second)
+
+	})
+}
+
+func (h *InventoryHandler) HandleSelect() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := &InventorySignals{}
+		if err := datastar.ReadSignals(r, signals); err != nil {
+			return
+		}
+
+		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+			http.Error(w, "auth error", http.StatusUnauthorized)
+			return
+		}
+
+		fmt.Println(signals.SelectedItemID)
+
+		sse := datastar.NewSSE(w, r)
+		sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		time.Sleep(time.Second)
 
 	})
 }
