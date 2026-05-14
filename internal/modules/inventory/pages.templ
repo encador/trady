@@ -46,6 +46,7 @@ templ InventoryControl() {
 templ NewItemForm() {
 	@itemFormCSS()
 	<div id="form-container">
+		<div data-init="$fileName = ''; $description = ''; $title = ''; $itemCount = 1"></div>
 		<div id="form-errors"></div>
 		<button id="toggle" data-show="!$formToggle" data-on:click="$formToggle = !$form-Toggle">New Item</button>
 		<form id="newItemForm" data-show="$formToggle" enctype="multipart/form-data" style="display:none">

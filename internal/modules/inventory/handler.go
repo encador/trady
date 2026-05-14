@@ -69,7 +69,9 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		}
 		file, _, err := r.FormFile("image")
 		if err != nil {
-			http.Error(w, "missing image", http.StatusBadRequest)
+			// http.Error(w, "missing image", http.StatusBadRequest)
+			sse := datastar.NewSSE(w, r)
+			sse.PatchElementTempl(component.MsgBox([]string{"No Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		defer file.Close()
@@ -85,14 +87,14 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println(err)
 			// http.Error(w, "invalid form data", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image Format"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("form-container"))
-		sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 
 	})
 }
@@ -108,6 +110,8 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
+
+		fmt.Println(signals.SelectedItemID)
 
 		sse := datastar.NewSSE(w, r)
 		sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
