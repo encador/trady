@@ -87,14 +87,17 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println(err)
 			// http.Error(w, "invalid form data", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Image Format"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Img Format"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
-		sse.PatchElementTempl(NewItemForm(), datastar.WithModeReplace(), datastar.WithSelectorID("form-container"))
-		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
+		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
+		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+		sse.RemoveElementByID("new-item")
+		sse.PatchElementTempl(NewItem(), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		// time.Sleep(time.Second)
 
 	})
 }
