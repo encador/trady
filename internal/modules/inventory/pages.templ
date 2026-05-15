@@ -26,7 +26,7 @@ templ InventoryPage(items []models.Item) {
 }
 
 templ NewItemForm() {
-	<form id="newItemForm" data-show="$selectedItem == 'new'" styly="display: none;" enctype="multipart/form-data">
+	<form id="newItemForm" data-show="$selectedItem == 'new'" style="display: none;" enctype="multipart/form-data">
 		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
 		<h2>New Item</h2>
 		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>

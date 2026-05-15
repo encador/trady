@@ -60,6 +60,14 @@ func getItem(db *sql.DB, itemID string) (models.Item, error) {
 	return item, nil
 }
 
+func deleteItem(db *sql.DB, itemID string) error {
+	q := `delete from items where id = ?`
+	if _, err := db.Exec(q, itemID); err != nil {
+		return err
+	}
+	return nil
+}
+
 func isOwner(db *sql.DB, itemID string, user models.User) bool {
 	item, err := getItem(db, itemID)
 	if err != nil {

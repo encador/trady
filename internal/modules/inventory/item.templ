@@ -37,6 +37,7 @@ templ ItemList(items []models.Item) {
 
 templ Item(item models.Item) {
 	<div
+		id={ "item-" + item.ID }
 		class="inventory-item"
 		data-on:click={ ` if ($selectedItem === '` + item.ID + `') { 
       $selectedItem = ''} else { $selectedItem = '` + item.ID + 

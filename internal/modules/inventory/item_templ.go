@@ -82,61 +82,74 @@ func Item(item models.Item) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div class=\"inventory-item\" data-on:click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === '` + item.ID + `') { 
-      $selectedItem = ''} else { $selectedItem = '` + item.ID +
-			`'; @post('/inventory/select') }; $showControls = false`)
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("item-" + item.ID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 43, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 40, Col: 24}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" data-class:selected=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"inventory-item\" data-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("$selectedItem === '" + item.ID + "'")
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === '` + item.ID + `') { 
+      $selectedItem = ''} else { $selectedItem = '` + item.ID +
+			`'; @post('/inventory/select') }; $showControls = false`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 44, Col: 61}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 44, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"><div class=\"info\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" data-class:selected=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("$selectedItem === '" + item.ID + "'")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 47, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 45, Col: 61}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" alt=\"Item Image\"><p class=\"name\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"><div class=\"info\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 48, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 48, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</p></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" alt=\"Item Image\"><p class=\"name\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 49, Col: 31}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</p></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -160,12 +173,12 @@ func ItemCSS() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var7 == nil {
-			templ_7745c5c3_Var7 = templ.NopComponent
+		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var8 == nil {
+			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<style>\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tcolor: var(--white-2);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--orange-2);\n\t\t\tbackground: var(--orange-1);\n\t\t}\n\n\t\t.inventory-item .info:hover img {\n\t\t\tborder-color: var(--orange-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\n\t\t.inventory-item.selected .info {\n\t\t\t/* border: 3px solid var(--blue-3); */\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\n\t\t.inventory-item.selected .info img {\n\t\t\tborder-color: var(--blue-3);\n\t\t}\n\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<style>\n\t\t.inventory-item .name {\n\t\t\toverflow: hidden;\n\t\t\theight: 20px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 100%;\n\t\t}\n\n\t\t.inventory-item .info {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tcolor: var(--white-2);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\t/* padding: 5px; */\n\t\t\toverflow: hidden;\n\t\t}\n\n\t\t.inventory-item .info:hover {\n\t\t\tcursor: pointer;\n\t\t\tborder: 3px solid var(--orange-2);\n\t\t\tbackground: var(--orange-1);\n\t\t}\n\n\t\t.inventory-item .info:hover img {\n\t\t\tborder-color: var(--orange-2);\n\t\t}\n\n\t\t.inventory-item {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tmargin: 10px;\n\t\t\t/* border: 2px solid var(--dark-3); */\n\t\t\tbackground: var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\t/* padding: 10px; */\n\t\t\ttext-align: center;\n\t\t\twidth: auto;\n\t\t\theight: auto;\n\t\t\tuser-select: none;\n\t\t}\n\n\t\t.inventory-item.selected .info {\n\t\t\t/* border: 3px solid var(--blue-3); */\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground: var(--blue-2);\n\t\t}\n\n\t\t.inventory-item.selected .info img {\n\t\t\tborder-color: var(--blue-3);\n\t\t}\n\n\t\t.inventory-item img {\n\t\t\twidth: 100%;\n\t\t\theight: 100px;\n\t\t\tobject-fit: cover;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tbackground: none;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -189,26 +202,26 @@ func NewItem() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var8 == nil {
-			templ_7745c5c3_Var8 = templ.NopComponent
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div id=\"new-item\" data-on:click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"new-item\" data-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === 'new') { $selectedItem = ''}
+		var templ_7745c5c3_Var10 string
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === 'new') { $selectedItem = ''}
     else { $selectedItem = 'new'}; $showControls = false`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 122, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 123, Col: 57}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" data-class:selected=\"$selectedItem === 'new'\"><b>+</b><p>Add New</p></div><style>\n\t\t#new-item {\n\t\t\tborder: 3px dashed var(--green-2);\n\t\t\tcolor: var(--green-1);\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\tuser-select: none;\n\t\t\tborder-radius: 10px;\n\t\t\tmargin: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tfont-size: 27px;\n\t\t}\n\t\t#new-item:hover {\n\t\t\tcursor: pointer;\n\t\t\tbackground-color: var(--green-2);\n\t\t\tborder-color: var(--green-3);\n\t\t\tcolor: var(--green-1);\n\t\t}\n\t\t#new-item.selected {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcolor: var(--blue-1);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" data-class:selected=\"$selectedItem === 'new'\"><b>+</b><p>Add New</p></div><style>\n\t\t#new-item {\n\t\t\tborder: 3px dashed var(--green-2);\n\t\t\tcolor: var(--green-1);\n\t\t\twidth: 120px;\n\t\t\theight: 130px;\n\t\t\tuser-select: none;\n\t\t\tborder-radius: 10px;\n\t\t\tmargin: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tfont-size: 27px;\n\t\t}\n\t\t#new-item:hover {\n\t\t\tcursor: pointer;\n\t\t\tbackground-color: var(--green-2);\n\t\t\tborder-color: var(--green-3);\n\t\t\tcolor: var(--green-1);\n\t\t}\n\t\t#new-item.selected {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcolor: var(--blue-1);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

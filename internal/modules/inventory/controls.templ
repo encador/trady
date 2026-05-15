@@ -36,7 +36,7 @@ templ ItemContols(item models.Item) {
 		</div>
 		<div id="options">
 			<h2>Item Options</h2>
-			<button id="delete">Delete</button>
+			<button id="delete" data-on:click="@post('/inventory/delete')">Delete</button>
 		</div>
 	</div>
 }
