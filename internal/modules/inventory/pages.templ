@@ -25,30 +25,10 @@ templ InventoryPage(items []models.Item) {
 	</style>
 }
 
-templ InventoryControl() {
-	<div id="ic-box">
-		<div id="form-errors"></div>
-		@itemFormCSS()
-		@NewItemForm()
-	</div>
-	<style>
-		#ic-box {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			height: fit-content;
-			min-height: 100%;
-			align-items: center;
-			justify-content: center;
-			/* background-color: red; */
-		}
-	</style>
-}
-
 templ NewItemForm() {
-	<form id="newItemForm" data-show="$selectedItem == 'new'" enctype="multipart/form-data">
+	<form id="newItemForm" data-show="$selectedItem == 'new'" style="display: none;" enctype="multipart/form-data">
 		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
-		<h2 style="color: var(--blue-1)">New Item</h2>
+		<h2>New Item</h2>
 		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
 		<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
 		<label for="title">Item Title</label>
@@ -61,11 +41,11 @@ templ NewItemForm() {
 	</form>
 }
 
-templ itemFormCSS() {
+templ ItemFormCSS() {
 	<style>
 		#newItemForm {
 			background-color: var(--dark-3);
-			border: 2px solid var(--dark-4);
+			border: 3px solid var(--dark-4);
 			border-radius: 10px;
 			display: flex;
 			flex-direction: column;
@@ -73,7 +53,8 @@ templ itemFormCSS() {
 			gap: 5px;
 			width: 80%;
 			height: fit-content;
-			padding: 10px 5px 5px 5px;
+			padding: 5px 0px 5px 0px;
+      user-select: none;
 		}
 		#newItemForm .buttons {
 			display: flex;
@@ -85,7 +66,15 @@ templ itemFormCSS() {
 			overflow: hidden;
 			width: 90%;
 		}
-		.buttons button {
+		#newItemForm h2 {
+			width: 100%;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+
+		#newItemForm .buttons button {
 			border-radius: 8px;
 			background: none;
 			font-weight: bolder;
@@ -94,26 +83,26 @@ templ itemFormCSS() {
 			width: 130px;
 			font-size: 15px;
 		}
-		.buttons #upload {
+		#newItemForm .buttons #upload {
 			border: var(--green-2) solid 3px;
 			color: var(--green-1);
 		}
-		.buttons #upload:hover {
+		#newItemForm .buttons #upload:hover {
 			background: var(--green-2);
 			border: var(--green-3) solid 3px;
 			cursor: pointer;
 		}
-		.buttons #upload:disabled {
+		#newItemForm .buttons #upload:disabled {
 			border-color: var(--dark-2);
 			color: var(--dark-1);
 		}
-		.buttons #upload:disabled:hover {
+		#newItemForm .buttons #upload:disabled:hover {
 			border-color: var(--dark-2);
 			background: var(--dark-3);
 			cursor: default;
 		}
 
-		#file-name {
+		#newItemForm #file-name {
 			color: var(--orange-1);
 			border: 3px solid var(--dark-2);
 			background-color: var(--dark-3);
@@ -126,20 +115,20 @@ templ itemFormCSS() {
 			display: flex;
 			overflow: auto;
 		}
-		#file-name:hover {
+		#newItemForm #file-name:hover {
 			border: 3px solid var(--dark-1);
 			background-color: var(--dark-2);
 
 			cursor: pointer;
 		}
-		label {
+		#newItemForm label {
 			color: var(--blue-1);
 			width: fit-content;
 			text-align: center;
 			padding: 0 5px 0 5px;
 			font-weight: 600;
 		}
-		#file-upload {
+		#newItemForm #file-upload {
 			/* display:none; */
 			position: absolute;
 			width: 1px;
@@ -150,7 +139,7 @@ templ itemFormCSS() {
 			clip: rect(0, 0, 0, 0);
 			border: 0;
 		}
-		textarea {
+		#newItemForm textarea {
 			background-color: var(--dark-2);
 			border: 2px solid var(--dark-2);
 			border-radius: 5px;
@@ -162,13 +151,13 @@ templ itemFormCSS() {
 			overflow: auto;
 			outline: none;
 		}
-		textarea:hover {
+		#newItemForm textarea:hover {
 			border: 2px dashed var(--blue-2);
 		}
-		textarea:focus {
+		#newItemForm textarea:focus {
 			border: 2px solid var(--blue-2);
 		}
-		input {
+		#newItemForm input {
 			border: var(--dark-2) solid 2px;
 			background-color: var(--dark-2);
 			color: var(--white-2);
@@ -183,11 +172,11 @@ templ itemFormCSS() {
 			font-weight: 500;
 			margin-bottom: 10px;
 		}
-		input:hover {
+		#newItemForm input:hover {
 			border: var(--blue-2) dashed 2px;
 			cursor: pointer;
 		}
-		input:focus {
+		#newItemForm input:focus {
 			border: var(--blue-2) solid 2px;
 		}
 	</style>

@@ -89,6 +89,7 @@ func main() {
 	mux.Handle("/inventory", invH.InventoryPage())
 	mux.Handle("/inventory/new", invH.HandleNew())
 	mux.Handle("/inventory/select", invH.HandleSelect())
+	mux.Handle("/inventory/delete", invH.HandleDelete())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", middleware.Cache1(http.FileServer(http.Dir("./images"))))

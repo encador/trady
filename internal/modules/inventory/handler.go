@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
@@ -97,7 +96,28 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
 		sse.RemoveElementByID("new-item")
 		sse.PatchElementTempl(NewItem(), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
-		// time.Sleep(time.Second)
+	})
+}
+
+func (h *InventoryHandler) HandleDelete() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := &InventorySignals{}
+		datastar.ReadSignals(r, signals)
+		fmt.Println("delete " + signals.SelectedItemID)
+		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+			http.Error(w, "auth error", http.StatusUnauthorized)
+			return
+		}
+
+		if err := deleteItem(h.database, signals.SelectedItemID); err != nil {
+			fmt.Println("breaki")
+			http.Error(w, "error", http.StatusInternalServerError)
+			return
+		}
+
+		sse := datastar.NewSSE(w, r)
+		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))
+		sse.RemoveElementByID("item-" + signals.SelectedItemID)
 
 	})
 }
@@ -114,11 +134,17 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		fmt.Println(signals.SelectedItemID)
+		item, err := getItem(h.database, signals.SelectedItemID)
+		if err != nil {
+			http.Error(w, "auth error", http.StatusUnauthorized)
+			return
+		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
-		time.Sleep(time.Second)
+		// time.Sleep(time.Millisecond * 100)
+		// sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		sse.PatchElementTempl(ItemContols(item))
+		sse.PatchSignals([]byte(`{ showControls: true }`))
 
 	})
 }
