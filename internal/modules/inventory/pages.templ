@@ -28,8 +28,9 @@ templ InventoryPage(items []models.Item) {
 templ InventoryControl() {
 	<div id="ic-box">
 		<div id="form-errors"></div>
-		@itemFormCSS()
+		@ItemFormCSS()
 		@NewItemForm()
+		@ItemContols("wowi")
 	</div>
 	<style>
 		#ic-box {
@@ -43,6 +44,12 @@ templ InventoryControl() {
 			/* background-color: red; */
 		}
 	</style>
+}
+
+templ ItemContols(text string) {
+	<div id="item-controls" data-init="$showControls = true" data-show="$showControls">
+		<p>{ text }</p>
+	</div>
 }
 
 templ NewItemForm() {
@@ -61,7 +68,7 @@ templ NewItemForm() {
 	</form>
 }
 
-templ itemFormCSS() {
+templ ItemFormCSS() {
 	<style>
 		#newItemForm {
 			background-color: var(--dark-3);

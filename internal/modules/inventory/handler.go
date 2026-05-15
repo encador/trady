@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/encador/trady/internal/models"
@@ -114,10 +115,10 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		fmt.Println(signals.SelectedItemID)
-
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		// sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
+		// sse.PatchSignals([]byte(`{ showControls: true }`))
+		sse.PatchElementTempl(ItemContols(strconv.Itoa(time.Now().Second())), datastar.WithModeReplace())
 		time.Sleep(time.Second)
 
 	})

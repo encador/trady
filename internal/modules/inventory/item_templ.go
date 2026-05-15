@@ -88,10 +88,10 @@ func Item(item models.Item) templ.Component {
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === '` + item.ID + `') { 
-      $selectedItem = ''; $showControls = false}
-    else { $selectedItem = '` + item.ID + `'; @post('/inventory/select') }`)
+      $selectedItem = ''} else { $selectedItem = '` + item.ID +
+			`'; @post('/inventory/select') }; $showControls = false`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 43, Col: 75}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 43, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -199,10 +199,10 @@ func NewItem() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === 'new') { $selectedItem = ''; 
-      $showControls = false} else { $selectedItem = 'new'}`)
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === 'new') { $selectedItem = ''}
+    else { $selectedItem = 'new'}; $showControls = false`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 122, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/item.templ`, Line: 122, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {

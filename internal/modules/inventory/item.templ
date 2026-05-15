@@ -39,8 +39,8 @@ templ Item(item models.Item) {
 	<div
 		class="inventory-item"
 		data-on:click={ ` if ($selectedItem === '` + item.ID + `') { 
-      $selectedItem = ''; $showControls = false}
-    else { $selectedItem = '` + item.ID + `'; @post('/inventory/select') }` }
+      $selectedItem = ''} else { $selectedItem = '` + item.ID + 
+      `'; @post('/inventory/select') }; $showControls = false` }
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
 	>
 		<div class="info">
@@ -118,8 +118,8 @@ templ ItemCSS() {
 templ NewItem() {
 	<div
 		id="new-item"
-		data-on:click={ ` if ($selectedItem === 'new') { $selectedItem = ''; 
-      $showControls = false} else { $selectedItem = 'new'}` }
+		data-on:click={ ` if ($selectedItem === 'new') { $selectedItem = ''}
+    else { $selectedItem = 'new'}; $showControls = false` }
 		data-class:selected="$selectedItem === 'new'"
 	>
 		<b>+</b>
