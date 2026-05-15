@@ -1,0 +1,125 @@
+package inventory
+
+import "github.com/encador/trady/internal/models"
+
+templ InventoryControl() {
+	<div id="ic-box">
+		<div id="form-errors"></div>
+		@ItemFormCSS()
+		@NewItemForm()
+		@ItemContolsCSS()
+		@ItemContols(models.Item{})
+	</div>
+	<style>
+		#ic-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: fit-content;
+			min-height: 100%;
+			align-items: center;
+			justify-content: center;
+			/* background-color: red; */
+		}
+	</style>
+}
+
+templ ItemContols(item models.Item) {
+	<div id="item-controls" data-show="$showControls" style="display: none;">
+		<div id="details">
+			<h2>Item Details</h2>
+			<img src={ item.ImageURL } alt="Item Image"/>
+			<textarea disabled id="title">{ item.Title }</textarea>
+			<textarea disabled id="description">{ item.Description }</textarea>
+			<button id="delete">Delete</button>
+		</div>
+	</div>
+}
+
+templ ItemContolsCSS() {
+	<style>
+		#item-controls {
+			max-width: 100%;
+			max-height: 100%;
+			min-width: auto;
+			min-height: auto;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		#item-controls #details img {
+			width: 100%;
+			border-bottom: 3px solid black;
+		}
+		#item-controls #details {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 80%;
+			height: fit-content;
+			margin-top: 20px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+
+		#item-controls textarea {
+			border: dashed 2px var(--dark-1);
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			width: 90%;
+			height: 70px;
+			padding: 2px;
+			border-radius: 15px;
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+		}
+		#item-controls h2 {
+			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+		#item-controls #title {
+			height: 20px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-radius: 0;
+		}
+
+		#item-controls #description {
+			margin-bottom: 10px;
+		}
+
+		#item-controls button {
+			border-radius: 5px;
+			background: none;
+			border:  solid 3px;
+			font-weight: bold;
+			width: 80px;
+			height: 30px;
+			cursor: pointer;
+		}
+		#item-controls button#delete {
+      color: var(--red-1);
+      border-color: var(--red-2);
+			margin-bottom: 10px;
+			width: 50%;
+			font-weight: bold;
+			font-size: 15px;
+		}
+		#item-controls button#delete:hover {
+			background-color: var(--red-2);
+      border-color: var(--red-3);
+		}
+	</style>
+}
