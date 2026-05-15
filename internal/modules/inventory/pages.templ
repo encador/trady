@@ -28,7 +28,7 @@ templ InventoryPage(items []models.Item) {
 templ NewItemForm() {
 	<form id="newItemForm" data-show="$selectedItem == 'new'" styly="display: none;" enctype="multipart/form-data">
 		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
-		<h2 style="color: var(--blue-1)">New Item</h2>
+		<h2>New Item</h2>
 		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
 		<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
 		<label for="title">Item Title</label>
@@ -45,7 +45,7 @@ templ ItemFormCSS() {
 	<style>
 		#newItemForm {
 			background-color: var(--dark-3);
-			border: 2px solid var(--dark-4);
+			border: 3px solid var(--dark-4);
 			border-radius: 10px;
 			display: flex;
 			flex-direction: column;
@@ -53,7 +53,7 @@ templ ItemFormCSS() {
 			gap: 5px;
 			width: 80%;
 			height: fit-content;
-			padding: 10px 5px 5px 5px;
+			padding: 5px 0px 5px 0px;
 		}
 		#newItemForm .buttons {
 			display: flex;
@@ -65,7 +65,15 @@ templ ItemFormCSS() {
 			overflow: hidden;
 			width: 90%;
 		}
-		.buttons button {
+		#newItemForm h2 {
+			width: 100%;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+
+		#newItemForm .buttons button {
 			border-radius: 8px;
 			background: none;
 			font-weight: bolder;
@@ -74,20 +82,20 @@ templ ItemFormCSS() {
 			width: 130px;
 			font-size: 15px;
 		}
-		.buttons #upload {
+		#newItemForm .buttons #upload {
 			border: var(--green-2) solid 3px;
 			color: var(--green-1);
 		}
-		.buttons #upload:hover {
+		#newItemForm .buttons #upload:hover {
 			background: var(--green-2);
 			border: var(--green-3) solid 3px;
 			cursor: pointer;
 		}
-		.buttons #upload:disabled {
+		#newItemForm .buttons #upload:disabled {
 			border-color: var(--dark-2);
 			color: var(--dark-1);
 		}
-		.buttons #upload:disabled:hover {
+		#newItemForm .buttons #upload:disabled:hover {
 			border-color: var(--dark-2);
 			background: var(--dark-3);
 			cursor: default;
@@ -106,7 +114,7 @@ templ ItemFormCSS() {
 			display: flex;
 			overflow: auto;
 		}
-		#file-name:hover {
+		#newItemForm #file-name:hover {
 			border: 3px solid var(--dark-1);
 			background-color: var(--dark-2);
 
@@ -119,7 +127,7 @@ templ ItemFormCSS() {
 			padding: 0 5px 0 5px;
 			font-weight: 600;
 		}
-		#file-upload {
+		#newItemForm #file-upload {
 			/* display:none; */
 			position: absolute;
 			width: 1px;

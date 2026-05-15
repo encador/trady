@@ -19,6 +19,7 @@ templ InventoryControl() {
 			min-height: 100%;
 			align-items: center;
 			justify-content: center;
+      padding: 15px 0 15px 0;
 			/* background-color: red; */
 		}
 	</style>
@@ -31,6 +32,9 @@ templ ItemContols(item models.Item) {
 			<img src={ item.ImageURL } alt="Item Image"/>
 			<textarea disabled id="title">{ item.Title }</textarea>
 			<textarea disabled id="description">{ item.Description }</textarea>
+		</div>
+		<div id="options">
+			<h2>Item Options</h2>
 			<button id="delete">Delete</button>
 		</div>
 	</div>
@@ -48,17 +52,18 @@ templ ItemContolsCSS() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+      gap: 15px;
 		}
 		#item-controls #details img {
 			width: 100%;
-			border-bottom: 3px solid black;
+      max-height: 400px;
+			border-bottom: 3px solid var(--dark-4);
 		}
 		#item-controls #details {
 			border: 3px solid var(--dark-4);
 			background-color: var(--dark-3);
 			width: 80%;
 			height: fit-content;
-			margin-top: 20px;
 			overflow: hidden;
 			display: flex;
 			flex-direction: column;
@@ -67,8 +72,22 @@ templ ItemContolsCSS() {
 			border-radius: 5px;
 		}
 
-		#item-controls textarea {
-			border: dashed 2px var(--dark-1);
+    #item-controls #options {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 70%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+
+
+		#item-controls #details textarea {
+			border: 3px dashed var(--dark-3);
 			background-color: var(--dark-2);
 			color: var(--white-3);
 			width: 90%;
@@ -89,29 +108,30 @@ templ ItemContolsCSS() {
 			color: var(--white-3);
 			border-bottom: 3px solid var(--dark-4);
 		}
-		#item-controls #title {
+		#item-controls #details #title {
 			height: 20px;
 			margin-top: 10px;
 			margin-bottom: 10px;
 			border-radius: 0;
 		}
 
-		#item-controls #description {
+		#item-controls #details #description {
 			margin-bottom: 10px;
 		}
 
 		#item-controls button {
 			border-radius: 5px;
 			background: none;
-			border:  solid 3px;
+			border: solid 3px;
 			font-weight: bold;
 			width: 80px;
 			height: 30px;
 			cursor: pointer;
+      margin: 15px 0 15px 0;
 		}
 		#item-controls button#delete {
-      color: var(--red-1);
-      border-color: var(--red-2);
+			color: var(--red-1);
+			border-color: var(--red-2);
 			margin-bottom: 10px;
 			width: 50%;
 			font-weight: bold;
@@ -119,7 +139,7 @@ templ ItemContolsCSS() {
 		}
 		#item-controls button#delete:hover {
 			background-color: var(--red-2);
-      border-color: var(--red-3);
+			border-color: var(--red-3);
 		}
 	</style>
 }

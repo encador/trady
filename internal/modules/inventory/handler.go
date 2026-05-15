@@ -121,6 +121,7 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		}
 
 		sse := datastar.NewSSE(w, r)
+		// time.Sleep(time.Millisecond * 100)
 		// sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
 		sse.PatchElementTempl(ItemContols(item))
 		sse.PatchSignals([]byte(`{ showControls: true }`))
