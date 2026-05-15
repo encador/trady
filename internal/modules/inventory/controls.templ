@@ -5,6 +5,7 @@ import "github.com/encador/trady/internal/models"
 templ InventoryControl() {
 	<div id="ic-box">
 		<div id="form-errors"></div>
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
 		@ItemFormCSS()
 		@NewItemForm()
 		@ItemContolsCSS()
@@ -19,7 +20,7 @@ templ InventoryControl() {
 			min-height: 100%;
 			align-items: center;
 			justify-content: center;
-      padding: 15px 0 15px 0;
+			padding: 15px 0 15px 0;
 			/* background-color: red; */
 		}
 	</style>
@@ -52,11 +53,12 @@ templ ItemContolsCSS() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-      gap: 15px;
+			gap: 15px;
+      user-select: none;
 		}
 		#item-controls #details img {
 			width: 100%;
-      max-height: 400px;
+			max-height: 400px;
 			border-bottom: 3px solid var(--dark-4);
 		}
 		#item-controls #details {
@@ -72,7 +74,7 @@ templ ItemContolsCSS() {
 			border-radius: 5px;
 		}
 
-    #item-controls #options {
+		#item-controls #options {
 			border: 3px solid var(--dark-4);
 			background-color: var(--dark-3);
 			width: 70%;
@@ -84,7 +86,6 @@ templ ItemContolsCSS() {
 			align-items: center;
 			border-radius: 5px;
 		}
-
 
 		#item-controls #details textarea {
 			border: 3px dashed var(--dark-3);
@@ -127,7 +128,7 @@ templ ItemContolsCSS() {
 			width: 80px;
 			height: 30px;
 			cursor: pointer;
-      margin: 15px 0 15px 0;
+			margin: 15px 0 15px 0;
 		}
 		#item-controls button#delete {
 			color: var(--red-1);
