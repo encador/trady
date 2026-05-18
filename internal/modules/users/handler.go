@@ -74,7 +74,7 @@ func (h *UserHandler) HandleLogin() http.Handler {
 		if err := verifyPass(user.Username, user.Password, h.database); err != nil {
 			fmt.Println(err)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Wrong Username or Password"}, 3), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBoxMultiple([]string{"Wrong Username or Password"}, 3), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 			return
 		}
 		if err := auth.SetCookie(user, w); err != nil {
@@ -123,7 +123,7 @@ func (h *UserHandler) HandleAdd() http.Handler {
 		if err != nil {
 			fmt.Println(err)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox(msgs, 2), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBoxMultiple(msgs, 2), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 		} else {
 
 			if err := auth.SetCookie(user, w); err != nil {
@@ -131,7 +131,7 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			}
 
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox(msgs, 1), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBoxMultiple(msgs, 1), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 			fmt.Println("[HandleAdd]: New User Added")
 			time.Sleep(time.Second * 1)
 

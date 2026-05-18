@@ -1,8 +1,10 @@
 package users
 
 import "github.com/encador/trady/internal/models"
+import "github.com/encador/trady/internal/templ/component"
 
 templ loginPage() {
+	@component.MsgBoxCSS()
 	<div id="errors" style="width:100%;"></div>
 	<div data-signals:toggle="false"></div>
 	@FormCSS()
@@ -36,6 +38,9 @@ templ loginPage() {
 			border-color: var(--blue-3);
 			cursor: pointer;
 		}
+    #errors {
+      margin-bottom: 10px;
+    }
 	</style>
 }
 

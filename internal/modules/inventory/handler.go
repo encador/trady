@@ -63,14 +63,14 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println("[Inventory]: Image File Too Large")
 			// http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Image Too Large"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox("Image Too Large", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		file, _, err := r.FormFile("image")
 		if err != nil {
 			// http.Error(w, "missing image", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"No Image"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox("No Image Provided", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		defer file.Close()
@@ -86,14 +86,14 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println(err)
 			// http.Error(w, "invalid form data", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox([]string{"Invalid Img Format"}, 3), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(component.MsgBox("Invalid Image Format", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
 		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
-		sse.PatchElementTempl(component.MsgBox([]string{"Success"}, 1), datastar.WithSelectorID("form-errors"), datastar.WithModeInner())
+		sse.PatchElementTempl(component.MsgBox("Item Added", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 		sse.RemoveElementByID("new-item")
 		sse.PatchElementTempl(NewItem(), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 	})
@@ -118,6 +118,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))
 		sse.RemoveElementByID("item-" + signals.SelectedItemID)
+		sse.PatchElementTempl(component.MsgBox("Item Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
 	})
 }

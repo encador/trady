@@ -4,7 +4,6 @@ import "github.com/encador/trady/internal/models"
 
 templ InventoryControl() {
 	<div id="ic-box">
-		<div id="form-errors"></div>
 		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
 		@ItemFormCSS()
 		@NewItemForm()
