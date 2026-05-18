@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
@@ -16,6 +17,7 @@ import (
 
 type InventorySignals struct {
 	SelectedItemID string `json:"selectedItem"`
+	ShowControls   bool   `json:"showControls"`
 }
 
 type InventoryHandler struct {
@@ -103,7 +105,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		signals := &InventorySignals{}
 		datastar.ReadSignals(r, signals)
-		fmt.Println("delete " + signals.SelectedItemID)
+		// fmt.Println("delete " + signals.SelectedItemID)
 		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
@@ -127,6 +129,8 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		signals := &InventorySignals{}
 		if err := datastar.ReadSignals(r, signals); err != nil {
+			fmt.Println(err)
+			http.Error(w, "signals error", http.StatusInternalServerError)
 			return
 		}
 
@@ -146,6 +150,8 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		// sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
 		sse.PatchElementTempl(ItemContols(item))
 		sse.PatchSignals([]byte(`{ showControls: true }`))
+		// sse.MarshalAndPatchSignals(InventorySignals{SelectedItemID: signals.SelectedItemID, ShowControls: true})
+		time.Sleep(time.Second)
 
 	})
 }
