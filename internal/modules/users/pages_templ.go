@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import "github.com/encador/trady/internal/models"
+import "github.com/encador/trady/internal/templ/component"
 
 func loginPage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -31,6 +32,10 @@ func loginPage() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = component.MsgBoxCSS().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"errors\" style=\"width:100%;\"></div><div data-signals:toggle=\"false\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -55,7 +60,7 @@ func loginPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><button id=\"toggle\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t\t#toggle {\n\t\t\tbackground: none;\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder: solid 3px var(--blue-2);\n\t\t\tborder-radius: 8px;\n\t\t\tmargin: 10px 0 0 0;\n\t\t\tpadding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#toggle:hover {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><button id=\"toggle\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t\t#toggle {\n\t\t\tbackground: none;\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder: solid 3px var(--blue-2);\n\t\t\tborder-radius: 8px;\n\t\t\tmargin: 10px 0 0 0;\n\t\t\tpadding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#toggle:hover {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcursor: pointer;\n\t\t}\n    #errors {\n      margin-bottom: 10px;\n    }\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -91,7 +96,7 @@ func userPage(user models.User) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 45, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/users/pages.templ`, Line: 50, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

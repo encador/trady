@@ -76,17 +76,41 @@ templ mainContent(content templ.Component) {
 }
 
 templ controlBox(controls templ.Component) {
-	<div id="ctrlBox">
-		@controls
+	<div id="ctrl-outerbox">
+		@component.MsgBoxCSS()
+		<div id="msg-box"></div>
+		<div id="ctrl-box">
+			@controls
+		</div>
 	</div>
 	<style>
-		#ctrlBox {
+		#ctrl-box {
 			background-color: var(--dark-2);
-			height: 60vh;
+			height: 65vh;
 			width: 20vw;
+      min-width: 190px;
 			border-radius: 10px;
+			overflow: auto;
+		}
+		#msg-box {
+			/* background-color: var(--dark-2); */
+			/* border: 2px solid var(--dark-2); */
+			border-radius: 10px;
+			width: 20vw;
+			height: 8vh;
+      min-height: 50px;
+			display: flex;
+			flex-direction: column-reverse;
 			align-items: center;
-      overflow: auto;
+			gap: 5px;
+			overflow: auto;
+			user-select: none;
+		}
+		#ctrl-outerbox {
+			gap: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 	</style>
 }
@@ -113,7 +137,7 @@ templ Base(opts Options) {
 			#yab {
 				display: flex;
 				flex-direction: row;
-        align-items: center;
+				align-items: center;
 				margin: 20px 0 10px 0;
 				gap: 20px;
 			}
@@ -123,7 +147,7 @@ templ Base(opts Options) {
 				align-items: center;
 				justify-content: center;
 				background-color: var(--dark-3);
-        overflow: hidden;
+				overflow: hidden;
 			}
 			button {
 				user-select: none;
