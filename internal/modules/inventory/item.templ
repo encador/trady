@@ -6,8 +6,7 @@ templ ItemList(items []models.Item) {
 	<div id="item-list">
 		@ItemCSS()
 		<div
-			data-init="$selectedItem = ''"
-			data-init="$showControls = false"
+			data-init="$selectedItem = ''; $showControls = false"
 		></div>
 		for _, item := range items {
 			@Item(item)
