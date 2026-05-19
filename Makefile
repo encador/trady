@@ -12,7 +12,7 @@ run: build
 
 dev:
 	go tool templ generate --watch \
-		--cmd="go run . -db=bin/trady.db -uploads=bin/uploads" \
+		--cmd="go run . -db=bin/trady.db -uploads=bin/uploads -port=55000" \
 		--proxy="http://localhost:55000" \
 		--proxybind="localhost" --proxyport="8080" \
 		--open-browser=false

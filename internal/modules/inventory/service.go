@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -60,14 +61,6 @@ func getItem(db *sql.DB, itemID string) (models.Item, error) {
 	return item, nil
 }
 
-func deleteItem(db *sql.DB, itemID string) error {
-	q := `delete from items where id = ?`
-	if _, err := db.Exec(q, itemID); err != nil {
-		return err
-	}
-	return nil
-}
-
 func isOwner(db *sql.DB, itemID string, user models.User) bool {
 	item, err := getItem(db, itemID)
 	if err != nil {
@@ -78,6 +71,7 @@ func isOwner(db *sql.DB, itemID string, user models.User) bool {
 
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models.Item, error) {
 
+	// Basic input validation
 	if item.Title == "" {
 		return item, errors.New("[addItem] No Item Title Provided")
 	}
@@ -85,23 +79,14 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		return item, errors.New("[addItem] No Item Description Provided")
 	}
 
-	var fileName string
-	id, err := generateID(16)
-	if err != nil {
-		return item, err
-	}
-
 	// Only allow png and jpeg
 	buff := make([]byte, 512)
 	n, _ := f.Read(buff)
-	switch http.DetectContentType(buff[:n]) {
-	case "image/jpeg":
-		fileName = id + ".jpeg"
-	case "image/png":
-		fileName = id + ".png"
-	default:
+	if ct := http.DetectContentType(buff[:n]); (ct != "image/jpeg") && (ct != "image/png") {
 		return item, errors.New("[addItem]: invalid file type")
 	}
+
+	// TODO: Add image encoding to sanitize file
 
 	// reset file seeker position
 	if seeker, ok := f.(io.Seeker); ok {
@@ -110,6 +95,12 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		}
 	}
 
+	id, err := generateID(16)
+	if err != nil {
+		return item, err
+	}
+	fileName := id
+
 	// Create file on system
 	path := filepath.Join(dir, fileName)
 	dst, err := os.Create(path)
@@ -117,6 +108,8 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		return item, err
 	}
 	defer dst.Close()
+
+	fmt.Println("[SYSTEM]: CREATE " + path)
 
 	// Copy image to system file
 	_, err = io.Copy(dst, f)
@@ -133,5 +126,26 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		return item, err
 	}
 
+	fmt.Println("[DB]: ADD ITEM(" + item.ID + ")")
 	return item, nil
+}
+
+func deleteItem(db *sql.DB, itemID string, directory string) error {
+	// Delete File
+	file := filepath.Join(directory, itemID)
+	if err := os.Remove(file); err != nil && !os.IsNotExist(err) {
+		return err
+	} else if err == nil {
+		fmt.Println("[SYSTEM]: DELETE " + file)
+	}
+
+	// Delete DB Entry
+	q := `delete from items where id = ?`
+	if _, err := db.Exec(q, itemID); err != nil {
+		return err
+	}
+
+	fmt.Println("[DB]: REMOVE ITEM(" + itemID + ")")
+	return nil
+
 }
