@@ -21,6 +21,7 @@ var secLevel = map[string]int{
 	// Static Files
 	"/static/datastar.js": -1,
 	"/static/favicon.ico": -1,
+	"/static/placeholder.png": -1,
 	"/robots.txt":         -1,
 
 	// Guest Pages

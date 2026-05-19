@@ -44,7 +44,7 @@ templ Item(item models.Item) {
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
 	>
 		<div class="info">
-			<img src={ item.ImageURL } alt="Item Image"/>
+			<img src={ item.ImageURL } onerror="if(!this.dataset.fallback){this.dataset.fallback='1'; this.src='static/placeholder.png';}" alt="Item Image"/>
 			<p class="name">{ item.Title }</p>
 		</div>
 	</div>
