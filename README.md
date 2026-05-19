@@ -6,13 +6,13 @@ An online trading application for physical goods
 
 ## Screenshots
 ### Login Page
-![Login Page](https://github.com/encador/trady/blob/dev/images/login.png)
+![Login Page](https://github.com/encador/trady/blob/main/images/login.png)
 
 ### Inventory Page
-![Inventory Page](https://github.com/encador/trady/blob/dev/images/inventory.png)
+![Inventory Page](https://github.com/encador/trady/blob/main/images/inventory.png)
 
 ### Account Page
-![Account Page](https://github.com/encador/trady/blob/dev/images/account.png)
+![Account Page](https://github.com/encador/trady/blob/main/images/account.png)
 
 
 ## Download Trady
