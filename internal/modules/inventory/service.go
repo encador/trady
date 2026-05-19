@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -60,14 +61,6 @@ func getItem(db *sql.DB, itemID string) (models.Item, error) {
 	return item, nil
 }
 
-func deleteItem(db *sql.DB, itemID string) error {
-	q := `delete from items where id = ?`
-	if _, err := db.Exec(q, itemID); err != nil {
-		return err
-	}
-	return nil
-}
-
 func isOwner(db *sql.DB, itemID string, user models.User) bool {
 	item, err := getItem(db, itemID)
 	if err != nil {
@@ -116,6 +109,8 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 	}
 	defer dst.Close()
 
+	fmt.Println("[SYSTEM]: CREATE " + path)
+
 	// Copy image to system file
 	_, err = io.Copy(dst, f)
 	if err != nil {
@@ -131,5 +126,26 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		return item, err
 	}
 
+	fmt.Println("[DB]: ADD ITEM(" + item.ID + ")")
 	return item, nil
+}
+
+func deleteItem(db *sql.DB, itemID string, directory string) error {
+	// Delete File
+	file := filepath.Join(directory, itemID)
+	if err := os.Remove(file); err != nil && !os.IsNotExist(err) {
+		return err
+	} else if err == nil {
+		fmt.Println("[SYSTEM]: DELETE " + file)
+	}
+
+	// Delete DB Entry
+	q := `delete from items where id = ?`
+	if _, err := db.Exec(q, itemID); err != nil {
+		return err
+	}
+
+	fmt.Println("[DB]: REMOVE ITEM(" + itemID + ")")
+	return nil
+
 }

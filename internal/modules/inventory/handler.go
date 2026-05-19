@@ -111,7 +111,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 			return
 		}
 
-		if err := deleteItem(h.database, signals.SelectedItemID); err != nil {
+		if err := deleteItem(h.database, signals.SelectedItemID, h.uploadDir); err != nil {
 			fmt.Println("breaki")
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
