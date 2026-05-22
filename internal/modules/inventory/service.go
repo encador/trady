@@ -112,7 +112,7 @@ func saveFile(f multipart.File, path string) error {
 	switch ftype {
 	case "png":
 		// Encode Image to PNG
-		encoder := png.Encoder{CompressionLevel: png.BestCompression}
+		encoder := png.Encoder{CompressionLevel: png.BestSpeed}
 		if err = encoder.Encode(dst, img); err != nil {
 			dst.Close()
 			os.Remove(path)
