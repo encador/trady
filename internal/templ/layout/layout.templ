@@ -136,6 +136,9 @@ templ Base(opts Options) {
 			@component.Navbar(opts.URL)
 		</body>
 		<style>
+			* {
+				box-sizing: border-box;
+			}
 			#yab {
 				display: flex;
 				flex-direction: row;
@@ -154,9 +157,6 @@ templ Base(opts Options) {
 			button {
 				user-select: none;
 			}
-      /* * { */
-      /*   box-sizing: border-box; */
-      /* } */
 		</style>
 	</html>
 }
