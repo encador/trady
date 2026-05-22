@@ -119,7 +119,7 @@ func controlBox(controls templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div><style>\n\t\t#ctrl-box {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 67vh;\n\t\t\twidth: 20vw;\n      min-width: 190px;\n\t\t\tborder-radius: 10px;\n\t\t\toverflow: auto;\n\t\t}\n\t\t#msg-box {\n\t\t\t/* background-color: var(--dark-2); */\n\t\t\t/* border: 2px solid var(--dark-2); */\n\t\t\tborder-radius: 5px;\n\t\t\twidth: 15vw;\n      height: 50px;\n\t\t\t/* height: 8vh; */\n      /* min-height: 50px; */\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column-reverse;\n\t\t\talign-items: center;\n\t\t\tgap: 5px;\n\t\t\toverflow: auto;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#ctrl-outerbox {\n\t\t\tgap: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div><style>\n\t\t#ctrl-box {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\theight: 67vh;\n\t\t\twidth: 20vw;\n      min-width: 190px;\n\t\t\tborder-radius: 10px;\n\t\t\toverflow: auto;\n      padding: 10px 0 10px 0;\n\t\t}\n\t\t#msg-box {\n\t\t\t/* background-color: var(--dark-2); */\n\t\t\t/* border: 2px solid var(--dark-2); */\n\t\t\tborder-radius: 5px;\n\t\t\twidth: 15vw;\n      height: 50px;\n\t\t\t/* height: 8vh; */\n      /* min-height: 50px; */\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column-reverse;\n\t\t\talign-items: center;\n\t\t\tgap: 5px;\n\t\t\toverflow: auto;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#ctrl-outerbox {\n\t\t\tgap: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -178,7 +178,7 @@ func Base(opts Options) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</body><style>\n\t\t\t#yab {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: row;\n\t\t\t\talign-items: center;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\tgap: 20px;\n\t\t\t}\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t\toverflow: hidden;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n\t\t</style></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</body><style>\n\t\t\t#yab {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: row;\n\t\t\t\talign-items: center;\n\t\t\t\tmargin: 20px 0 10px 0;\n\t\t\t\tgap: 20px;\n\t\t\t}\n\t\t\tbody {\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: center;\n\t\t\t\tbackground-color: var(--dark-3);\n\t\t\t\toverflow: hidden;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tuser-select: none;\n\t\t\t}\n      /* * { */\n      /*   box-sizing: border-box; */\n      /* } */\n\t\t</style></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
