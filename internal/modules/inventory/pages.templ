@@ -108,7 +108,7 @@ templ ItemFormCSS() {
 			background-color: var(--dark-3);
 			margin: 10px 0 10px 0;
 			width: 60%;
-			height: 20px;
+			height: 25px;
 			border-radius: 15px;
 			align-items: center;
 			justify-content: center;
@@ -141,7 +141,7 @@ templ ItemFormCSS() {
 		}
 		#newItemForm textarea {
 			background-color: var(--dark-2);
-			border: 2px solid var(--dark-2);
+			border: 3px dashed var(--dark-3);
 			border-radius: 5px;
 			color: var(--white-2);
 			padding: 5px;
@@ -152,13 +152,13 @@ templ ItemFormCSS() {
 			outline: none;
 		}
 		#newItemForm textarea:hover {
-			border: 2px dashed var(--blue-2);
+			border: 3px dashed var(--blue-2);
 		}
 		#newItemForm textarea:focus {
-			border: 2px solid var(--blue-2);
+			border: 3px solid var(--blue-2);
 		}
 		#newItemForm input {
-			border: var(--dark-2) solid 2px;
+			border: var(--dark-3) dashed 3px;
 			background-color: var(--dark-2);
 			color: var(--white-2);
 			/* caret-color: var(--white-1); */
@@ -173,11 +173,11 @@ templ ItemFormCSS() {
 			margin-bottom: 10px;
 		}
 		#newItemForm input:hover {
-			border: var(--blue-2) dashed 2px;
-			cursor: pointer;
+			border: var(--blue-2) dashed 3px;
+			cursor: text;
 		}
 		#newItemForm input:focus {
-			border: var(--blue-2) solid 2px;
+			border: var(--blue-2) solid 3px;
 		}
 	</style>
 }
