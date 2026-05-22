@@ -51,7 +51,7 @@ func InventoryControl() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\theight: fit-content;\n\t\t\tmin-height: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tpadding: 15px 0 15px 0;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\tmin-height: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -87,7 +87,7 @@ func ItemContols(item models.Item) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 32, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 30, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -100,7 +100,7 @@ func ItemContols(item models.Item) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 33, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 31, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -113,7 +113,7 @@ func ItemContols(item models.Item) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 34, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/inventory/controls.templ`, Line: 32, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -148,7 +148,7 @@ func ItemContolsCSS() templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\tmax-height: 100%;\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n      user-select: none;\n\t\t}\n\t\t#item-controls #details img {\n      display:block;\n\t\t\twidth: 100%;\n      min-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 60%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details #title {\n\t\t\theight: 20px;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls button {\n\t\t\tborder-radius: 5px;\n\t\t\tbackground: none;\n\t\t\tborder: solid 3px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 80px;\n\t\t\theight: 30px;\n\t\t\tcursor: pointer;\n\t\t\tmargin: 15px 0 15px 0;\n\t\t}\n\t\t#item-controls button#delete {\n\t\t\tcolor: var(--red-1);\n\t\t\tborder-color: var(--red-2);\n\t\t\tmargin-bottom: 10px;\n\t\t\twidth: 50%;\n\t\t\tfont-weight: bold;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#item-controls button#delete:hover {\n\t\t\tbackground-color: var(--red-2);\n\t\t\tborder-color: var(--red-3);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 60%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\tborder-radius: 5px;\n\t\t\tbackground: none;\n\t\t\tborder: solid 3px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: 80px;\n\t\t\theight: 30px;\n\t\t\tcursor: pointer;\n\t\t\tmargin: 15px 0 15px 0;\n\t\t}\n\t\t#item-controls button#delete {\n\t\t\tcolor: var(--red-1);\n\t\t\tborder-color: var(--red-2);\n\t\t\tmargin-bottom: 10px;\n\t\t\twidth: 50%;\n\t\t\tfont-weight: bold;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#item-controls button#delete:hover {\n\t\t\tbackground-color: var(--red-2);\n\t\t\tborder-color: var(--red-3);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

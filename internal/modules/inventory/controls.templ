@@ -15,11 +15,9 @@ templ InventoryControl() {
 			display: flex;
 			flex-direction: column;
 			width: 100%;
-			height: fit-content;
 			min-height: 100%;
 			align-items: center;
 			justify-content: center;
-			padding: 15px 0 15px 0;
 			/* background-color: red; */
 		}
 	</style>
@@ -44,19 +42,19 @@ templ ItemContolsCSS() {
 	<style>
 		#item-controls {
 			width: 100%;
-			max-height: 100%;
+			/* background-color: red; */
 
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
 			gap: 15px;
-      user-select: none;
+			user-select: none;
 		}
 		#item-controls #details img {
-      display:block;
+			display: block;
 			width: 100%;
-      min-width: 0;
+			min-width: 0;
 			max-height: 400px;
 			border-bottom: 3px solid var(--dark-4);
 		}
@@ -100,16 +98,8 @@ templ ItemContolsCSS() {
 			font-weight: bold;
 			resize: none;
 		}
-		#item-controls h2 {
-			width: 100%;
-			margin-top: 10px;
-			padding-bottom: 5px;
-			text-align: center;
-			color: var(--white-3);
-			border-bottom: 3px solid var(--dark-4);
-		}
 		#item-controls #details #title {
-			height: 20px;
+			height: 30px;
 			margin-top: 10px;
 			margin-bottom: 10px;
 			border-radius: 0;
@@ -117,6 +107,15 @@ templ ItemContolsCSS() {
 
 		#item-controls #details #description {
 			margin-bottom: 10px;
+		}
+
+		#item-controls h2 {
+			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
 		}
 
 		#item-controls button {

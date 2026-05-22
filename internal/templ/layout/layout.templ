@@ -91,6 +91,7 @@ templ controlBox(controls templ.Component) {
       min-width: 190px;
 			border-radius: 10px;
 			overflow: auto;
+      padding: 10px 0 10px 0;
 		}
 		#msg-box {
 			/* background-color: var(--dark-2); */
@@ -135,6 +136,9 @@ templ Base(opts Options) {
 			@component.Navbar(opts.URL)
 		</body>
 		<style>
+			* {
+				box-sizing: border-box;
+			}
 			#yab {
 				display: flex;
 				flex-direction: row;
