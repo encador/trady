@@ -29,7 +29,7 @@ templ ItemContols(item models.Item) {
 	<div id="item-controls" data-show="$showControls" style="display: none;">
 		<div id="details">
 			<h2>Item Details</h2>
-			<img src={ item.ImageURL } onerror="if(!this.dataset.fallback){this.dataset.fallback='1'; this.src='static/placeholder.png';}" alt="Item Image"/>
+			<img src={ item.ImageURL } alt=""/>
 			<textarea disabled id="title">{ item.Title }</textarea>
 			<textarea disabled id="description">{ item.Description }</textarea>
 		</div>
