@@ -6,6 +6,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -69,6 +72,66 @@ func isOwner(db *sql.DB, itemID string, user models.User) bool {
 	return item.OwnerID == user.ID
 }
 
+func saveFile(f multipart.File, path string) error {
+
+	// Basic file type sniff
+	buff := make([]byte, 512)
+	n, _ := f.Read(buff)
+	if ct := http.DetectContentType(buff[:n]); (ct != "image/jpeg") && (ct != "image/png") {
+		return errors.New("[addItem]: invalid file type")
+	}
+
+	// reset file seeker position
+	if seeker, ok := f.(io.Seeker); ok {
+		if _, err := seeker.Seek(0, io.SeekStart); err != nil {
+			return err
+		}
+	}
+
+	// Decode Image
+	img, ftype, err := image.Decode(f)
+	if err != nil {
+		return err
+	}
+
+	// Create file on system
+	dst, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	fmt.Println("[SYSTEM]: CREATE " + path)
+
+	// Copy image to system file
+	// _, err = io.Copy(dst, f)
+	// if err != nil {
+	// 	return  err
+	// }
+
+	switch ftype {
+	case "png":
+		// Encode Image to PNG
+		encoder := png.Encoder{CompressionLevel: png.BestCompression}
+		if err = encoder.Encode(dst, img); err != nil {
+			dst.Close()
+			os.Remove(path)
+			return err
+		}
+	case "jpeg":
+		// Encode Image to JPEG
+		if err = jpeg.Encode(dst, img, &jpeg.Options{Quality: 70}); err != nil {
+			dst.Close()
+			os.Remove(path)
+			return err
+		}
+	default:
+		return errors.New("Invalid Image Type")
+	}
+
+	return nil
+}
+
 func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models.Item, error) {
 
 	// Basic input validation
@@ -79,41 +142,16 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 		return item, errors.New("[addItem] No Item Description Provided")
 	}
 
-	// Only allow png and jpeg
-	buff := make([]byte, 512)
-	n, _ := f.Read(buff)
-	if ct := http.DetectContentType(buff[:n]); (ct != "image/jpeg") && (ct != "image/png") {
-		return item, errors.New("[addItem]: invalid file type")
-	}
-
-	// TODO: Add image encoding to sanitize file
-
-	// reset file seeker position
-	if seeker, ok := f.(io.Seeker); ok {
-		if _, err := seeker.Seek(0, io.SeekStart); err != nil {
-			return item, err
-		}
-	}
-
+	// Generate ItemID
 	id, err := generateID(16)
 	if err != nil {
 		return item, err
 	}
 	fileName := id
 
-	// Create file on system
 	path := filepath.Join(dir, fileName)
-	dst, err := os.Create(path)
-	if err != nil {
-		return item, err
-	}
-	defer dst.Close()
 
-	fmt.Println("[SYSTEM]: CREATE " + path)
-
-	// Copy image to system file
-	_, err = io.Copy(dst, f)
-	if err != nil {
+	if err = saveFile(f, path); err != nil {
 		return item, err
 	}
 
