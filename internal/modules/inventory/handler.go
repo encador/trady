@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
-	"github.com/encador/trady/internal/templ/component"
-	"github.com/encador/trady/internal/templ/layout"
+	"github.com/encador/trady/internal/modules/general"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -39,12 +37,12 @@ func NewHandler(db *sql.DB, uploadDir string) (*InventoryHandler, error) {
 func (h *InventoryHandler) InventoryPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
-		opts := layout.Options{
+		opts := general.Options{
 			Content:  InventoryPage(items),
 			Contorls: InventoryControl(),
 			URL:      "/inventory",
 		}
-		layout.Base(opts).Render(r.Context(), w)
+		general.Base(opts).Render(r.Context(), w)
 	})
 }
 
@@ -65,14 +63,14 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println("[Inventory]: Image File Too Large")
 			// http.Error(w, "file too large", http.StatusRequestEntityTooLarge)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox("Image Too Large", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			sse.PatchElementTempl(general.MsgBox("Image Too Large", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		file, _, err := r.FormFile("image")
 		if err != nil {
 			// http.Error(w, "missing image", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox("No Image Provided", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			sse.PatchElementTempl(general.MsgBox("No Image Provided", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		defer file.Close()
@@ -88,14 +86,14 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			fmt.Println(err)
 			// http.Error(w, "invalid form data", http.StatusBadRequest)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBox("Invalid Image Format", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			sse.PatchElementTempl(general.MsgBox("Invalid Image Format", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 			return
 		}
 		sse := datastar.NewSSE(w, r)
 		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
-		sse.PatchElementTempl(component.MsgBox("Item Added", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+		sse.PatchElementTempl(general.MsgBox("Item Added", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 		sse.RemoveElementByID("new-item")
 		sse.PatchElementTempl(NewItem(), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 	})
@@ -120,7 +118,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))
 		sse.RemoveElementByID("item-" + signals.SelectedItemID)
-		sse.PatchElementTempl(component.MsgBox("Item Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+		sse.PatchElementTempl(general.MsgBox("Item Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
 	})
 }
@@ -146,12 +144,9 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		}
 
 		sse := datastar.NewSSE(w, r)
-		// time.Sleep(time.Millisecond * 100)
-		// sse.PatchElementTempl(component.MsgBox([]string{"Item Selected"}, 2), datastar.WithSelectorID("ic-box"), datastar.WithModeAppend())
 		sse.PatchElementTempl(ItemContols(item))
-		sse.PatchSignals([]byte(`{ showControls: true }`))
-		// sse.MarshalAndPatchSignals(InventorySignals{SelectedItemID: signals.SelectedItemID, ShowControls: true})
-		time.Sleep(time.Second)
-
+		signals.ShowControls = true
+		sse.MarshalAndPatchSignals(signals)
+		// sse.PatchSignals([]byte(`{ showControls: true }`))
 	})
 }

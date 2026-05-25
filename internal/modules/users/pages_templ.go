@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import "github.com/encador/trady/internal/models"
-import "github.com/encador/trady/internal/templ/component"
+import "github.com/encador/trady/internal/modules/general"
 
 func loginPage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -32,7 +32,7 @@ func loginPage() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = component.MsgBoxCSS().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = general.MsgBoxCSS().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

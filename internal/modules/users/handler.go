@@ -15,8 +15,7 @@ import (
 
 	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/modules/auth"
-	"github.com/encador/trady/internal/templ/component"
-	"github.com/encador/trady/internal/templ/layout"
+	"github.com/encador/trady/internal/modules/general"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -33,22 +32,22 @@ func (h *UserHandler) HandleUserPage() http.Handler {
 
 		user := auth.GetUser(r.Context())
 
-		opt := layout.Options{
+		opt := general.Options{
 			Content: userPage(user),
 			URL:     "/user",
 		}
-		layout.Base(opt).Render(r.Context(), w)
+		general.Base(opt).Render(r.Context(), w)
 	})
 }
 
 func (h *UserHandler) HandleLoginPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
-			opt := layout.Options{
+			opt := general.Options{
 				Content: loginPage(),
 				URL:     "/user/login",
 			}
-			layout.Base(opt).Render(r.Context(), w)
+			general.Base(opt).Render(r.Context(), w)
 			return
 
 		} else {
@@ -74,7 +73,7 @@ func (h *UserHandler) HandleLogin() http.Handler {
 		if err := verifyPass(user.Username, user.Password, h.database); err != nil {
 			fmt.Println(err)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBoxMultiple([]string{"Wrong Username or Password"}, 3), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(general.MsgBoxMultiple([]string{"Wrong Username or Password"}, 3), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 			return
 		}
 		if err := auth.SetCookie(user, w); err != nil {
@@ -123,7 +122,7 @@ func (h *UserHandler) HandleAdd() http.Handler {
 		if err != nil {
 			fmt.Println(err)
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBoxMultiple(msgs, 2), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(general.MsgBoxMultiple(msgs, 2), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 		} else {
 
 			if err := auth.SetCookie(user, w); err != nil {
@@ -131,7 +130,7 @@ func (h *UserHandler) HandleAdd() http.Handler {
 			}
 
 			sse := datastar.NewSSE(w, r)
-			sse.PatchElementTempl(component.MsgBoxMultiple(msgs, 1), datastar.WithSelectorID("errors"), datastar.WithModeInner())
+			sse.PatchElementTempl(general.MsgBoxMultiple(msgs, 1), datastar.WithSelectorID("errors"), datastar.WithModeInner())
 			fmt.Println("[HandleAdd]: New User Added")
 			time.Sleep(time.Second * 1)
 

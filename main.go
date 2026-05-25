@@ -11,8 +11,7 @@ import (
 	"github.com/encador/trady/internal/modules/inventory"
 	"github.com/encador/trady/internal/modules/middleware"
 	"github.com/encador/trady/internal/modules/users"
-	"github.com/encador/trady/internal/templ/component"
-	"github.com/encador/trady/internal/templ/layout"
+	"github.com/encador/trady/internal/modules/general"
 )
 
 type config struct {
@@ -79,7 +78,7 @@ func main() {
 	})
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		layout.Base(layout.Options{Content: component.Hello(""), URL: "/"}).Render(r.Context(), w)
+		general.Base(general.Options{Content: general.Hello(""), URL: "/"}).Render(r.Context(), w)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())

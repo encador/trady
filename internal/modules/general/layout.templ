@@ -75,7 +75,7 @@ templ mainContent(content templ.Component) {
 
 templ controlBox(controls templ.Component) {
 	<div id="ctrl-outerbox">
-		MsgBoxCSS()
+		@MsgBoxCSS()
 		<div id="msg-box"></div>
 		<div id="ctrl-box">
 			@controls
@@ -86,19 +86,19 @@ templ controlBox(controls templ.Component) {
 			background-color: var(--dark-2);
 			height: 67vh;
 			width: 20vw;
-      min-width: 190px;
+			min-width: 190px;
 			border-radius: 10px;
 			overflow: auto;
-      padding: 10px 0 10px 0;
+			padding: 10px 0 10px 0;
 		}
 		#msg-box {
 			/* background-color: var(--dark-2); */
 			/* border: 2px solid var(--dark-2); */
 			border-radius: 5px;
 			width: 15vw;
-      height: 50px;
+			height: 50px;
 			/* height: 8vh; */
-      /* min-height: 50px; */
+			/* min-height: 50px; */
 			display: flex;
 			flex-direction: column-reverse;
 			align-items: center;
@@ -131,7 +131,7 @@ templ Base(opts Options) {
 					@controlBox(opts.Contorls)
 				}
 			</div>
-			Navbar(opts.URL)
+			@Navbar(opts.URL)
 		</body>
 		<style>
 			* {
