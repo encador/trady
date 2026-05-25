@@ -1,6 +1,4 @@
-package layout
-
-import "github.com/encador/trady/internal/templ/component"
+package general
 
 type Options struct {
 	Content  templ.Component
@@ -77,7 +75,7 @@ templ mainContent(content templ.Component) {
 
 templ controlBox(controls templ.Component) {
 	<div id="ctrl-outerbox">
-		@component.MsgBoxCSS()
+		MsgBoxCSS()
 		<div id="msg-box"></div>
 		<div id="ctrl-box">
 			@controls
@@ -133,7 +131,7 @@ templ Base(opts Options) {
 					@controlBox(opts.Contorls)
 				}
 			</div>
-			@component.Navbar(opts.URL)
+			Navbar(opts.URL)
 		</body>
 		<style>
 			* {
