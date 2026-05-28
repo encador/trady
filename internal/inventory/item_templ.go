@@ -123,14 +123,14 @@ func Item(item models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"><div class=\"info\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" data-indicator=\"selecting\"><div class=\"info\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 47, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 48, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -143,7 +143,7 @@ func Item(item models.Item) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 48, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 49, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -215,7 +215,7 @@ func NewItem() templ.Component {
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(` if ($selectedItem === 'new') { $selectedItem = ''}
     else { $selectedItem = 'new'}; $showControls = false`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 126, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/item.templ`, Line: 127, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {

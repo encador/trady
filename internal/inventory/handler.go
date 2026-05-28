@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
@@ -59,8 +58,6 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			return
 		}
 
-		time.Sleep(time.Second)
-
 		r.Body = http.MaxBytesReader(w, r.Body, maxImgSize+1024)
 		if err := r.ParseMultipartForm(maxImgSize); err != nil {
 			fmt.Println("[Inventory]: Image File Too Large")
@@ -95,7 +92,6 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		sse := datastar.NewSSE(w, r)
 		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
-		time.Sleep(time.Second)
 		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
 		sse.PatchElementTempl(general.MsgBox("Item Added", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 		sse.RemoveElementByID("new-item")
@@ -118,6 +114,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
+
 
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))

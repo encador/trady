@@ -36,9 +36,14 @@ templ NewItemForm() {
 		<label for="description">Item Description</label>
 		<textarea id="description" data-bind:description type="text" name="description" placeholder="Enter Description"></textarea>
 		<div class="buttons">
-			<button id="upload" disabled data-attr:disabled="!$fileName || !$title || !$description || $fetching" data-on:click="@post('/inventory/new', {contentType: 'form'})" data-indicator:fetching>Add</button>
+			<button
+				id="upload"
+				disabled
+				data-attr:disabled="!$fileName || !$title || !$description || $fetching"
+				data-on:click="@post('/inventory/new', {contentType: 'form'})"
+				data-indicator="fetching"
+			>Add</button>
 		</div>
-		<p data-text="$fetching"></p>
 	</form>
 }
 

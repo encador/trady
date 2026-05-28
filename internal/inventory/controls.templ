@@ -1,9 +1,11 @@
 package inventory
 
 import "github.com/encador/trady/internal/models"
+import "github.com/encador/trady/internal/general"
 
 templ InventoryControl() {
 	<div id="ic-box">
+		@general.Spinner("selecting")
 		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
 		@ItemFormCSS()
 		@NewItemForm()
@@ -33,7 +35,7 @@ templ ItemContols(item models.Item) {
 		</div>
 		<div id="options">
 			<h2>Item Options</h2>
-			<button id="delete" data-on:click="@post('/inventory/delete')">Delete</button>
+			<button id="delete" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
 		</div>
 	</div>
 }
@@ -139,6 +141,19 @@ templ ItemContolsCSS() {
 		#item-controls button#delete:hover {
 			background-color: var(--red-2);
 			border-color: var(--red-3);
+		}
+    #item-controls button#delete:disabled {
+			color: var(--dark-1);
+			border-color: var(--dark-2);
+			margin-bottom: 10px;
+			width: 50%;
+			font-weight: bold;
+			font-size: 15px;
+		}
+		#item-controls button#delete:disabled:hover {
+			background-color: var(--dark-3);
+			border-color: var(--dark-2);
+      cursor: default;
 		}
 	</style>
 }
