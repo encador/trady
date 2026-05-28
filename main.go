@@ -8,10 +8,10 @@ import (
 	"os"
 
 	"github.com/encador/trady/internal/database"
-	"github.com/encador/trady/internal/modules/inventory"
-	"github.com/encador/trady/internal/modules/middleware"
-	"github.com/encador/trady/internal/modules/users"
-	"github.com/encador/trady/internal/modules/general"
+	"github.com/encador/trady/internal/inventory"
+	"github.com/encador/trady/internal/middleware"
+	"github.com/encador/trady/internal/users"
+	"github.com/encador/trady/internal/general"
 )
 
 type config struct {

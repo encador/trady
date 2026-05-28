@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/encador/trady/internal/models"
-	"github.com/encador/trady/internal/modules/auth"
-	"github.com/encador/trady/internal/modules/users"
+	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/users"
 )
 
 // Map url to security level

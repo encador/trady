@@ -14,8 +14,8 @@ import (
 	"time"
 
 	"github.com/encador/trady/internal/models"
-	"github.com/encador/trady/internal/modules/auth"
-	"github.com/encador/trady/internal/modules/general"
+	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/general"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
