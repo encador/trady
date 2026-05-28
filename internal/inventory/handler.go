@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/models"
-	"github.com/encador/trady/internal/modules/auth"
-	"github.com/encador/trady/internal/modules/general"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -114,6 +114,7 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
+
 
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))

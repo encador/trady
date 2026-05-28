@@ -38,7 +38,7 @@ func Hello(color string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("background-color: var(--green-2)")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 6, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 6, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -122,7 +122,7 @@ func Button(text string) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var5).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 1, Col: 0}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -135,7 +135,7 @@ func Button(text string) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(text)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 16, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 16, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -193,7 +193,7 @@ func MsgBox(msg string, level int) templ.Component {
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var9).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 1, Col: 0}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -206,7 +206,7 @@ func MsgBox(msg string, level int) templ.Component {
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(msgBoxColor(level))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 25, Col: 151}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 25, Col: 151}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -219,7 +219,7 @@ func MsgBox(msg string, level int) templ.Component {
 		var templ_7745c5c3_Var12 string
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(msg)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 26, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 26, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
@@ -266,7 +266,7 @@ func MsgBoxMultiple(msg []string, level int) templ.Component {
 		var templ_7745c5c3_Var15 string
 		templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var14).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 1, Col: 0}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 		if templ_7745c5c3_Err != nil {
@@ -284,7 +284,7 @@ func MsgBoxMultiple(msg []string, level int) templ.Component {
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(m)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/modules/general/general.templ`, Line: 33, Col: 9}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 33, Col: 9}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -342,6 +342,48 @@ func msgBoxColor(level int) string {
 		return "border-color: var(--red-1); color: var(--red-1); background-color: var(--red-3)"
 	}
 	return ""
+}
+
+func Spinner(signal string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var18 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var18 == nil {
+			templ_7745c5c3_Var18 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div class=\"lds-ripple\" data-show=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var19 string
+		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs("$" + signal)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 87, Col: 49}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "\"><div></div><div></div></div><style>\n\t\t.lds-ripple,\n\t\t.lds-ripple div {\n\t\t\tbox-sizing: border-box;\n\t\t}\n\t\t.lds-ripple {\n\t\t\tdisplay: inline-block;\n\t\t\tposition: relative;\n\t\t\twidth: 80px;\n\t\t\theight: 80px;\n\t\t\tcolor: var(--blue-2);\n\t\t}\n\t\t.lds-ripple div {\n\t\t\tposition: absolute;\n\t\t\tborder: 4px solid currentColor;\n\t\t\topacity: 1;\n\t\t\tborder-radius: 50%;\n\t\t\tanimation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;\n\t\t}\n\t\t.lds-ripple div:nth-child(2) {\n\t\t\tanimation-delay: -0.5s;\n\t\t}\n\t\t@keyframes lds-ripple {\n\t\t\t0% {\n\t\t\t\ttop: 36px;\n\t\t\t\tleft: 36px;\n\t\t\t\twidth: 8px;\n\t\t\t\theight: 8px;\n\t\t\t\topacity: 0;\n\t\t\t}\n\t\t\t4.9% {\n\t\t\t\ttop: 36px;\n\t\t\t\tleft: 36px;\n\t\t\t\twidth: 8px;\n\t\t\t\theight: 8px;\n\t\t\t\topacity: 0;\n\t\t\t}\n\t\t\t5% {\n\t\t\t\ttop: 36px;\n\t\t\t\tleft: 36px;\n\t\t\t\twidth: 8px;\n\t\t\t\theight: 8px;\n\t\t\t\topacity: 1;\n\t\t\t}\n\t\t\t100% {\n\t\t\t\ttop: 0;\n\t\t\t\tleft: 0;\n\t\t\t\twidth: 80px;\n\t\t\t\theight: 80px;\n\t\t\t\topacity: 0;\n\t\t\t}\n\t\t}\n\t</style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
 }
 
 var _ = templruntime.GeneratedTemplate

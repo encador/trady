@@ -42,6 +42,7 @@ templ Item(item models.Item) {
       $selectedItem = ''} else { $selectedItem = '` + item.ID + 
       `'; @post('/inventory/select') }; $showControls = false` }
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
+		data-indicator="selecting"
 	>
 		<div class="info">
 			<img src={ item.ImageURL } alt=""/>
