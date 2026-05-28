@@ -36,8 +36,9 @@ templ NewItemForm() {
 		<label for="description">Item Description</label>
 		<textarea id="description" data-bind:description type="text" name="description" placeholder="Enter Description"></textarea>
 		<div class="buttons">
-			<button id="upload" disabled data-attr:disabled="!$fileName || !$title || !$description" data-on:click="@post('/inventory/new', {contentType: 'form'})">Add</button>
+			<button id="upload" disabled data-attr:disabled="!$fileName || !$title || !$description || $fetching" data-on:click="@post('/inventory/new', {contentType: 'form'})" data-indicator:fetching>Add</button>
 		</div>
+		<p data-text="$fetching"></p>
 	</form>
 }
 
@@ -54,7 +55,7 @@ templ ItemFormCSS() {
 			width: 80%;
 			height: fit-content;
 			padding: 5px 0px 5px 0px;
-      user-select: none;
+			user-select: none;
 		}
 		#newItemForm .buttons {
 			display: flex;
