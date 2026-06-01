@@ -199,14 +199,14 @@ func MsgBox(msg string, level int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" data-on-interval__duration.10s=\"el.remove()\" data-on:click=\"el.remove()\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" data-on-interval__duration.2s=\"el.remove()\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(msgBoxColor(level))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 25, Col: 151}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 25, Col: 122}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -272,7 +272,7 @@ func MsgBoxMultiple(msg []string, level int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" data-on-interval__duration.10s=\"el.remove()\" data-on:click=\"el.remove()\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" data-on-interval__duration.2s=\"el.remove()\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -324,7 +324,7 @@ func MsgBoxCSS() templ.Component {
 			templ_7745c5c3_Var17 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<style>\n\t\t.msg {\n\t\t\tborder: 3px solid;\n\t\t\tborder-radius: 10px;\n\t\t\twidth: auto;\n\t\t\tmax-width: 80%;\n\t\t\tmin-width: 100px;\n\t\t\ttext-align: center;\n\t\t\theight: auto;\n\t\t\tpadding: 5px;\n\t\t\t/* margin: 10px; */\n\t\t\tcursor: pointer;\n\t\t}\n\t\t.msg p {\n\t\t\tfont-weight: bold;\n\t\t\tmargin: 3px;\n\t\t}\n\t\t.msg.level-1 {\n\t\t\tborder-color: var(--green-1);\n\t\t\tcolor: var(--green-1);\n\t\t\tbackground-color: var(--green-3);\n\t\t}\n\t\t.msg.level-2 {\n\t\t\tborder-color: var(--orange-1);\n\t\t\tcolor: var(--orange-1);\n\t\t\tbackground-color: var(--orange-3);\n\t\t}\n\t\t.msg.level-3 {\n\t\t\tborder-color: var(--red-1);\n\t\t\tcolor: var(--red-1);\n\t\t\tbackground-color: var(--red-3);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<style>\n\t\t.msg {\n\t\t\tborder: 3px solid;\n\t\t\tborder-radius: 10px;\n\t\t\twidth: auto;\n\t\t\tmax-width: 80%;\n\t\t\tmin-width: 100px;\n\t\t\ttext-align: center;\n\t\t\theight: auto;\n\t\t\tpadding: 5px;\n\t\t\t/* margin: 10px; */\n\t\t}\n\t\t.msg p {\n\t\t\tfont-weight: bold;\n\t\t\tmargin: 3px;\n\t\t}\n\t\t.msg.level-1 {\n\t\t\tborder-color: var(--green-1);\n\t\t\tcolor: var(--green-1);\n\t\t\tbackground-color: var(--green-3);\n\t\t}\n\t\t.msg.level-2 {\n\t\t\tborder-color: var(--orange-1);\n\t\t\tcolor: var(--orange-1);\n\t\t\tbackground-color: var(--orange-3);\n\t\t}\n\t\t.msg.level-3 {\n\t\t\tborder-color: var(--red-1);\n\t\t\tcolor: var(--red-1);\n\t\t\tbackground-color: var(--red-3);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -372,7 +372,7 @@ func Spinner(signal string) templ.Component {
 		var templ_7745c5c3_Var19 string
 		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs("$" + signal)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 87, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/general/general.templ`, Line: 86, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {

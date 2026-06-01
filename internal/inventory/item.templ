@@ -5,9 +5,6 @@ import "github.com/encador/trady/internal/models"
 templ ItemList(items []models.Item) {
 	<div id="item-list">
 		@ItemCSS()
-		<div
-			data-init="$selectedItem = ''; $showControls = false"
-		></div>
 		for _, item := range items {
 			@Item(item)
 		}
@@ -38,11 +35,8 @@ templ Item(item models.Item) {
 	<div
 		id={ "item-" + item.ID }
 		class="inventory-item"
-		data-on:click={ ` if ($selectedItem === '` + item.ID + `') { 
-      $selectedItem = ''} else { $selectedItem = '` + item.ID + 
-      `'; @post('/inventory/select') }; $showControls = false` }
+		data-on:click={ `el.dispatchEvent(new CustomEvent('item-selected', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
-		data-indicator="selecting"
 	>
 		<div class="info">
 			<img src={ item.ImageURL } alt=""/>
@@ -123,8 +117,7 @@ templ ItemCSS() {
 templ NewItem() {
 	<div
 		id="new-item"
-		data-on:click={ ` if ($selectedItem === 'new') { $selectedItem = ''}
-    else { $selectedItem = 'new'}; $showControls = false` }
+		data-on:click="if ($selectedItem !== 'new') {$selectedItem = 'new'; $showControls = false} else {$selectedItem = ''}"
 		data-class:selected="$selectedItem === 'new'"
 	>
 		<b>+</b>

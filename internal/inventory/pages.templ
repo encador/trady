@@ -3,6 +3,11 @@ package inventory
 import "github.com/encador/trady/internal/models"
 
 templ InventoryPage(items []models.Item) {
+	<div
+		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false;"
+		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/inventory/select')} else {$selectedItem = ''}; $showControls = false"
+		data-indicator="selecting"
+	></div>
 	@ItemList(items)
 	<style>
 		#item-list {
@@ -21,169 +26,6 @@ templ InventoryPage(items []models.Item) {
 			min-height: auto;
 
 			overflow: auto;
-		}
-	</style>
-}
-
-templ NewItemForm() {
-	<form id="newItemForm" data-show="$selectedItem == 'new'" style="display: none;" enctype="multipart/form-data">
-		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
-		<h2>New Item</h2>
-		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
-		<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
-		<label for="title">Item Title</label>
-		<input id="title" data-bind:title name="title" type="text" placeholder="Enter Title"/>
-		<label for="description">Item Description</label>
-		<textarea id="description" data-bind:description type="text" name="description" placeholder="Enter Description"></textarea>
-		<div class="buttons">
-			<button
-				id="upload"
-				disabled
-				data-attr:disabled="!$fileName || !$title || !$description || $fetching"
-				data-on:click="@post('/inventory/new', {contentType: 'form'})"
-				data-indicator="fetching"
-			>Add</button>
-		</div>
-	</form>
-}
-
-templ ItemFormCSS() {
-	<style>
-		#newItemForm {
-			background-color: var(--dark-3);
-			border: 3px solid var(--dark-4);
-			border-radius: 10px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 5px;
-			width: 80%;
-			height: fit-content;
-			padding: 5px 0px 5px 0px;
-			user-select: none;
-		}
-		#newItemForm .buttons {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			margin-top: 10px;
-			margin-bottom: 5px;
-			gap: 20px;
-			overflow: hidden;
-			width: 90%;
-		}
-		#newItemForm h2 {
-			width: 100%;
-			padding-bottom: 5px;
-			text-align: center;
-			color: var(--white-3);
-			border-bottom: 3px solid var(--dark-4);
-		}
-
-		#newItemForm .buttons button {
-			border-radius: 8px;
-			background: none;
-			font-weight: bolder;
-			margin: 0px;
-			height: 30px;
-			width: 130px;
-			font-size: 15px;
-		}
-		#newItemForm .buttons #upload {
-			border: var(--green-2) solid 3px;
-			color: var(--green-1);
-		}
-		#newItemForm .buttons #upload:hover {
-			background: var(--green-2);
-			border: var(--green-3) solid 3px;
-			cursor: pointer;
-		}
-		#newItemForm .buttons #upload:disabled {
-			border-color: var(--dark-2);
-			color: var(--dark-1);
-		}
-		#newItemForm .buttons #upload:disabled:hover {
-			border-color: var(--dark-2);
-			background: var(--dark-3);
-			cursor: default;
-		}
-
-		#newItemForm #file-name {
-			color: var(--orange-1);
-			border: 3px solid var(--dark-2);
-			background-color: var(--dark-3);
-			margin: 10px 0 10px 0;
-			width: 60%;
-			height: 25px;
-			border-radius: 15px;
-			align-items: center;
-			justify-content: center;
-			display: flex;
-			overflow: auto;
-		}
-		#newItemForm #file-name:hover {
-			border: 3px solid var(--dark-1);
-			background-color: var(--dark-2);
-
-			cursor: pointer;
-		}
-		#newItemForm label {
-			color: var(--blue-1);
-			width: fit-content;
-			text-align: center;
-			padding: 0 5px 0 5px;
-			font-weight: 600;
-		}
-		#newItemForm #file-upload {
-			/* display:none; */
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			border: 0;
-		}
-		#newItemForm textarea {
-			background-color: var(--dark-2);
-			border: 3px dashed var(--dark-3);
-			border-radius: 5px;
-			color: var(--white-2);
-			padding: 5px;
-			height: 60px;
-			width: 80%;
-			resize: none;
-			overflow: auto;
-			outline: none;
-		}
-		#newItemForm textarea:hover {
-			border: 3px dashed var(--blue-2);
-		}
-		#newItemForm textarea:focus {
-			border: 3px solid var(--blue-2);
-		}
-		#newItemForm input {
-			border: var(--dark-3) dashed 3px;
-			background-color: var(--dark-2);
-			color: var(--white-2);
-			/* caret-color: var(--white-1); */
-			border-radius: 15px;
-			padding: 2px;
-			outline: none;
-			font-size: 15px;
-			text-align: center;
-			width: 70%;
-			height: auto;
-			font-weight: 500;
-			margin-bottom: 10px;
-		}
-		#newItemForm input:hover {
-			border: var(--blue-2) dashed 3px;
-			cursor: text;
-		}
-		#newItemForm input:focus {
-			border: var(--blue-2) solid 3px;
 		}
 	</style>
 }

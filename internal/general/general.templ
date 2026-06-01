@@ -22,13 +22,13 @@ css button() {
 }
 
 templ MsgBox(msg string, level int) {
-	<div class={ "msg", "level-"+strconv.Itoa(level) } data-on-interval__duration.10s="el.remove()" data-on:click="el.remove()" style={ msgBoxColor(level) }>
+	<div class={ "msg", "level-"+strconv.Itoa(level) } data-on-interval__duration.2s="el.remove()" style={ msgBoxColor(level) }>
 		<p>{ msg }</p>
 	</div>
 }
 
 templ MsgBoxMultiple(msg []string, level int) {
-	<div class={ "msg", "level-"+strconv.Itoa(level) } data-on-interval__duration.10s="el.remove()" data-on:click="el.remove()">
+	<div class={ "msg", "level-"+strconv.Itoa(level) } data-on-interval__duration.2s="el.remove()">
 		for _, m := range msg {
 			<p>{ m }</p>
 		}
@@ -47,7 +47,6 @@ templ MsgBoxCSS() {
 			height: auto;
 			padding: 5px;
 			/* margin: 10px; */
-			cursor: pointer;
 		}
 		.msg p {
 			font-weight: bold;
