@@ -35,6 +35,8 @@ var secLevel = map[string]int{
 	"/inventory":      1,
 	"/inventory/new":  1,
 	"/inventory/select": 1,
+	"/inventory/list": 1,
+	"/inventory/delist": 1,
 	"/inventory/delete": 1,
 }
 

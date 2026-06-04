@@ -13,6 +13,7 @@ templ NewItemForm() {
 		<div class="buttons">
 			<button
 				id="upload"
+				class="green"
 				disabled
 				data-attr:disabled="!$fileName || !$title || !$description || $fetching"
 				data-on:click="@post('/inventory/new', {contentType: 'form'})"
@@ -55,32 +56,11 @@ templ ItemFormCSS() {
 			border-bottom: 3px solid var(--dark-4);
 		}
 
-		#newItemForm .buttons button {
-			border-radius: 8px;
-			background: none;
+		#newItemForm .buttons #upload {
 			font-weight: bolder;
-			margin: 0px;
 			height: 30px;
 			width: 130px;
 			font-size: 15px;
-		}
-		#newItemForm .buttons #upload {
-			border: var(--green-2) solid 3px;
-			color: var(--green-1);
-		}
-		#newItemForm .buttons #upload:hover {
-			background: var(--green-2);
-			border: var(--green-3) solid 3px;
-			cursor: pointer;
-		}
-		#newItemForm .buttons #upload:disabled {
-			border-color: var(--dark-2);
-			color: var(--dark-1);
-		}
-		#newItemForm .buttons #upload:disabled:hover {
-			border-color: var(--dark-2);
-			background: var(--dark-3);
-			cursor: default;
 		}
 
 		#newItemForm #file-name {

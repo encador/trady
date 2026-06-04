@@ -7,7 +7,7 @@ templ LoginForm() {
 		<input data-bind="username" placeholder="Enter Name" type="text" id="name" name="username"/>
 		<label for="password">Password</label>
 		<input data-bind:pass placeholder="Enter Password" type="password" name="password"/>
-		<button disabled data-attr:disabled="$pass == '' || $username == ''" data-on:click="@post('/user/login', {contentType: 'form'})" id="submit">Login</button>
+		<button disabled data-attr:disabled="$pass == '' || $username == ''" data-on:click="@post('/user/login', {contentType: 'form'})" id="submit" class="green">Login</button>
 	</form>
 }
 
@@ -21,7 +21,7 @@ templ SignupForm() {
 		<div data-computed:match="$pass == $pass2"></div>
 		<label data-class:wrong="!$match" for="password">Repeat Password</label>
 		<input data-bind:pass2 data-class:wrong="!$match" placeholder="Repeat Password" type="password"/>
-		<button disabled data-attr:disabled="!$match || $pass == '' || $username == ''" data-on:click="@post('/user/new', {contentType: 'form'})" id="submit">Sign Up</button>
+		<button disabled data-attr:disabled="!$match || $pass == '' || $username == ''" data-on:click="@post('/user/new', {contentType: 'form'})" id="submit" class="green">Sign Up</button>
 	</form>
 }
 
@@ -50,29 +50,11 @@ templ FormCSS() {
 			border-bottom: 3px solid var(--dark-4);
 		}
 		#submit {
-			border: var(--green-2) solid 3px;
-			color: var(--green-1);
-			border-radius: 8px;
-			background: none;
 			font-weight: bolder;
 			margin: 0px;
 			height: 30px;
 			width: 100px;
 			font-size: 15px;
-		}
-		#submit:disabled {
-			border-color: var(--dark-2);
-			color: var(--dark-1);
-		}
-		#submit:disabled:hover {
-			background: var(--dark-3);
-			border-color: var(--dark-2);
-			cursor: default;
-		}
-		#submit:hover {
-			background: var(--green-2);
-			border: var(--green-3) solid 3px;
-			cursor: pointer;
 		}
 		input {
 			border: var(--dark-2) solid 2px;
