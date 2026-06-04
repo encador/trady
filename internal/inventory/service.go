@@ -195,3 +195,11 @@ func listItem(db *sql.DB, item models.Item) error {
 	}
 	return nil
 }
+
+func delistItem(db *sql.DB, item models.Item) error {
+	q := `update items set listed = false where id = ?`
+	if _, err := db.Exec(q, item.ID); err != nil{
+		return err
+	}
+	return nil
+}

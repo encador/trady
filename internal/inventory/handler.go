@@ -185,3 +185,37 @@ func (h *InventoryHandler) HandleList() http.Handler {
 
 	})
 }
+func (h *InventoryHandler) HandleDelist() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "POST only", http.StatusMethodNotAllowed)
+		}
+		signals := &InventorySignals{}
+		if err := datastar.ReadSignals(r, signals); err != nil {
+			fmt.Println(err)
+			http.Error(w, "signals error", http.StatusInternalServerError)
+			return
+		}
+
+		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+			http.Error(w, "auth error", http.StatusUnauthorized)
+			return
+		}
+		item, err := getItem(h.database, signals.SelectedItemID)
+		if err != nil {
+			http.Error(w, "error", http.StatusInternalServerError)
+			return
+		}
+
+		sse := datastar.NewSSE(w, r)
+		if err := delistItem(h.database, item); err != nil {
+			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+			return
+		}
+		item.Listed = false
+		sse.PatchElementTempl(ItemContols(item))
+		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
+		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+
+	})
+}
