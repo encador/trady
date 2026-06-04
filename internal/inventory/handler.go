@@ -180,6 +180,7 @@ func (h *InventoryHandler) HandleList() http.Handler {
 		}
 		item.Listed = true
 		sse.PatchElementTempl(ItemContols(item))
+		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
 		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
 
 	})

@@ -38,7 +38,7 @@ templ Item(item models.Item) {
 		data-on:click={ `el.dispatchEvent(new CustomEvent('item-selected', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
 	>
-		<div class="info">
+		<div class="info" style = {templ.KV("border-style: dashed;", item.Listed)}>
 			<img src={ item.ImageURL } alt=""/>
 			<p class="name">{ item.Title }</p>
 		</div>
