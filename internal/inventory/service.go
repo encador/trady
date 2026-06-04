@@ -187,3 +187,11 @@ func deleteItem(db *sql.DB, itemID string, directory string) error {
 	return nil
 
 }
+
+func listItem(db *sql.DB, item models.Item) error {
+	q := `update items set listed = true where id = ?`
+	if _, err := db.Exec(q, item.ID); err != nil{
+		return err
+	}
+	return nil
+}

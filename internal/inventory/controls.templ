@@ -35,7 +35,11 @@ templ ItemContols(item models.Item) {
 		</div>
 		<div id="options">
 			<h2>Item Options</h2>
-			<button id="list" class="blue" data-on:click="alert('list')"  data-indicator="fetching" data-attr:disabled="$fetching">List Item</button>
+			if !item.Listed {
+				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">List Item</button>
+			} else {
+				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Delist Item</button>
+}
 			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
 		</div>
 	</div>
@@ -124,9 +128,9 @@ templ ItemContolsCSS() {
 		#item-controls button {
 			height: 30px;
 			margin: 10px 0 10px 0;
-      font-size: 15px;
-      width: auto;
-      padding: 0 15px 0 15px;
+			font-size: 15px;
+			width: auto;
+			padding: 0 15px 0 15px;
 		}
 	</style>
 }

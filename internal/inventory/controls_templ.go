@@ -128,7 +128,22 @@ func ItemContols(item models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</textarea></div><div id=\"options\"><h2>Item Options</h2><button id=\"list\" class=\"blue\" data-on:click=\"alert('list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">List Item</button> <button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</textarea></div><div id=\"options\"><h2>Item Options</h2>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if !item.Listed {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<button id=\"list\" class=\"blue\" data-on:click=\"@post('/inventory/list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">List Item</button> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<button id=\"delist\" class=\"orange\" data-on:click=\"@post('/inventory/delist')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delist Item</button> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -157,7 +172,7 @@ func ItemContolsCSS() templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 60%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: 30px;\n\t\t\tmargin: 10px 0 10px 0;\n      font-size: 15px;\n      width: auto;\n      padding: 0 15px 0 15px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 60%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: 30px;\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\tfont-size: 15px;\n\t\t\twidth: auto;\n\t\t\tpadding: 0 15px 0 15px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
