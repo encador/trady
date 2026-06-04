@@ -60,7 +60,7 @@ func loginPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><button id=\"toggle\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t\t#toggle {\n\t\t\tbackground: none;\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder: solid 3px var(--blue-2);\n\t\t\tborder-radius: 8px;\n\t\t\tmargin: 10px 0 0 0;\n\t\t\tpadding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n\t\t#toggle:hover {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tcolor: var(--blue-1);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcursor: pointer;\n\t\t}\n    #errors {\n      margin-bottom: 10px;\n    }\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><button id=\"toggle\" class=\"blue\" data-text=\"$toggle === true ? 'Use Existing' : 'Create Account'\" data-on:click=\"$toggle = !$toggle\" type=\"button\"></button><style>\n\t\tdiv {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t}\n\t\t#toggle {\n\t\t\tmargin: 10px 0 0 0;\n\t\t\tpadding: 4px 10px 4px 10px;\n\t\t\twidth: auto;\n\t\t\tfont-weight: bolder;\n\t\t\tfont-size: 15px;\n\t\t}\n    #errors {\n      margin-bottom: 10px;\n    }\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,13 +96,13 @@ func userPage(user models.User) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/users/pages.templ`, Line: 50, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/users/pages.templ`, Line: 40, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</p></div><button id=\"logout\" data-on:click=\"@post('/user/logout')\">Log Out</button><style>\n\t\th1 {\n\t\t\tcolor: var(--white-2);\n\t\t}\n\t\t#account-box {\n\t\t\tborder: 3px solid var(--blue-2);\n\t\t\tborder-radius: 5px;\n\t\t\tmin-width: 200px;\n\t\t\twidth: fit-content;\n\t\t\tmax-width: 90%;\n\t\t\tpadding: 5px;\n\t\t\theight: 100px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t#account-box p {\n\t\t\tfont-weight: bold;\n\t\t\tcolor: var(--white-2);\n\t\t\tfont-size: 1.5em;\n\t\t}\n\n\t\t#logout {\n\t\t\ttext-decoration: none;\n\t\t\tcolor: var(--red-1);\n\t\t\tbackground: none;\n\t\t\tborder: var(--red-2) solid 3px;\n\t\t\tmargin-left: 5px;\n\t\t\tmargin-right: 5px;\n\t\t\tborder-radius: 5px;\n\t\t\tfont-weight: bolder;\n\t\t\theight: auto;\n\t\t\twidth: fit-content;\n\t\t\tfont-size: 16px;\n\t\t\ttext-align: center;\n\t\t\tpadding-top: 5px;\n\t\t\tpadding-bottom: 2px;\n\t\t\tpadding-left: 10px;\n\t\t\tpadding-right: 10px;\n\t\t\tmargin: 10px;\n\t\t}\n\n\t\t#logout:hover {\n\t\t\tbackground: var(--red-2);\n\t\t\tborder-color: var(--red-3);\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</p></div><button id=\"logout\" class=\"red\" data-on:click=\"@post('/user/logout')\">Log Out</button><style>\n\t\th1 {\n\t\t\tcolor: var(--white-2);\n\t\t}\n\t\t#account-box {\n\t\t\tborder: 3px solid var(--blue-2);\n\t\t\tborder-radius: 5px;\n\t\t\tmin-width: 200px;\n\t\t\twidth: fit-content;\n\t\t\tmax-width: 90%;\n\t\t\tpadding: 5px;\n\t\t\theight: 100px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\toverflow: auto;\n\t\t}\n\n\t\t#account-box p {\n\t\t\tfont-weight: bold;\n\t\t\tcolor: var(--white-2);\n\t\t\tfont-size: 1.5em;\n\t\t}\n\n\t\t#logout {\n\t\t\tmargin-left: 5px;\n\t\t\tmargin-right: 5px;\n\t\t\tborder-radius: 5px;\n\t\t\tfont-weight: bolder;\n\t\t\theight: auto;\n\t\t\twidth: fit-content;\n\t\t\tfont-size: 16px;\n\t\t\tpadding-top: 5px;\n\t\t\tpadding-bottom: 2px;\n\t\t\tpadding-left: 10px;\n\t\t\tpadding-right: 10px;\n\t\t\tmargin: 10px;\n\t\t}\n\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
