@@ -35,7 +35,8 @@ templ ItemContols(item models.Item) {
 		</div>
 		<div id="options">
 			<h2>Item Options</h2>
-			<button id="delete" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
+			<button id="list" class="blue" data-on:click="alert('list')"  data-indicator="fetching" data-attr:disabled="$fetching">List Item</button>
+			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
 		</div>
 	</div>
 }
@@ -121,39 +122,11 @@ templ ItemContolsCSS() {
 		}
 
 		#item-controls button {
-			border-radius: 5px;
-			background: none;
-			border: solid 3px;
-			font-weight: bold;
-			width: 80px;
 			height: 30px;
-			cursor: pointer;
-			margin: 15px 0 15px 0;
-		}
-		#item-controls button#delete {
-			color: var(--red-1);
-			border-color: var(--red-2);
-			margin-bottom: 10px;
-			width: 50%;
-			font-weight: bold;
-			font-size: 15px;
-		}
-		#item-controls button#delete:hover {
-			background-color: var(--red-2);
-			border-color: var(--red-3);
-		}
-    #item-controls button#delete:disabled {
-			color: var(--dark-1);
-			border-color: var(--dark-2);
-			margin-bottom: 10px;
-			width: 50%;
-			font-weight: bold;
-			font-size: 15px;
-		}
-		#item-controls button#delete:disabled:hover {
-			background-color: var(--dark-3);
-			border-color: var(--dark-2);
-      cursor: default;
+			margin: 10px 0 10px 0;
+      font-size: 15px;
+      width: auto;
+      padding: 0 15px 0 15px;
 		}
 	</style>
 }

@@ -35,6 +35,56 @@ templ colors() {
 			--white-3: rgb(200, 200, 200);
 			--white-4: rgb(150, 150, 150);
 		}
+		button {
+			background: none;
+			border-radius: 5px;
+			border: solid 3px;
+			font-weight: bold;
+		}
+		button:disabled {
+			color: var(--dark-1) !important;
+			border-color: var(--dark-2) !important;
+		}
+    button:disabled:hover {
+      background:none !important;
+      cursor: default !important;
+		}
+		button.red {
+			color: var(--red-1);
+			border-color: var(--red-2);
+		}
+		button.red:hover {
+			background-color: var(--red-2);
+			border-color: var(--red-3);
+			cursor: pointer;
+		}
+		button.green {
+			color: var(--green-1);
+			border-color: var(--green-2);
+		}
+		button.green:hover {
+			background-color: var(--green-2);
+			border-color: var(--green-3);
+			cursor: pointer;
+		}
+		button.orange {
+			color: var(--orange-1);
+			border-color: var(--orange-2);
+		}
+		button.orange:hover {
+			background-color: var(--orange-2);
+			border-color: var(--orange-3);
+			cursor: pointer;
+		}
+		button.blue {
+			color: var(--blue-1);
+			border-color: var(--blue-2);
+		}
+		button.blue:hover {
+			background-color: var(--blue-2);
+			border-color: var(--blue-3);
+			cursor: pointer;
+		}
 	</style>
 }
 
