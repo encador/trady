@@ -44,9 +44,9 @@ templ colors() {
 			color: var(--dark-1) !important;
 			border-color: var(--dark-2) !important;
 		}
-    button:disabled:hover {
-      background:none !important;
-      cursor: default !important;
+		button:disabled:hover {
+			background: none !important;
+			cursor: default !important;
 		}
 		button.red {
 			color: var(--red-1);
@@ -122,24 +122,10 @@ templ mainContent(content templ.Component) {
 	</style>
 }
 
-templ controlBox(controls templ.Component) {
-	<div id="ctrl-outerbox">
-		@MsgBoxCSS()
-		<div id="msg-box"></div>
-		<div id="ctrl-box">
-			@controls
-		</div>
-	</div>
+templ msgBox() {
+	@MsgBoxCSS()
+	<div id="msg-box"></div>
 	<style>
-		#ctrl-box {
-			background-color: var(--dark-2);
-			height: 68vh;
-			width: 20vw;
-			min-width: 190px;
-			border-radius: 10px;
-			overflow: auto;
-			padding: 10px 0 10px 0;
-		}
 		#msg-box {
 			/* background-color: var(--dark-2); */
 			/* border: 2px solid var(--dark-2); */
@@ -155,6 +141,27 @@ templ controlBox(controls templ.Component) {
 			overflow: hidden;
 			user-select: none;
 		}
+	</style>
+}
+
+templ controlBox(controls templ.Component) {
+	<div id="ctrl-outerbox">
+		@msgBox()
+		<div id="ctrl-box">
+			@controls
+		</div>
+	</div>
+	<style>
+		#ctrl-box {
+			background-color: var(--dark-2);
+			height: 68vh;
+			width: 20vw;
+			min-width: 190px;
+			border-radius: 10px;
+			overflow: auto;
+			padding: 10px 0 10px 0;
+		}
+
 		#ctrl-outerbox {
 			gap: 10px;
 			display: flex;
