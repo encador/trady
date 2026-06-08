@@ -79,6 +79,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 			OwnerID:     auth.GetUser(r.Context()).ID,
 			Title:       r.FormValue("title"),
 			Description: r.FormValue("description"),
+			Listed:      r.FormValue("listed") == "true",
 		}
 
 		item, err = addItem(h.database, file, item, h.uploadDir)
