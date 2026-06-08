@@ -38,7 +38,7 @@ templ Item(item models.Item) {
 		data-on:click={ `el.dispatchEvent(new CustomEvent('item-selected', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
 		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
 	>
-		<div class="info" style = {templ.KV("border-style: dashed;", item.Listed)}>
+		<div class="info" style = {templ.KV("border-style: solid;", item.Listed)}>
 			<img src={ item.ImageURL } alt=""/>
 			<p class="name">{ item.Title }</p>
 		</div>
@@ -55,7 +55,7 @@ templ ItemCSS() {
 		}
 
 		.inventory-item .info {
-			border: 3px solid var(--dark-4);
+			border: 3px dashed var(--dark-4);
 			color: var(--white-2);
 			border-radius: 10px;
 			width: 130px;
@@ -66,7 +66,7 @@ templ ItemCSS() {
 
 		.inventory-item .info:hover {
 			cursor: pointer;
-			border: 3px solid var(--orange-2);
+			border-color: var(--orange-2);
 			background: var(--orange-1);
 		}
 

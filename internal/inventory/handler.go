@@ -175,13 +175,13 @@ func (h *InventoryHandler) HandleList() http.Handler {
 
 		sse := datastar.NewSSE(w, r)
 		if err := listItem(h.database, item); err != nil {
-			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 			return
 		}
 		item.Listed = true
 		sse.PatchElementTempl(ItemContols(item))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
-		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})
 }
@@ -209,13 +209,13 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 
 		sse := datastar.NewSSE(w, r)
 		if err := delistItem(h.database, item); err != nil {
-			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 			return
 		}
 		item.Listed = false
 		sse.PatchElementTempl(ItemContols(item))
 		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
-		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
+		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})
 }

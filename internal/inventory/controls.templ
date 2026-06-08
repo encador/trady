@@ -30,17 +30,22 @@ templ ItemContols(item models.Item) {
 		<div id="details">
 			<h2>Item Details</h2>
 			<img src={ item.ImageURL } alt=""/>
+			if item.Listed {
+				<textarea disabled id="status">Status: Public</textarea>
+			} else {
+				<textarea disabled id="status">Status: Private</textarea>
+			}
 			<textarea disabled id="title">{ item.Title }</textarea>
 			<textarea disabled id="description">{ item.Description }</textarea>
 		</div>
 		<div id="options">
 			<h2>Item Options</h2>
 			if !item.Listed {
-				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">List Item</button>
+				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">Make Public</button>
 			} else {
-				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Delist Item</button>
-}
-			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
+				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Make Private</button>
+			}
+			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Remove Item</button>
 		</div>
 	</div>
 }
@@ -81,7 +86,7 @@ templ ItemContolsCSS() {
 		#item-controls #options {
 			border: 3px solid var(--dark-4);
 			background-color: var(--dark-3);
-			width: 60%;
+			width: 70%;
 			height: fit-content;
 			overflow: hidden;
 			display: flex;
@@ -89,6 +94,9 @@ templ ItemContolsCSS() {
 			align-content: center;
 			align-items: center;
 			border-radius: 5px;
+		}
+		p#status {
+			color: var(--white-3);
 		}
 
 		#item-controls #details textarea {
@@ -105,9 +113,17 @@ templ ItemContolsCSS() {
 			font-weight: bold;
 			resize: none;
 		}
+		#item-controls #details #status {
+			height: 30px;
+			width: 150px;
+			border: none;
+			background: none;
+			margin-top: 10px;
+			border-radius: 0;
+		}
+
 		#item-controls #details #title {
 			height: 30px;
-			margin-top: 10px;
 			margin-bottom: 10px;
 			border-radius: 0;
 		}
@@ -126,11 +142,12 @@ templ ItemContolsCSS() {
 		}
 
 		#item-controls button {
-			height: 30px;
+			height: auto;
 			margin: 10px 0 10px 0;
-			font-size: 15px;
+			font-size: 17px;
+			font-weight: 600;
 			width: auto;
-			padding: 0 15px 0 15px;
+			padding: 2px 15px 2px 15px;
 		}
 	</style>
 }
