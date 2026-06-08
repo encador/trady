@@ -45,7 +45,7 @@ templ ItemContols(item models.Item) {
 			} else {
 				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Make Private</button>
 			}
-			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Remove Item</button>
+			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
 		</div>
 	</div>
 }

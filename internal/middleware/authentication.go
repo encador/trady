@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/models"
 	"github.com/encador/trady/internal/users"
 )
 
@@ -29,15 +29,16 @@ var secLevel = map[string]int{
 	"/user/new":   -1,
 
 	// Protected Pages
-	"/":               1,
-	"/user":           1,
-	"/user/logout":    1,
-	"/inventory":      1,
-	"/inventory/new":  1,
+	"/":                 1,
+	"/user":             1,
+	"/user/logout":      1,
+	"/inventory":        1,
+	"/inventory/new":    1,
 	"/inventory/select": 1,
-	"/inventory/list": 1,
+	"/inventory/list":   1,
 	"/inventory/delist": 1,
 	"/inventory/delete": 1,
+	"/board":            1,
 }
 
 // List of urls that redirect to Login when not logged-in

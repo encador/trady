@@ -7,11 +7,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/encador/trady/internal/board"
 	"github.com/encador/trady/internal/database"
+	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/inventory"
 	"github.com/encador/trady/internal/middleware"
 	"github.com/encador/trady/internal/users"
-	"github.com/encador/trady/internal/general"
 )
 
 type config struct {
@@ -68,6 +69,7 @@ func main() {
 		fmt.Println(err)
 		os.Exit(0)
 	}
+	boardH := board.NewBoardHandler(db)
 
 	fs := http.FileServer(http.FS(staticFiles))
 	mux.Handle("/static/", middleware.Cache1(fs))
@@ -92,6 +94,8 @@ func main() {
 	mux.Handle("/inventory/delete", invH.HandleDelete())
 	mux.Handle("/inventory/list", invH.HandleList())
 	mux.Handle("/inventory/delist", invH.HandleDelist())
+
+	mux.Handle("/board", boardH.BoardPage())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))
