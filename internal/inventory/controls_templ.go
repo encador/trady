@@ -102,48 +102,63 @@ func ItemContols(item models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" alt=\"\"> <textarea disabled id=\"title\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" alt=\"\"> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if item.Listed {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<textarea disabled id=\"status\">Status: Public</textarea> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<textarea disabled id=\"status\">Status: Private</textarea> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<textarea disabled id=\"title\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/controls.templ`, Line: 33, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/controls.templ`, Line: 38, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</textarea> <textarea disabled id=\"description\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</textarea> <textarea disabled id=\"description\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/controls.templ`, Line: 34, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/inventory/controls.templ`, Line: 39, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</textarea></div><div id=\"options\"><h2>Item Options</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</textarea></div><div id=\"options\"><h2>Item Options</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if !item.Listed {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<button id=\"list\" class=\"blue\" data-on:click=\"@post('/inventory/list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">List Item</button> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<button id=\"list\" class=\"blue\" data-on:click=\"@post('/inventory/list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Public</button> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<button id=\"delist\" class=\"orange\" data-on:click=\"@post('/inventory/delist')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delist Item</button> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<button id=\"delist\" class=\"orange\" data-on:click=\"@post('/inventory/delist')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Private</button> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -172,7 +187,7 @@ func ItemContolsCSS() templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 60%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-top: 10px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: 30px;\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\tfont-size: 15px;\n\t\t\twidth: auto;\n\t\t\tpadding: 0 15px 0 15px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 70%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\t\tp#status {\n\t\t\tcolor: var(--white-3);\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #status {\n\t\t\theight: 30px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: auto;\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\tfont-size: 17px;\n\t\t\tfont-weight: 600;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 15px 2px 15px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

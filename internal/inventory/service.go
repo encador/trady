@@ -159,8 +159,8 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 	item.ID = id
 	item.ImageURL = filepath.Join("images", fileName)
 
-	q := `insert into items(id, owner_id, title, description, image) values (?, ?, ?, ?,?)`
-	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL); err != nil {
+	q := `insert into items(id, owner_id, title, description, image, listed) values (?, ?, ?, ?,?, ?)`
+	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL, item.Listed); err != nil {
 		return item, err
 	}
 

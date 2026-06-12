@@ -1,0 +1,114 @@
+package board
+
+import "github.com/encador/trady/internal/models"
+
+templ Board(listings []models.Item) {
+	<div id="item-list">
+		@ListingCSS()
+		for _, listing := range listings {
+			@Listing(listing)
+		}
+	</div>
+	<style>
+		#item-list {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 15px;
+			/* align-items: center; */
+			justify-content: center;
+			box-sizing: border-box;
+			margin: 0;
+			/* width: 100%; */
+			/* height: 100%; */
+			max-width: 100%;
+			max-height: 100%;
+			min-width: auto;
+			min-height: auto;
+
+			overflow: auto;
+		}
+	</style>
+}
+
+templ Listing(listing models.Item) {
+	<div
+		id={ "listing-" + listing.ID }
+		class="listing"
+		data-on:click={ `document.dispatchEvent(new CustomEvent('listing-selected', { detail: { id: '` + listing.ID + `' }, bubbles: true, composed: true }))` }
+		data-class:selected={ "$selectedListing === '" + listing.ID + "'" }
+	>
+		<div class="info">
+			<img src={ listing.ImageURL } alt=""/>
+			<p class="name">{ listing.Title }</p>
+		</div>
+	</div>
+}
+
+templ ListingCSS() {
+	<style>
+		.listing .name {
+			overflow: hidden;
+			height: 20px;
+			font-weight: bold;
+			width: 100%;
+		}
+
+		.listing .info {
+			border: 3px solid var(--dark-4);
+			color: var(--white-2);
+			border-radius: 10px;
+			width: 130px;
+			height: 140px;
+			/* padding: 5px; */
+			overflow: hidden;
+		}
+
+		.listing .info:hover {
+			cursor: pointer;
+			border-color: var(--orange-2);
+			background: var(--orange-1);
+		}
+
+		.listing .info:hover img {
+			border-color: var(--orange-2);
+		}
+
+		.listing {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 10px;
+			/* border: 2px solid var(--dark-3); */
+			background: var(--dark-3);
+			border-radius: 10px;
+			/* padding: 10px; */
+			text-align: center;
+			width: auto;
+			height: auto;
+			user-select: none;
+		}
+
+		.listing.selected .info {
+			/* border: 3px solid var(--blue-3); */
+			border-color: var(--blue-3);
+			background: var(--blue-2);
+		}
+
+		.listing.selected .info img {
+			border-color: var(--blue-3);
+		}
+
+		.listing img {
+			display: block;
+			width: 100%;
+			/* height: 100px; */
+			height: 80%;
+			object-fit: cover;
+			border-bottom: 3px solid var(--dark-4);
+			background: none;
+			margin-bottom: 2px;
+			outline: none;
+		}
+	</style>
+}

@@ -3,22 +3,28 @@ package general
 templ Navbar(path string) {
 	<nav>
 		<a
-			class={ "nav-item", templ.KV("active", path == "/user") }
-			href="/user"
-		>
-			Account
-		</a>
-		<a
 			class={ "nav-item", templ.KV("active", path == "/") }
 			href="/"
 		>
 			Home
 		</a>
 		<a
+			class={ "nav-item", templ.KV("active", path == "/board") }
+			href="/board"
+		>
+			Public Board
+		</a>
+		<a
 			class={ "nav-item", templ.KV("active", path == "/inventory") }
 			href="/inventory"
 		>
 			Inventory
+		</a>
+		<a
+			class={ "nav-item", templ.KV("active", path == "/user") }
+			href="/user"
+		>
+			Account
 		</a>
 	</nav>
 	<style>

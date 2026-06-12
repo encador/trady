@@ -2,8 +2,10 @@ package inventory
 
 templ NewItemForm() {
 	<form id="newItemForm" data-show="$selectedItem == 'new'" style="display: none;" enctype="multipart/form-data">
-		<div data-init="$fileName = ''; $description = ''; $title = ''"></div>
+		<div data-init="$fileName = ''; $description = ''; $title = ''; "></div>
 		<h2>New Item</h2>
+		<p name="status" id="status-toggle" data-text="$isPublic ? 'Status: Public' : 'Status: Private'" data-on:click="$isPublic = !$isPublic"></p>
+		<input hidden type="text" name="listed" data-attr:value="$isPublic ? 'true' : 'false'"/>
 		<label id="file-name" for="file-upload" data-text="$fileName != '' ? $fileName : 'Select Image'"></label>
 		<input id="file-upload" data-on:change="$fileName = evt.target.files[0] ? evt.target.files[0].name : ''" type="file" name="image" accept="image/png, image/jpeg"/>
 		<label for="title">Item Title</label>
@@ -25,6 +27,16 @@ templ NewItemForm() {
 
 templ ItemFormCSS() {
 	<style>
+		#status-toggle {
+			color: var(--white-3);
+			font-size: 18px;
+			font-weight: bold;
+			margin-top: 5px;
+			cursor: pointer;
+		}
+		#status-toggle:hover {
+			color: var(--orange-1);
+		}
 		#newItemForm {
 			background-color: var(--dark-3);
 			border: 3px solid var(--dark-4);
