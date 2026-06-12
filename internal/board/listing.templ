@@ -34,7 +34,7 @@ templ Listing(listing models.Item) {
 	<div
 		id={ "listing-" + listing.ID }
 		class="listing"
-		data-on:click={ `el.dispatchEvent(new CustomEvent('listing-selected', { detail: { id: '` + listing.ID + `' }, bubbles: true, composed: true }))` }
+		data-on:click={ `document.dispatchEvent(new CustomEvent('listing-selected', { detail: { id: '` + listing.ID + `' }, bubbles: true, composed: true }))` }
 		data-class:selected={ "$selectedListing === '" + listing.ID + "'" }
 	>
 		<div class="info">

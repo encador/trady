@@ -3,5 +3,10 @@ package board
 import "github.com/encador/trady/internal/models"
 
 templ BoardPage(listings []models.Item) {
+	<div
+		data-init="$selectedListing = ''; $previousListing = ''; $showControls = false;"
+		data-on:listing-selected__window="if (evt.detail.id !== $selectedListing) {$selectedListing = evt.detail.id; @post('/board/select')} else {$selectedListing = ''}; $showControls = false"
+		data-indicator="selecting"
+	></div>
 	@Board(listings)
 }

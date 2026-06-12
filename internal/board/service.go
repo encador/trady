@@ -29,3 +29,15 @@ func getAllListings(db *sql.DB) ([]models.Item, error) {
 
 	return listings, nil
 }
+
+func getListing(db *sql.DB, itemID string) (models.Item, error) {
+	q := `select id, owner_id, title, description, image, listed from items where id = ?`
+	item := models.Item{}
+
+	row := db.QueryRow(q, itemID)
+	if err := row.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
+		return item, err
+	}
+
+	return item, nil
+}

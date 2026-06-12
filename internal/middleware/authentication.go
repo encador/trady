@@ -39,6 +39,7 @@ var secLevel = map[string]int{
 	"/inventory/delist": 1,
 	"/inventory/delete": 1,
 	"/board":            1,
+	"/board/select":     1,
 }
 
 // List of urls that redirect to Login when not logged-in

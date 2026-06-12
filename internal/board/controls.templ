@@ -1,0 +1,137 @@
+package board
+
+import "github.com/encador/trady/internal/general"
+import "github.com/encador/trady/internal/models"
+
+templ ListingControl() {
+	<div id="lc-box">
+		@general.Spinner("selecting")
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedListing">Nothing Selected</h2>
+		@ListingContolsCSS()
+		@ListingContols(models.Item{})
+	</div>
+	<style>
+		#lc-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			min-height: 100%;
+			align-items: center;
+			justify-content: center;
+			/* background-color: red; */
+		}
+	</style>
+}
+
+templ ListingContols(item models.Item) {
+	<div id="listing-controls" data-show="$showControls" style="display: none;">
+		<div id="details">
+			<h2>Item Details</h2>
+			<img src={ item.ImageURL } alt=""/>
+			<textarea disabled id="title">{ item.Title }</textarea>
+			<textarea disabled id="description">{ item.Description }</textarea>
+		</div>
+	</div>
+}
+
+templ ListingContolsCSS() {
+	<style>
+		#listing-controls {
+			width: 100%;
+			/* background-color: red; */
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+			user-select: none;
+		}
+		#listing-controls #details img {
+			display: block;
+			width: 100%;
+			min-width: 0;
+			max-height: 400px;
+			border-bottom: 3px solid var(--dark-4);
+		}
+		#listing-controls #details {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 80%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+
+		#listing-controls #options {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 70%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+		p#status {
+			color: var(--white-3);
+		}
+
+		#listing-controls #details textarea {
+			border: 3px dashed var(--dark-3);
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			width: 90%;
+			height: 70px;
+			padding: 2px;
+			border-radius: 15px;
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+		}
+		#listing-controls #details #status {
+			height: 30px;
+			width: 150px;
+			border: none;
+			background: none;
+			margin-top: 10px;
+			border-radius: 0;
+		}
+
+		#listing-controls #details #title {
+			height: 30px;
+			margin-bottom: 10px;
+			border-radius: 0;
+		}
+
+		#listing-controls #details #description {
+			margin-bottom: 10px;
+		}
+
+		#listing-controls h2 {
+			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+
+		#listing-controls button {
+			height: auto;
+			margin: 10px 0 10px 0;
+			font-size: 17px;
+			font-weight: 600;
+			width: auto;
+			padding: 2px 15px 2px 15px;
+		}
+	</style>
+}
