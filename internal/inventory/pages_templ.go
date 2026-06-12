@@ -39,10 +39,6 @@ func InventoryPage(items []models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		return nil
 	})
 }

@@ -1,4 +1,7 @@
 package board
 
-templ BoardPage() {
+import "github.com/encador/trady/internal/models"
+
+templ BoardPage(listings []models.Item) {
+	@Board(listings)
 }

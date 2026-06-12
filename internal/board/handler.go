@@ -2,6 +2,7 @@ package board
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/encador/trady/internal/general"
@@ -17,8 +18,15 @@ func NewBoardHandler(db *sql.DB) *BoardHandler {
 
 func (h *BoardHandler) BoardPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		listings, err := getAllListings(h.database)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, "internal error", http.StatusInternalServerError)
+			return
+		}
+
 		opt := general.Options{
-			Content: general.Hello(""),
+			Content: Board(listings),
 			URL: "/board",
 		}
 		general.Base(opt).Render(r.Context(), w)
