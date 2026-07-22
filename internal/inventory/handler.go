@@ -138,7 +138,7 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
@@ -168,7 +168,7 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
@@ -202,7 +202,7 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return

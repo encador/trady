@@ -52,7 +52,7 @@ func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
 	return items, nil
 }
 
-func getItem(db *sql.DB, itemID string) (models.Item, error) {
+func GetItem(db *sql.DB, itemID string) (models.Item, error) {
 	q := `select id, owner_id, title, description, image, listed from items where id = ?`
 	item := models.Item{}
 
@@ -65,7 +65,7 @@ func getItem(db *sql.DB, itemID string) (models.Item, error) {
 }
 
 func isOwner(db *sql.DB, itemID string, user models.User) bool {
-	item, err := getItem(db, itemID)
+	item, err := GetItem(db, itemID)
 	if err != nil {
 		return false
 	}

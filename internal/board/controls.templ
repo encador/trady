@@ -8,7 +8,7 @@ templ ListingControl() {
 		@general.Spinner("selecting")
 		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedListing">Nothing Selected</h2>
 		@ListingContolsCSS()
-		@ListingContols(models.Item{})
+		@ListingContols(models.Listing{})
 	</div>
 	<style>
 		#lc-box {
@@ -23,13 +23,13 @@ templ ListingControl() {
 	</style>
 }
 
-templ ListingContols(item models.Item) {
+templ ListingContols(listing models.Listing) {
 	<div id="listing-controls" data-show="$showControls" style="display: none;">
 		<div id="details">
 			<h2>Item Details</h2>
-			<img src={ item.ImageURL } alt=""/>
-			<textarea disabled id="title">{ item.Title }</textarea>
-			<textarea disabled id="description">{ item.Description }</textarea>
+			<img src={ listing.Item.ImageURL } alt=""/>
+			<textarea disabled id="title">{ listing.Item.Title }</textarea>
+			<textarea disabled id="description">{ listing.Item.Description }</textarea>
 		</div>
 	</div>
 }

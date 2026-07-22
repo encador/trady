@@ -51,7 +51,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 
 		sse := datastar.NewSSE(w, r)
 		l, err := getListing(h.database, signals.SelectedListingID)
-		if err != nil || !l.Listed {
+		if err != nil || !l.Item.Listed {
 			// http.Error(w, "error", http.StatusInternalServerError)
 			sse.PatchElementTempl(general.MsgBox("Invalid Listing", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
 			signals.SelectedListingID=""
