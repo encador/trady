@@ -28,6 +28,7 @@ templ ListingContols(listing models.Listing) {
 		<div id="details">
 			<h2>Item Details</h2>
 			<img src={ listing.Item.ImageURL } alt=""/>
+			<textarea disabled id="status">{ "User: "+ listing.User.Username }</textarea>
 			<textarea disabled id="title">{ listing.Item.Title }</textarea>
 			<textarea disabled id="description">{ listing.Item.Description }</textarea>
 		</div>
@@ -78,9 +79,6 @@ templ ListingContolsCSS() {
 			align-content: center;
 			align-items: center;
 			border-radius: 5px;
-		}
-		p#status {
-			color: var(--white-3);
 		}
 
 		#listing-controls #details textarea {
