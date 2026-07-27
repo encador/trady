@@ -10,7 +10,7 @@ import (
 )
 
 type BoardSignals struct {
-	SelectedListingID string `json:"selectedListing"`
+	SelectedItemID string `json:"selectedItem"`
 	ShowControls      bool   `json:"showControls"`
 }
 
@@ -50,11 +50,11 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		datastar.ReadSignals(r, signals)
 
 		sse := datastar.NewSSE(w, r)
-		l, err := getListing(h.database, signals.SelectedListingID)
+		l, err := getListing(h.database, signals.SelectedItemID)
 		if err != nil || !l.Item.Listed {
 			// http.Error(w, "error", http.StatusInternalServerError)
 			sse.PatchElementTempl(general.MsgBox("Invalid Listing", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
-			signals.SelectedListingID=""
+			signals.SelectedItemID=""
 			signals.ShowControls=false
 			sse.MarshalAndPatchSignals(signals)
 			return

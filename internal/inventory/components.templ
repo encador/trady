@@ -1,0 +1,105 @@
+package inventory
+
+import (
+	"github.com/encador/trady/internal/general"
+	"github.com/encador/trady/internal/items"
+	"github.com/encador/trady/internal/models"
+)
+
+templ InventoryPage(items []models.Item) {
+	<div
+		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false;"
+		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/inventory/select')} else {$selectedItem = ''}; $showControls = false"
+		data-indicator="selecting"
+	></div>
+	@ItemList(items)
+}
+
+templ ControlBox() {
+	<div id="ic-box">
+		@general.Spinner("selecting")
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
+		@ItemFormCSS()
+		@NewItemForm()
+		@items.ContolsCSS()
+		@items.Contols(models.Item{})
+	</div>
+	<style>
+		#ic-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			min-height: 100%;
+			align-items: center;
+			justify-content: center;
+			/* background-color: red; */
+		}
+	</style>
+}
+
+templ ItemList(list []models.Item) {
+	<div id="item-list">
+		@items.ItemCSS()
+		for _, item := range list {
+			@items.Item(item)
+		}
+		@NewItem()
+	</div>
+	<style>
+		#item-list {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 15px;
+			/* align-items: center; */
+			justify-content: center;
+			box-sizing: border-box;
+			margin: 0;
+			/* width: 100%; */
+			/* height: 100%; */
+			max-width: 100%;
+			max-height: 100%;
+			min-width: auto;
+			min-height: auto;
+
+			overflow: auto;
+		}
+	</style>
+}
+
+templ NewItem() {
+	<div
+		id="new-item"
+		data-on:click="if ($selectedItem !== 'new') {$selectedItem = 'new'; $showControls = false} else {$selectedItem = ''}"
+		data-class:selected="$selectedItem === 'new'"
+	>
+		<b>+</b>
+		<p>Add New</p>
+	</div>
+	<style>
+		#new-item {
+			border: 3px dashed var(--green-2);
+			color: var(--green-1);
+			width: 130px;
+			height: 140px;
+			user-select: none;
+			border-radius: 10px;
+			margin: 10px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			font-size: 27px;
+		}
+		#new-item:hover {
+			cursor: pointer;
+			background-color: var(--green-2);
+			border-color: var(--green-3);
+			color: var(--green-1);
+		}
+		#new-item.selected {
+			background-color: var(--blue-2);
+			border-color: var(--blue-3);
+			color: var(--blue-1);
+		}
+	</style>
+}

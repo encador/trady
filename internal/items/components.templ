@@ -1,31 +1,91 @@
-package inventory
+package items
 
 import "github.com/encador/trady/internal/models"
-import "github.com/encador/trady/internal/general"
 
-templ InventoryControl() {
-	<div id="ic-box">
-		@general.Spinner("selecting")
-		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
-		@ItemFormCSS()
-		@NewItemForm()
-		@ItemContolsCSS()
-		@ItemContols(models.Item{})
+templ Item(item models.Item) {
+	<div
+		id={ "item-" + item.ID }
+		class="inventory-item"
+		data-on:click={ `el.dispatchEvent(new CustomEvent('item-selected', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
+		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
+	>
+		<div class="info" style={ templ.KV("border-style: solid;", item.Listed) }>
+			<img src={ item.ImageURL } alt=""/>
+			<p class="name">{ item.Title }</p>
+		</div>
 	</div>
+}
+
+templ ItemCSS() {
 	<style>
-		#ic-box {
+		.inventory-item .name {
+			overflow: hidden;
+			height: 20px;
+			font-weight: bold;
+			width: 100%;
+		}
+
+		.inventory-item .info {
+			border: 3px dashed var(--dark-4);
+			color: var(--white-2);
+			border-radius: 10px;
+			width: 130px;
+			height: 140px;
+			/* padding: 5px; */
+			overflow: hidden;
+		}
+
+		.inventory-item .info:hover {
+			cursor: pointer;
+			border-color: var(--orange-2);
+			background: var(--orange-1);
+		}
+
+		.inventory-item .info:hover img {
+			border-color: var(--orange-2);
+		}
+
+		.inventory-item {
 			display: flex;
 			flex-direction: column;
-			width: 100%;
-			min-height: 100%;
 			align-items: center;
 			justify-content: center;
-			/* background-color: red; */
+			margin: 10px;
+			/* border: 2px solid var(--dark-3); */
+			background: var(--dark-3);
+			border-radius: 10px;
+			/* padding: 10px; */
+			text-align: center;
+			width: auto;
+			height: auto;
+			user-select: none;
+		}
+
+		.inventory-item.selected .info {
+			/* border: 3px solid var(--blue-3); */
+			border-color: var(--blue-3);
+			background: var(--blue-2);
+		}
+
+		.inventory-item.selected .info img {
+			border-color: var(--blue-3);
+		}
+
+		.inventory-item img {
+			display: block;
+			width: 100%;
+			/* height: 100px; */
+			height: 80%;
+			object-fit: cover;
+			border-bottom: 3px solid var(--dark-4);
+			background: none;
+			margin-bottom: 2px;
+			outline: none;
 		}
 	</style>
 }
 
-templ ItemContols(item models.Item) {
+templ Contols(item models.Item) {
 	<div id="item-controls" data-show="$showControls" style="display: none;">
 		<div id="details">
 			<h2>Item Details</h2>
@@ -50,7 +110,7 @@ templ ItemContols(item models.Item) {
 	</div>
 }
 
-templ ItemContolsCSS() {
+templ ContolsCSS() {
 	<style>
 		#item-controls {
 			width: 100%;
