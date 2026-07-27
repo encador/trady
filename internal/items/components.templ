@@ -87,26 +87,34 @@ templ ItemCSS() {
 
 templ Contols(item models.Item) {
 	<div id="item-controls" data-show="$showControls" style="display: none;">
-		<div id="details">
-			<h2>Item Details</h2>
-			<img src={ item.ImageURL } alt=""/>
-			if item.Listed {
-				<textarea disabled id="status">Status: Public</textarea>
-			} else {
-				<textarea disabled id="status">Status: Private</textarea>
-			}
-			<textarea disabled id="title">{ item.Title }</textarea>
-			<textarea disabled id="description">{ item.Description }</textarea>
-		</div>
-		<div id="options">
-			<h2>Item Options</h2>
-			if !item.Listed {
-				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">Make Public</button>
-			} else {
-				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Make Private</button>
-			}
-			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
-		</div>
+		@ItemDetails(item)
+		@ItemOptions(item)
+	</div>
+}
+
+templ ItemDetails(item models.Item) {
+	<div id="details">
+		<h2>Item Details</h2>
+		<img src={ item.ImageURL } alt=""/>
+		if item.Listed {
+			<textarea disabled id="status">Status: Public</textarea>
+		} else {
+			<textarea disabled id="status">Status: Private</textarea>
+		}
+		<textarea disabled id="title">{ item.Title }</textarea>
+		<textarea disabled id="description">{ item.Description }</textarea>
+	</div>
+}
+
+templ ItemOptions(item models.Item) {
+	<div id="options">
+		<h2>Item Options</h2>
+		if !item.Listed {
+			<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">Make Public</button>
+		} else {
+			<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Make Private</button>
+		}
+		<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
 	</div>
 }
 

@@ -167,76 +167,146 @@ func Contols(item models.Item) templ.Component {
 			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div id=\"item-controls\" data-show=\"$showControls\" style=\"display: none;\"><div id=\"details\"><h2>Item Details</h2><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div id=\"item-controls\" data-show=\"$showControls\" style=\"display: none;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 92, Col: 27}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
+		templ_7745c5c3_Err = ItemDetails(item).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" alt=\"\"> ")
+		templ_7745c5c3_Err = ItemOptions(item).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if item.Listed {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<textarea disabled id=\"status\">Status: Public</textarea> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<textarea disabled id=\"status\">Status: Private</textarea> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<textarea disabled id=\"title\">")
+		return nil
+	})
+}
+
+func ItemDetails(item models.Item) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var10 == nil {
+			templ_7745c5c3_Var10 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"details\"><h2>Item Details</h2><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 98, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 98, Col: 26}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</textarea> <textarea disabled id=\"description\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" alt=\"\"> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if item.Listed {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<textarea disabled id=\"status\">Status: Public</textarea> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<textarea disabled id=\"status\">Status: Private</textarea> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<textarea disabled id=\"title\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 99, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 104, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</textarea></div><div id=\"options\"><h2>Item Options</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</textarea> <textarea disabled id=\"description\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 105, Col: 56}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</textarea></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func ItemOptions(item models.Item) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var14 == nil {
+			templ_7745c5c3_Var14 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div id=\"options\"><h2>Item Options</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if !item.Listed {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<button id=\"list\" class=\"blue\" data-on:click=\"@post('/inventory/list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Public</button> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<button id=\"list\" class=\"blue\" data-on:click=\"@post('/inventory/list')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Public</button> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<button id=\"delist\" class=\"orange\" data-on:click=\"@post('/inventory/delist')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Private</button> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<button id=\"delist\" class=\"orange\" data-on:click=\"@post('/inventory/delist')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Make Private</button> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<button id=\"delete\" class=\"red\" data-on:click=\"@post('/inventory/delete')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Delete</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -260,12 +330,12 @@ func ContolsCSS() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var13 == nil {
-			templ_7745c5c3_Var13 = templ.NopComponent
+		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var15 == nil {
+			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 70%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #status {\n\t\t\theight: 30px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: auto;\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\tfont-size: 17px;\n\t\t\tfont-weight: 600;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 15px 2px 15px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<style>\n\t\t#item-controls {\n\t\t\twidth: 100%;\n\t\t\t/* background-color: red; */\n\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t\tuser-select: none;\n\t\t}\n\t\t#item-controls #details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#item-controls #details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 70%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\n\t\t#item-controls #details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#item-controls #details #status {\n\t\t\theight: 30px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#item-controls #details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\n\t\t#item-controls h2 {\n\t\t\twidth: 100%;\n\t\t\tmargin-top: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t\ttext-align: center;\n\t\t\tcolor: var(--white-3);\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\n\t\t#item-controls button {\n\t\t\theight: auto;\n\t\t\tmargin: 10px 0 10px 0;\n\t\t\tfont-size: 17px;\n\t\t\tfont-weight: 600;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 15px 2px 15px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
