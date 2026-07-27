@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
@@ -62,8 +61,6 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			sse.MarshalAndPatchSignals(signals)
 			return
 		}
-
-		time.Sleep(time.Second)
 
 		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
 			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true}))
