@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/encador/trady/internal/general"
+	"github.com/encador/trady/internal/items"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -33,7 +34,7 @@ func (h *BoardHandler) BoardPage() http.Handler {
 
 		opt := general.Options{
 			Content:  BoardPage(listings),
-			Contorls: ListingControl(),
+			Contorls: ControlBox(),
 			URL:      "/board",
 		}
 		general.Base(opt).Render(r.Context(), w)
@@ -60,7 +61,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		sse.PatchElementTempl(ListingContols(l))
+		sse.PatchElementTempl(items.Contols(l.Item))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 	})
