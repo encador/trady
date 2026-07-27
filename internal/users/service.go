@@ -60,6 +60,14 @@ func GetUser(username string, db *sql.DB) (models.User, error) {
 	return user, err
 }
 
+func GetUserByID(db *sql.DB, id int) (models.User, error) {
+	q := `select id, security, username, password from users where id = ?`
+	row := db.QueryRow(q, id)
+	user := models.User{}
+	err := row.Scan(&user.ID, &user.Security, &user.Username, &user.Password)
+	return user, err
+}
+
 func verifyPass(username, password string, db *sql.DB) error {
 	u, err := GetUser(username, db)
 	if err != nil {

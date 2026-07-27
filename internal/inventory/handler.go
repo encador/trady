@@ -9,6 +9,7 @@ import (
 
 	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
+	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
 	"github.com/starfederation/datastar-go/datastar"
 )
@@ -39,7 +40,7 @@ func (h *InventoryHandler) InventoryPage() http.Handler {
 		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
 		opts := general.Options{
 			Content:  InventoryPage(items),
-			Contorls: InventoryControl(),
+			Contorls: ControlBox(),
 			URL:      "/inventory",
 		}
 		general.Base(opts).Render(r.Context(), w)
@@ -92,7 +93,7 @@ func (h *InventoryHandler) HandleNew() http.Handler {
 		}
 		sse := datastar.NewSSE(w, r)
 		// sse.PatchSignals([]byte(`{fileName: '', title: '', description: '', itemCount: 1}`))
-		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
+		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-list"), datastar.WithModeAppend())
 		sse.PatchElementTempl(NewItemForm(), datastar.WithSelectorID("newItemForm"), datastar.WithModeReplace())
 		sse.PatchElementTempl(general.MsgBox("Item Added", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 		sse.RemoveElementByID("new-item")
@@ -138,14 +139,14 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(ItemContols(item))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true}))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 		// sse.PatchSignals([]byte(`{ showControls: true }`))
@@ -168,7 +169,7 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
@@ -180,8 +181,8 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			return
 		}
 		item.Listed = true
-		sse.PatchElementTempl(ItemContols(item))
-		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true}))
+		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
 		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})
@@ -202,7 +203,7 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
-		item, err := getItem(h.database, signals.SelectedItemID)
+		item, err := GetItem(h.database, signals.SelectedItemID)
 		if err != nil {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
@@ -214,8 +215,8 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			return
 		}
 		item.Listed = false
-		sse.PatchElementTempl(ItemContols(item))
-		sse.PatchElementTempl(Item(item), datastar.WithSelectorID("item-"+item.ID))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true}))
+		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
 		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})

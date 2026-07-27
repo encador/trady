@@ -3,7 +3,9 @@ package board
 import (
 	"database/sql"
 
+	"github.com/encador/trady/internal/inventory"
 	"github.com/encador/trady/internal/models"
+	"github.com/encador/trady/internal/users"
 )
 
 func getAllListings(db *sql.DB) ([]models.Item, error) {
@@ -30,14 +32,18 @@ func getAllListings(db *sql.DB) ([]models.Item, error) {
 	return listings, nil
 }
 
-func getListing(db *sql.DB, itemID string) (models.Item, error) {
-	q := `select id, owner_id, title, description, image, listed from items where id = ?`
-	item := models.Item{}
-
-	row := db.QueryRow(q, itemID)
-	if err := row.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
-		return item, err
+func getListing(db *sql.DB, itemID string) (models.Listing, error) {
+	listing := models.Listing{}
+	item, err := inventory.GetItem(db, itemID)
+	if err != nil {
+		return listing, err
+	}
+	user, err := users.GetUserByID(db, item.OwnerID)
+	if err != nil {
+		return listing, err
 	}
 
-	return item, nil
+	listing.User = user
+	listing.Item = item
+	return listing, nil
 }

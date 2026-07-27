@@ -47,6 +47,7 @@ var validRedirect = map[string]bool{
 	"/":          true,
 	"/user":      true,
 	"/inventory": true,
+	"/board": true,
 }
 
 func AuthHandler(next http.Handler, db *sql.DB) http.Handler {

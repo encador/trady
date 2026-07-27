@@ -1,0 +1,293 @@
+package items
+
+import "github.com/encador/trady/internal/models"
+
+type Data struct {
+	Item    models.Item
+	User    models.User
+	Owner   bool
+	Details bool
+	Options bool
+}
+
+templ Contols(d Data) {
+	<div id="item-controls" data-show="$showControls" style="display: none;">
+		if d.Owner {
+			@OwnerCSS()
+			@Owner(d.User)
+		}
+		if d.Details {
+			@DetailsCSS()
+			@Details(d.Item)
+		}
+		if d.Options {
+			@OptionsCSS()
+			@Options(d.Item)
+		}
+	</div>
+}
+
+templ Item(item models.Item) {
+	<div
+		id={ "item-" + item.ID }
+		class="item"
+		data-on:click={ `el.dispatchEvent(new CustomEvent('item-selected', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
+		data-class:selected={ "$selectedItem === '" + item.ID + "'" }
+	>
+		<div class="info" style={ templ.KV("border-style: solid;", item.Listed) }>
+			<img src={ item.ImageURL } alt=""/>
+			<p class="name">{ item.Title }</p>
+		</div>
+	</div>
+}
+
+templ ItemCSS() {
+	<style>
+		.item .name {
+			overflow: hidden;
+			height: 20px;
+			font-weight: bold;
+			width: 100%;
+		}
+
+		.item .info {
+			border: 3px dashed var(--dark-4);
+			color: var(--white-2);
+			border-radius: 10px;
+			width: 130px;
+			height: 140px;
+			/* padding: 5px; */
+			overflow: hidden;
+		}
+
+		.item .info:hover {
+			cursor: pointer;
+			border-color: var(--orange-2);
+			background: var(--orange-1);
+		}
+
+		.item .info:hover img {
+			border-color: var(--orange-2);
+		}
+
+		.item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 10px;
+			/* border: 2px solid var(--dark-3); */
+			background: var(--dark-3);
+			border-radius: 10px;
+			/* padding: 10px; */
+			text-align: center;
+			width: auto;
+			height: auto;
+			user-select: none;
+		}
+
+		.item.selected .info {
+			/* border: 3px solid var(--blue-3); */
+			border-color: var(--blue-3);
+			background: var(--blue-2);
+		}
+
+		.item.selected .info img {
+			border-color: var(--blue-3);
+		}
+
+		.item img {
+			display: block;
+			width: 100%;
+			/* height: 100px; */
+			height: 80%;
+			object-fit: cover;
+			border-bottom: 3px solid var(--dark-4);
+			background: none;
+			margin-bottom: 2px;
+			outline: none;
+		}
+	</style>
+}
+
+templ Details(item models.Item) {
+	<div id="details">
+		<h2>Item Details</h2>
+		<img src={ item.ImageURL } alt=""/>
+		if item.Listed {
+			<textarea disabled id="status">Status: Public</textarea>
+		} else {
+			<textarea disabled id="status">Status: Private</textarea>
+		}
+		<textarea disabled id="title">{ item.Title }</textarea>
+		<textarea disabled id="description">{ item.Description }</textarea>
+	</div>
+}
+
+templ DetailsCSS() {
+	<style>
+		#details img {
+			display: block;
+			width: 100%;
+			min-width: 0;
+			max-height: 400px;
+			border-bottom: 3px solid var(--dark-4);
+		}
+		#details {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 80%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+		#details textarea {
+			border: 3px dashed var(--dark-3);
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			width: 90%;
+			height: 70px;
+			padding: 2px;
+			border-radius: 15px;
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+		}
+		#details #status {
+			height: 30px;
+			width: 150px;
+			border: none;
+			background: none;
+			margin-top: 10px;
+			border-radius: 0;
+		}
+
+		#details #title {
+			height: 30px;
+			margin-bottom: 10px;
+			border-radius: 0;
+		}
+
+		#details #description {
+			margin-bottom: 10px;
+		}
+	</style>
+}
+
+templ Owner(user models.User) {
+	<div id="owner">
+		<h2>Owner</h2>
+		<textarea disabled>Name: { user.Username }</textarea>
+	</div>
+}
+
+templ OwnerCSS() {
+	<style>
+		#owner {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 80%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+			padding-bottom: 10px;
+		}
+
+		#owner textarea {
+			color: var(--white-3);
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+			height: 20px;
+			width: 150px;
+			border: none;
+			background: none;
+			margin-top: 10px;
+		}
+	</style>
+}
+
+templ Options(item models.Item) {
+	<div id="options">
+		<h2>Item Options</h2>
+		<div id="buttons">
+			if !item.Listed {
+				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">Make Public</button>
+			} else {
+				<button id="delist" class="orange" data-on:click="@post('/inventory/delist')" data-indicator="fetching" data-attr:disabled="$fetching">Make Private</button>
+			}
+			<button id="delete" class="red" data-on:click="@post('/inventory/delete')" data-indicator="fetching" data-attr:disabled="$fetching">Delete</button>
+		</div>
+	</div>
+}
+
+templ OptionsCSS() {
+	<style>
+		#options {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 80%;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			border-radius: 5px;
+		}
+		#options #buttons {
+			margin: 5px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			gap: 5px;
+			flex-wrap: wrap;
+		}
+		#options #buttons button {
+			height: auto;
+			/* margin: 10px 0 10px 0; */
+			font-size: 17px;
+			font-weight: 600;
+			width: auto;
+			padding: 2px 10px 2px 10px;
+		}
+	</style>
+}
+
+templ ContolsCSS() {
+	<style>
+		#item-controls {
+			width: 100%;
+			/* background-color: red; */
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+			user-select: none;
+		}
+
+		#item-controls h2 {
+			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+	</style>
+}

@@ -15,3 +15,8 @@ type Item struct {
 	ImageURL    string
 	Listed      bool
 }
+
+type Listing struct {
+	User User
+	Item Item
+}

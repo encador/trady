@@ -1,0 +1,62 @@
+package board
+
+import "github.com/encador/trady/internal/general"
+import "github.com/encador/trady/internal/models"
+import "github.com/encador/trady/internal/items"
+
+templ BoardPage(listings []models.Item) {
+	<div
+		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false;"
+		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false"
+		data-indicator="selecting"
+	></div>
+	@Board(listings)
+}
+
+templ Board(listings []models.Item) {
+	<div id="item-list">
+		@items.ItemCSS()
+		for _, listing := range listings {
+			@items.Item(listing)
+		}
+	</div>
+	<style>
+		#item-list {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 15px;
+			/* align-items: center; */
+			justify-content: center;
+			box-sizing: border-box;
+			margin: 0;
+			/* width: 100%; */
+			/* height: 100%; */
+			max-width: 100%;
+			max-height: 100%;
+			min-width: auto;
+			min-height: auto;
+
+			overflow: auto;
+		}
+	</style>
+}
+
+templ ControlBox() {
+	<div id="lc-box">
+		@general.Spinner("selecting")
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedListing && !$selecting">Nothing Selected</h2>
+		@items.ContolsCSS()
+		@items.Contols(items.Data{})
+	</div>
+	<style>
+		#lc-box {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			min-height: 100%;
+			align-items: center;
+			justify-content: center;
+			/* background-color: red; */
+		}
+	</style>
+}

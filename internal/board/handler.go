@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
+	"github.com/encador/trady/internal/items"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
 type BoardSignals struct {
-	SelectedListingID string `json:"selectedListing"`
-	ShowControls      bool   `json:"showControls"`
+	SelectedItemID string `json:"selectedItem"`
+	ShowControls   bool   `json:"showControls"`
 }
 
 type BoardHandler struct {
@@ -33,7 +35,7 @@ func (h *BoardHandler) BoardPage() http.Handler {
 
 		opt := general.Options{
 			Content:  BoardPage(listings),
-			Contorls: ListingControl(),
+			Contorls: ControlBox(),
 			URL:      "/board",
 		}
 		general.Base(opt).Render(r.Context(), w)
@@ -50,17 +52,21 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		datastar.ReadSignals(r, signals)
 
 		sse := datastar.NewSSE(w, r)
-		l, err := getListing(h.database, signals.SelectedListingID)
-		if err != nil || !l.Listed {
+		l, err := getListing(h.database, signals.SelectedItemID)
+		if err != nil || !l.Item.Listed {
 			// http.Error(w, "error", http.StatusInternalServerError)
 			sse.PatchElementTempl(general.MsgBox("Invalid Listing", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
-			signals.SelectedListingID=""
-			signals.ShowControls=false
+			signals.SelectedItemID = ""
+			signals.ShowControls = false
 			sse.MarshalAndPatchSignals(signals)
 			return
 		}
 
-		sse.PatchElementTempl(ListingContols(l))
+		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true}))
+		} else {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, User: l.User, Details: true, Owner: true}))
+		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 	})
