@@ -2,6 +2,24 @@ package items
 
 import "github.com/encador/trady/internal/models"
 
+type Data struct {
+	Item    models.Item
+	User    models.User
+	Details bool
+	Options bool
+}
+
+templ Contols(d Data) {
+	<div id="item-controls" data-show="$showControls" style="display: none;">
+		if d.Details {
+			@ItemDetails(d.Item)
+		}
+		if d.Options {
+			@ItemOptions(d.Item)
+		}
+	</div>
+}
+
 templ Item(item models.Item) {
 	<div
 		id={ "item-" + item.ID }
@@ -83,13 +101,6 @@ templ ItemCSS() {
 			outline: none;
 		}
 	</style>
-}
-
-templ Contols(item models.Item) {
-	<div id="item-controls" data-show="$showControls" style="display: none;">
-		@ItemDetails(item)
-		@ItemOptions(item)
-	</div>
 }
 
 templ ItemDetails(item models.Item) {

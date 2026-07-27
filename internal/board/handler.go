@@ -61,7 +61,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		sse.PatchElementTempl(items.Contols(l.Item))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true}))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 	})

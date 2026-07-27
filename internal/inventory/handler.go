@@ -146,7 +146,7 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(items.Contols(item))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true}))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 		// sse.PatchSignals([]byte(`{ showControls: true }`))
@@ -181,7 +181,7 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			return
 		}
 		item.Listed = true
-		sse.PatchElementTempl(items.Contols(item))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true}))
 		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
 		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
@@ -215,7 +215,7 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			return
 		}
 		item.Listed = false
-		sse.PatchElementTempl(items.Contols(item))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true}))
 		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
 		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
