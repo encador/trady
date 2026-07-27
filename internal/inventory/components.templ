@@ -18,7 +18,7 @@ templ InventoryPage(items []models.Item) {
 templ ControlBox() {
 	<div id="ic-box">
 		@general.Spinner("selecting")
-		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem">Nothing Selected</h2>
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedItem && !$selecting">Nothing Selected</h2>
 		@ItemFormCSS()
 		@NewItemForm()
 		@items.ContolsCSS()

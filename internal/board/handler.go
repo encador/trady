@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 
+	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
 	"github.com/starfederation/datastar-go/datastar"
@@ -12,7 +14,7 @@ import (
 
 type BoardSignals struct {
 	SelectedItemID string `json:"selectedItem"`
-	ShowControls      bool   `json:"showControls"`
+	ShowControls   bool   `json:"showControls"`
 }
 
 type BoardHandler struct {
@@ -55,13 +57,19 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		if err != nil || !l.Item.Listed {
 			// http.Error(w, "error", http.StatusInternalServerError)
 			sse.PatchElementTempl(general.MsgBox("Invalid Listing", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
-			signals.SelectedItemID=""
-			signals.ShowControls=false
+			signals.SelectedItemID = ""
+			signals.ShowControls = false
 			sse.MarshalAndPatchSignals(signals)
 			return
 		}
 
-		sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true}))
+		time.Sleep(time.Second)
+
+		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true}))
+		} else {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, User: l.User, Details: true, Owner: true}))
+		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 	})

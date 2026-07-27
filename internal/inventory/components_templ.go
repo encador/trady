@@ -76,7 +76,7 @@ func ControlBox() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<h2 style=\"color: var(--white-4); user-select:none;\" data-show=\"!$showControls && !$selectedItem\">Nothing Selected</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<h2 style=\"color: var(--white-4); user-select:none;\" data-show=\"!$showControls && !$selectedItem && !$selecting\">Nothing Selected</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

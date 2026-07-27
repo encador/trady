@@ -44,7 +44,7 @@ templ Board(listings []models.Item) {
 templ ControlBox() {
 	<div id="lc-box">
 		@general.Spinner("selecting")
-		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedListing">Nothing Selected</h2>
+		<h2 style="color: var(--white-4); user-select:none;" data-show="!$showControls && !$selectedListing && !$selecting">Nothing Selected</h2>
 		@items.ContolsCSS()
 		@items.Contols(items.Data{})
 	</div>
