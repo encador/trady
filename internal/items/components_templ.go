@@ -263,48 +263,33 @@ func Details(item models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\" alt=\"\"> ")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if item.Listed {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<textarea disabled id=\"status\">Status: Public</textarea> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<textarea disabled id=\"status\">Status: Private</textarea> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<textarea disabled id=\"title\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\" alt=\"\"> <textarea disabled id=\"title\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 122, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 117, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</textarea> <textarea disabled id=\"description\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</textarea> <textarea disabled id=\"description\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 123, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 118, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "</textarea></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</textarea></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -333,7 +318,7 @@ func DetailsCSS() templ.Component {
 			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<style>\n\t\t#details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t}\n\t\t#details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\t\t#details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#details #status {\n\t\t\theight: 30px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<style>\n\t\t#details img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n      margin-bottom: 5px;\n\t\t}\n\t\t#details {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\t\t#details textarea {\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 90%;\n\t\t\theight: 70px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t}\n\t\t#details #title {\n\t\t\theight: 30px;\n\t\t\tmargin-bottom: 10px;\n\t\t\tborder-radius: 0;\n\t\t}\n\n\t\t#details #description {\n\t\t\tmargin-bottom: 10px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -362,20 +347,20 @@ func Owner(user models.User) templ.Component {
 			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div id=\"owner\"><h2>Owner</h2><textarea disabled>Name: ")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div id=\"owner\"><h2>Owner</h2><textarea disabled>Name: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(user.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 186, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 173, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</textarea></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "</textarea></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -404,7 +389,7 @@ func OwnerCSS() templ.Component {
 			templ_7745c5c3_Var17 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<style>\n\t\t#owner {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t\tpadding-bottom: 10px;\n\t\t}\n\n\t\t#owner textarea {\n\t\t\tcolor: var(--white-3);\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t\theight: 20px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<style>\n\t\t#owner {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t\tpadding-bottom: 10px;\n\t\t}\n\n\t\t#owner textarea {\n\t\t\tcolor: var(--white-3);\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t\theight: 20px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -433,7 +418,22 @@ func Options(item models.Item) templ.Component {
 			templ_7745c5c3_Var18 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div id=\"options\"><h2>Item Options</h2><div id=\"buttons\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div id=\"options\"><h2>Item Options</h2>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if item.Listed {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<textarea disabled id=\"status\">Status: Public</textarea>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<textarea disabled id=\"status\">Status: Private</textarea>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div id=\"buttons\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -477,7 +477,7 @@ func OptionsCSS() templ.Component {
 			templ_7745c5c3_Var19 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<style>\n\t\t#options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\t\t#options #buttons {\n\t\t\tmargin: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: row;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 5px;\n\t\t\tflex-wrap: wrap;\n\t\t}\n\t\t#options #buttons button {\n\t\t\theight: auto;\n\t\t\t/* margin: 10px 0 10px 0; */\n\t\t\tfont-size: 17px;\n\t\t\tfont-weight: 600;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 10px 2px 10px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<style>\n\t\t#options {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 5px;\n\t\t}\n\t\t#options #buttons {\n\t\t\tmargin: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: row;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 5px;\n\t\t\tflex-wrap: wrap;\n\t\t}\n\t\t#options #buttons button {\n\t\t\theight: auto;\n\t\t\t/* margin: 10px 0 10px 0; */\n\t\t\tfont-size: 17px;\n\t\t\tfont-weight: 600;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 10px 2px 10px;\n\t\t}\n\t\t#options textarea {\n\t\t\tcolor: var(--white-4);\n\t\t\toutline: none;\n\t\t\tfont-size: 15px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t\theight: 20px;\n\t\t\twidth: 150px;\n\t\t\tborder: none;\n\t\t\tbackground: none;\n\t\t\tmargin-top: 10px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

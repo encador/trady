@@ -114,11 +114,6 @@ templ Details(item models.Item) {
 	<div id="details">
 		<h2>Item Details</h2>
 		<img src={ item.ImageURL } alt=""/>
-		if item.Listed {
-			<textarea disabled id="status">Status: Public</textarea>
-		} else {
-			<textarea disabled id="status">Status: Private</textarea>
-		}
 		<textarea disabled id="title">{ item.Title }</textarea>
 		<textarea disabled id="description">{ item.Description }</textarea>
 	</div>
@@ -132,6 +127,7 @@ templ DetailsCSS() {
 			min-width: 0;
 			max-height: 400px;
 			border-bottom: 3px solid var(--dark-4);
+      margin-bottom: 5px;
 		}
 		#details {
 			border: 3px solid var(--dark-4);
@@ -159,15 +155,6 @@ templ DetailsCSS() {
 			font-weight: bold;
 			resize: none;
 		}
-		#details #status {
-			height: 30px;
-			width: 150px;
-			border: none;
-			background: none;
-			margin-top: 10px;
-			border-radius: 0;
-		}
-
 		#details #title {
 			height: 30px;
 			margin-bottom: 10px;
@@ -222,6 +209,11 @@ templ OwnerCSS() {
 templ Options(item models.Item) {
 	<div id="options">
 		<h2>Item Options</h2>
+		if item.Listed {
+			<textarea disabled id="status">Status: Public</textarea>
+		} else {
+			<textarea disabled id="status">Status: Private</textarea>
+		}
 		<div id="buttons">
 			if !item.Listed {
 				<button id="list" class="blue" data-on:click="@post('/inventory/list')" data-indicator="fetching" data-attr:disabled="$fetching">Make Public</button>
@@ -263,6 +255,19 @@ templ OptionsCSS() {
 			font-weight: 600;
 			width: auto;
 			padding: 2px 10px 2px 10px;
+		}
+		#options textarea {
+			color: var(--white-4);
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+			height: 20px;
+			width: 150px;
+			border: none;
+			background: none;
+			margin-top: 10px;
 		}
 	</style>
 }

@@ -10,6 +10,7 @@ An online trading application for physical goods
 
 ### Inventory Page
 ![Inventory Page](https://github.com/encador/trady/blob/main/images/inventory.png)
+![Inventory Page 2](https://github.com/encador/trady/blob/main/images/inventory2.png)
 
 ### Account Page
 ![Account Page](https://github.com/encador/trady/blob/main/images/account.png)
