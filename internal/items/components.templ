@@ -1,12 +1,17 @@
 package items
 
 import "github.com/encador/trady/internal/models"
+import "strconv"
 
 type Data struct {
-	Item    models.Item
-	Owner   models.User
-	Details bool
-	Options bool
+	Item     models.Item
+	Owner    models.User
+	UserBid  models.Item
+	BidCount int
+	Details  bool
+	Options  bool
+	MakeBid  bool
+	TakeBid  bool
 }
 
 templ Contols(d Data) {
@@ -23,8 +28,14 @@ templ Contols(d Data) {
 			@OptionsCSS()
 			@Options(d.Item)
 		}
-		@BidCSS()
-		@Bid()
+		if d.MakeBid {
+			@BidCSS()
+			@MakeBid(d.UserBid)
+		}
+		if d.TakeBid {
+			@BidCSS()
+			@TakeBid(d.BidCount)
+		}
 	</div>
 }
 
@@ -236,9 +247,9 @@ templ Options(item models.Item) {
 	<div id="options">
 		<h2>Item Options</h2>
 		if item.Listed {
-			<textarea disabled id="status">Status: Public</textarea>
+			<textarea disabled>Status: Public</textarea>
 		} else {
-			<textarea disabled id="status">Status: Private</textarea>
+			<textarea disabled>Status: Private</textarea>
 		}
 		<div id="buttons">
 			if !item.Listed {
@@ -298,12 +309,47 @@ templ OptionsCSS() {
 	</style>
 }
 
-templ Bid() {
+templ MakeBid(bid models.Item) {
+	<div id="bid">
+		<h2>My Bid</h2>
+		if bid.ID != "" {
+			<span>Item: { bid.Title }</span>
+		} else {
+			<span>Item: None</span>
+		}
+		<div id="buttons">
+			<button id="place-bid" class="green" data-on:click="alert('BID')" data-indicator="fetching" data-attr:disabled="$fetching">Select Item</button>
+			<button
+				id="place-bid"
+				class="red"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || "+bid.ID != "" }
+			>Remove</button>
+		</div>
+	</div>
+}
+
+templ TakeBid(count int) {
 	<div id="bid">
 		<h2>Manage Bids</h2>
+		<span>Count: { count }</span>
 		<div id="buttons">
-			<button id="place-bid" class="green" data-on:click="alert('BID')" data-indicator="fetching" data-attr:disabled="$fetching">Place Bid</button>
-			<button id="place-bid" class="red" data-on:click="alert('BID')" data-indicator="fetching" data-attr:disabled="$fetching">Remove Bid</button>
+			<button
+				id="place-bid"
+				class="blue"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+			>View All</button>
+			<button
+				disabled
+				id="place-bid"
+				class="red"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+			>Remove All</button>
 		</div>
 	</div>
 }
@@ -316,6 +362,11 @@ templ BidCSS() {
 			background-color: var(--dark-3);
 			border: 3px solid var(--dark-4);
 			border-radius: 5px;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			justify-content: center;
+			align-content: center;
 		}
 		#bid #buttons {
 			margin: 5px;
@@ -328,9 +379,20 @@ templ BidCSS() {
 		}
 		#bid #buttons button {
 			font-size: 16px;
-      font-weight: bold;
+			font-weight: bold;
 			width: auto;
 			padding: 2px 10px 2px 10px;
+		}
+		#bid span {
+			color: var(--white-4);
+			outline: none;
+			font-size: 18px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+			height: 20px;
+			border: none;
+			margin: 10px 0 5px 0;
 		}
 	</style>
 }

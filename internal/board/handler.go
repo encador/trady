@@ -62,10 +62,11 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			return
 		}
 
+		// Does the User own this listing
 		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true}))
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true, TakeBid: true, BidCount: 0}))
 		} else {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Owner: l.Owner}))
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Owner: l.Owner, MakeBid: true}))
 		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
