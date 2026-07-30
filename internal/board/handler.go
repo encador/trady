@@ -8,6 +8,7 @@ import (
 	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
+	"github.com/encador/trady/internal/bids"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -64,7 +65,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 
 		// Does the User own this listing
 		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true, TakeBid: true, BidCount: 0}))
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true, TakeBid: true, BidCount: bids.GetByItemID(l.Item.ID).Count}))
 		} else {
 			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Owner: l.Owner, MakeBid: true}))
 		}

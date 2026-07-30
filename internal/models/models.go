@@ -20,3 +20,8 @@ type Listing struct {
 	Owner User
 	Item Item
 }
+
+type Bids struct{
+	Count int
+	Items []Item
+}

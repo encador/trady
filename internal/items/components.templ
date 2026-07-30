@@ -24,17 +24,17 @@ templ Contols(d Data) {
 			@DetailsCSS()
 			@Details(d.Item)
 		}
-		if d.Options {
-			@OptionsCSS()
-			@Options(d.Item)
-		}
 		if d.MakeBid {
 			@BidCSS()
 			@MakeBid(d.UserBid)
 		}
-		if d.TakeBid {
+		if d.TakeBid && d.Item.Listed {
 			@BidCSS()
 			@TakeBid(d.BidCount)
+		}
+		if d.Options {
+			@OptionsCSS()
+			@Options(d.Item)
 		}
 	</div>
 }
@@ -332,7 +332,7 @@ templ MakeBid(bid models.Item) {
 
 templ TakeBid(count int) {
 	<div id="bid">
-		<h2>Manage Bids</h2>
+		<h2>Public Bids</h2>
 		<span>Count: { count }</span>
 		<div id="buttons">
 			<button
