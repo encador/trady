@@ -43,7 +43,7 @@ func getListing(db *sql.DB, itemID string) (models.Listing, error) {
 		return listing, err
 	}
 
-	listing.User = user
+	listing.Owner = user
 	listing.Item = item
 	return listing, nil
 }

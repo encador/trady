@@ -65,7 +65,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
 			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true}))
 		} else {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, User: l.User, Details: true, Owner: true}))
+			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Owner: l.Owner}))
 		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)

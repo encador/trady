@@ -17,6 +17,6 @@ type Item struct {
 }
 
 type Listing struct {
-	User User
+	Owner User
 	Item Item
 }
