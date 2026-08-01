@@ -187,7 +187,7 @@ func Base(opts Options) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<script type=\"module\" src=\"/static/datastar.js\"></script></head><body><div id=\"yab\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<script type=\"module\" src=\"/static/datastar.js\"></script></head><body><div id=\"picker\"></div><div id=\"yab\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

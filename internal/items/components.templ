@@ -318,7 +318,7 @@ templ MakeBid(bid models.Item) {
 			<span>Item: None</span>
 		}
 		<div id="buttons">
-			<button id="place-bid" class="green" data-on:click="alert('BID')" data-indicator="fetching" data-attr:disabled="$fetching">Select Item</button>
+			<button id="place-bid" class="green" data-on:click="@post('/board/make-bid')" data-indicator="fetching" data-attr:disabled="$fetching">Select Item</button>
 			<button
 				id="place-bid"
 				class="red"

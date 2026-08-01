@@ -40,6 +40,7 @@ var secLevel = map[string]int{
 	"/inventory/delete": 1,
 	"/board":            1,
 	"/board/select":     1,
+	"/board/make-bid":   1,
 }
 
 // List of urls that redirect to Login when not logged-in
@@ -47,7 +48,7 @@ var validRedirect = map[string]bool{
 	"/":          true,
 	"/user":      true,
 	"/inventory": true,
-	"/board": true,
+	"/board":     true,
 }
 
 func AuthHandler(next http.Handler, db *sql.DB) http.Handler {

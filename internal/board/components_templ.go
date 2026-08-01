@@ -33,7 +33,7 @@ func BoardPage(listings []models.Item) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div data-init=\"$selectedItem = ''; $previousItem = ''; $showControls = false;\" data-on:item-selected__window=\"if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false\" data-indicator=\"selecting\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div data-init=\"$selectedItem = ''; $previousItem = ''; $showControls = false; @post('/board/make-bid')\" data-on:item-selected__window=\"if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false\" data-indicator=\"selecting\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

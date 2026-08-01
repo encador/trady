@@ -4,11 +4,13 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/bids"
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
-	"github.com/encador/trady/internal/bids"
+	"github.com/encador/trady/internal/models"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -71,5 +73,13 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
+	})
+}
+
+func (h *BoardHandler) HandleBidPicker() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		sse := datastar.NewSSE(w, r)
+		sse.PatchElementTempl(bids.Picker(models.Bids{}), datastar.WithSelectorID("picker"))
+		time.Sleep(time.Second)
 	})
 }

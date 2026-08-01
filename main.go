@@ -97,6 +97,7 @@ func main() {
 
 	mux.Handle("/board", boardH.BoardPage())
 	mux.Handle("/board/select", boardH.HandleSelect())
+	mux.Handle("/board/make-bid", boardH.HandleBidPicker())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))
