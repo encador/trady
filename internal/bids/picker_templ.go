@@ -60,7 +60,7 @@ func PickerCSS() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t#picker {\n\t\t\tposition: fixed;\n\t\t\tbackground-color: #00000050;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tinset: 0;\n\t\t\tcursor: pointer;\n\t\t}\n\t\t#picker-window {\n\t\t\twidth: 900px;\n\t\t\theight: 500px;\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\tcursor: default;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t#picker {\n\t\t\tposition: fixed;\n\t\t\tbackground-color: #00000050;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\t/* align-items: center; */\n\t\t\tinset: 0;\n\t\t\tcursor: pointer;\n\t\t}\n\t\t#picker-window {\n      background-color: var(--dark-2);\n      color: var(--white-3);\n      border: 3px solid var(--dark-3);\n      border-radius: 10px;\n\t\t\twidth: 60vw;\n\t\t\theight: 70vh;\n      max-width: 1300px;\n      max-height: 800px;\n\t\t\tmargin-top: 5%;\n\t\t\tcursor: default;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

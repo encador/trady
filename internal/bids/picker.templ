@@ -21,15 +21,20 @@ templ PickerCSS() {
 			background-color: #00000050;
 			display: flex;
 			justify-content: center;
-			align-items: center;
+			/* align-items: center; */
 			inset: 0;
 			cursor: pointer;
 		}
 		#picker-window {
-			width: 900px;
-			height: 500px;
-			background-color: var(--dark-2);
-			color: var(--white-3);
+      background-color: var(--dark-2);
+      color: var(--white-3);
+      border: 3px solid var(--dark-3);
+      border-radius: 10px;
+			width: 60vw;
+			height: 70vh;
+      max-width: 1300px;
+      max-height: 800px;
+			margin-top: 5%;
 			cursor: default;
 		}
 	</style>
