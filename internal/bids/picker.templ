@@ -4,11 +4,10 @@ import "github.com/encador/trady/internal/models"
 
 templ Picker(bids models.Bids) {
 	<div id="picker" data-ref:picker data-on:click="if (!$over-window) {$picker.style.display='none'}">
-		@PickerCSS()
 		<div
 			id="picker-window"
-			data-on:mouseenter="console.log('enter'); $over-window=true"
-			data-on:mouseleave="console.log('leave'); $over-window=false"
+			data-on:mouseenter="$over-window=true"
+			data-on:mouseleave="$over-window=false"
 		>
 			<h1>WOW</h1>
 		</div>
@@ -18,7 +17,7 @@ templ Picker(bids models.Bids) {
 templ PickerCSS() {
 	<style>
 		#picker {
-			position: absolute;
+			position: fixed;
 			background-color: #00000050;
 			display: flex;
 			justify-content: center;
@@ -27,7 +26,6 @@ templ PickerCSS() {
 			cursor: pointer;
 		}
 		#picker-window {
-			position: absolute;
 			width: 900px;
 			height: 500px;
 			background-color: var(--dark-2);
