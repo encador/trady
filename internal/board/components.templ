@@ -7,7 +7,7 @@ import "github.com/encador/trady/internal/bids"
 
 templ BoardPage(listings []models.Item) {
 	<div
-		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false; @post('/board/make-bid')"
+		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false;"
 		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false"
 		data-indicator="selecting"
 	></div>

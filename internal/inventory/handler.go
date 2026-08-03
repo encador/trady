@@ -16,8 +16,8 @@ import (
 )
 
 type InventorySignals struct {
-	SelectedItemID string `json:"selectedItem"`
-	ShowControls   bool   `json:"showControls"`
+	SelectedItemID models.ID `json:"selectedItem"`
+	ShowControls   bool      `json:"showControls"`
 }
 
 type InventoryHandler struct {
@@ -38,7 +38,7 @@ func NewHandler(db *sql.DB, uploadDir string) (*InventoryHandler, error) {
 
 func (h *InventoryHandler) InventoryPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		items, _ := getAllItems(h.database, auth.GetUser(r.Context()))
+		items, _ := items.GetAllForUser(h.database, auth.GetUser(r.Context()).ID)
 		opts := general.Options{
 			Content:  InventoryPage(items),
 			Contorls: ControlBox(),
@@ -107,20 +107,22 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 		signals := &InventorySignals{}
 		datastar.ReadSignals(r, signals)
 		// fmt.Println("delete " + signals.SelectedItemID)
-		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+		if !item.IsOwner(auth.GetUser(r.Context())) || err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
 
-		if err := deleteItem(h.database, signals.SelectedItemID, h.uploadDir); err != nil {
-			fmt.Println("breaki")
+		if err := deleteItem(h.database, item); err != nil {
+			fmt.Println(err)
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
 
+
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))
-		sse.RemoveElementByID("item-" + signals.SelectedItemID)
+		sse.RemoveElementByID("item-" + string(signals.SelectedItemID))
 		sse.PatchElementTempl(general.MsgBox("Item Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
 	})
@@ -135,19 +137,15 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
-			http.Error(w, "auth error", http.StatusUnauthorized)
-			return
-		}
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
 
-		item, err := GetItem(h.database, signals.SelectedItemID)
-		if err != nil {
+		if !item.IsOwner(auth.GetUser(r.Context())) || err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
 			return
 		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: bids.ForItem(item.ID).Count}))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 		// sse.PatchSignals([]byte(`{ showControls: true }`))
@@ -165,25 +163,21 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			http.Error(w, "signals error", http.StatusInternalServerError)
 			return
 		}
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
 
-		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+		if !item.IsOwner(auth.GetUser(r.Context())) || err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
-			return
-		}
-		item, err := GetItem(h.database, signals.SelectedItemID)
-		if err != nil {
-			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
 
 		sse := datastar.NewSSE(w, r)
-		if err := listItem(h.database, item); err != nil {
+		if err := items.List(h.database, item.ID); err != nil {
 			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 			return
 		}
 		item.Listed = true
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: bids.ForItem(item.ID).Count}))
-		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+string(item.ID)))
 		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})
@@ -200,24 +194,21 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			return
 		}
 
-		if !isOwner(h.database, signals.SelectedItemID, auth.GetUser(r.Context())) {
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+
+		if !item.IsOwner(auth.GetUser(r.Context())) || err != nil {
 			http.Error(w, "auth error", http.StatusUnauthorized)
-			return
-		}
-		item, err := GetItem(h.database, signals.SelectedItemID)
-		if err != nil {
-			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
 
 		sse := datastar.NewSSE(w, r)
-		if err := delistItem(h.database, item); err != nil {
+		if err := items.Delist(h.database, item.ID); err != nil {
 			sse.PatchElementTempl(general.MsgBox("Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 			return
 		}
 		item.Listed = false
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true, TakeBid: true, BidCount: bids.ForItem(item.ID).Count}))
-		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+item.ID))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+string(item.ID)))
 		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
 	})

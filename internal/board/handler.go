@@ -11,12 +11,13 @@ import (
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
+	"github.com/encador/trady/internal/users"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
 type BoardSignals struct {
-	SelectedItemID string `json:"selectedItem"`
-	ShowControls   bool   `json:"showControls"`
+	SelectedItemID models.ID `json:"selectedItem"`
+	ShowControls   bool      `json:"showControls"`
 }
 
 type BoardHandler struct {
@@ -29,7 +30,7 @@ func NewBoardHandler(db *sql.DB) *BoardHandler {
 
 func (h *BoardHandler) BoardPage() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		listings, err := getAllListings(h.database)
+		listings, err := items.GetAllListed(h.database)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, "internal error", http.StatusInternalServerError)
@@ -55,8 +56,8 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 		datastar.ReadSignals(r, signals)
 
 		sse := datastar.NewSSE(w, r)
-		l, err := getListing(h.database, signals.SelectedItemID)
-		if err != nil || !l.Item.Listed {
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+		if err != nil || !item.Listed {
 			// http.Error(w, "error", http.StatusInternalServerError)
 			sse.PatchElementTempl(general.MsgBox("Invalid Listing", 3), datastar.WithSelectorID("msg-box"), datastar.WithModeAppend())
 			signals.SelectedItemID = ""
@@ -65,11 +66,12 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			return
 		}
 
-		// Does the User own this listing
-		if auth.GetUser(r.Context()).ID == l.Item.OwnerID {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Options: true, TakeBid: true, BidCount: bids.ForItem(l.Item.ID).Count}))
+		// Does the User own this item
+		if item.IsOwner(auth.GetUser(r.Context())) {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
 		} else {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: l.Item, Details: true, Owner: l.Owner, MakeBid: true}))
+			owner, _ := users.GetUserByID(h.database, item.OwnerID)
+			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Owner: owner, MakeBid: true}))
 		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
@@ -79,7 +81,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 func (h *BoardHandler) HandleBidPicker() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(bids.Picker(models.Bids{}), datastar.WithModeReplace())
+		sse.PatchElementTempl(bids.Picker([]models.Item{}), datastar.WithModeReplace())
 		time.Sleep(time.Second)
 	})
 }

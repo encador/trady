@@ -2,7 +2,7 @@ package bids
 
 import "github.com/encador/trady/internal/models"
 
-templ Picker(bids models.Bids) {
+templ Picker(items []models.Item) {
 	<div
 		id="picker"
 		data-ref:picker
@@ -17,7 +17,10 @@ templ Picker(bids models.Bids) {
 			data-on:mouseenter="$over-window=true"
 			data-on:mouseleave="$over-window=false"
 		>
-			<h1>WOW</h1>
+			@PickerItemCSS()
+			for _, item := range items {
+				@PickerItem(item)
+			}
 		</div>
 	</div>
 }
@@ -45,6 +48,19 @@ templ PickerCSS() {
 			max-height: 800px;
 			margin-top: 5%;
 			cursor: default;
+		}
+	</style>
+}
+
+templ PickerItem(models.Item) {
+	<div id="picker-item">
+		ITEM
+	</div>
+}
+
+templ PickerItemCSS() {
+	<style>
+		#picker-item {
 		}
 	</style>
 }
