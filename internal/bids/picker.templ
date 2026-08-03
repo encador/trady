@@ -3,7 +3,15 @@ package bids
 import "github.com/encador/trady/internal/models"
 
 templ Picker(bids models.Bids) {
-	<div id="picker" data-ref:picker data-on:click="if (!$over-window) {$picker.style.display='none'}">
+	<div
+		id="picker"
+		data-ref:picker
+		data-on:click="if (!$over-window) {$show-picker=false}"
+		data-show="$show-picker"
+	>
+		<div
+			data-init="$over-window=false; $show-picker=true"
+		></div>
 		<div
 			id="picker-window"
 			data-on:mouseenter="$over-window=true"
@@ -24,16 +32,17 @@ templ PickerCSS() {
 			/* align-items: center; */
 			inset: 0;
 			cursor: pointer;
+			user-select: none;
 		}
 		#picker-window {
-      background-color: var(--dark-2);
-      color: var(--white-3);
-      border: 3px solid var(--dark-3);
-      border-radius: 10px;
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			border: 3px solid var(--dark-3);
+			border-radius: 10px;
 			width: 60vw;
 			height: 70vh;
-      max-width: 1300px;
-      max-height: 800px;
+			max-width: 1300px;
+			max-height: 800px;
 			margin-top: 5%;
 			cursor: default;
 		}

@@ -79,7 +79,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 func (h *BoardHandler) HandleBidPicker() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(bids.Picker(models.Bids{}))
+		sse.PatchElementTempl(bids.Picker(models.Bids{}), datastar.WithModeReplace())
 		time.Sleep(time.Second)
 	})
 }
