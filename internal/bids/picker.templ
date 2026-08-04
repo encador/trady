@@ -8,19 +8,26 @@ templ Picker(items []models.Item) {
 		data-ref:picker
 		data-on:click="if (!$over-window) {$show-picker=false}"
 		data-show="$show-picker"
+		data-on:picker__window="if (evt.detail.id !== $pickerItem) {$pickerItem = evt.detail.id} else {$pickerItem = ''};"
 	>
 		<div
 			data-init="$over-window=false; $show-picker=true"
 		></div>
 		<div
-			id="picker-window"
+			id="picker-wrapper"
 			data-on:mouseenter="$over-window=true"
 			data-on:mouseleave="$over-window=false"
+			style="cursor: default"
 		>
-			@PickerItemCSS()
-			for _, item := range items {
-				@PickerItem(item)
-			}
+			<div
+				id="picker-window"
+			>
+				@PickerItemCSS()
+				for _, item := range items {
+					@PickerItem(item)
+				}
+			</div>
+			<div id="picker-options"></div>
 		</div>
 	</div>
 }
@@ -30,37 +37,138 @@ templ PickerCSS() {
 		#picker {
 			position: fixed;
 			background-color: #00000050;
-			display: flex;
-			justify-content: center;
-			/* align-items: center; */
 			inset: 0;
 			cursor: pointer;
 			user-select: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#picker-wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 5px;
+			padding-bottom: 10%;
 		}
 		#picker-window {
 			background-color: var(--dark-2);
 			color: var(--white-3);
 			border: 3px solid var(--dark-3);
 			border-radius: 10px;
-			width: 60vw;
-			height: 70vh;
+			width: 50vw;
+			height: 60vh;
 			max-width: 1300px;
 			max-height: 800px;
-			margin-top: 5%;
-			cursor: default;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			padding: 10px;
+			flex-wrap: wrap;
+			overflow: auto;
+		}
+		#picker-options {
+			width: 30vw;
+			height: 50px;
+			background-color: var(--dark-2);
+			border: 3px solid var(--dark-3);
+			border-radius: 5px;
 		}
 	</style>
 }
 
-templ PickerItem(models.Item) {
-	<div id="picker-item">
-		ITEM
+templ PickerItem(item models.Item) {
+	<div
+		id="picker-item"
+		data-on:click={ `el.dispatchEvent(new CustomEvent('picker', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
+		data-class:selected={ "$pickerItem === '" + item.ID + "'" }
+	>
+		<img src={ item.ImageURL } alt=""/>
+		<span id="title">{ item.Title }</span>
+		<textarea disabled id="description">{ item.Description }</textarea>
 	</div>
 }
 
 templ PickerItemCSS() {
 	<style>
+		#picker-item img {
+			display: block;
+			width: 100%;
+			min-width: 0;
+			max-height: 400px;
+			border-bottom: 3px solid var(--dark-4);
+			margin-bottom: 5px;
+		}
 		#picker-item {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 170px;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-content: center;
+			align-items: center;
+			border-radius: 5px;
+			padding-bottom: 5px;
+		}
+		#picker-item:hover {
+			border-color: var(--orange-2);
+			background-color: var(--orange-1);
+			cursor: pointer;
+		}
+		#picker-item:hover textarea {
+			border-color: var(--orange-3);
+			background-color: var(--orange-2);
+		}
+		#picker-item.selected {
+			border-color: var(--blue-3);
+			background-color: var(--blue-2);
+		}
+		#picker-item.selected textarea {
+			border-color: var(--blue-2);
+			background-color: var(--blue-3);
+		}
+		#picker-item textarea {
+			border: 3px dashed var(--dark-3);
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			width: 90%;
+			height: 50px;
+			padding: 2px;
+			border-radius: 15px;
+			outline: none;
+			font-size: 15px;
+			text-align: center;
+			font-weight: bold;
+			resize: none;
+		}
+		#picker-item span {
+			color: var(--white-3);
+			font-size: 18px;
+			text-align: center;
+			font-weight: bold;
+			height: 20px;
+			border: none;
+			margin: 0px 0 5px 0;
+			overflow: auto;
+			padding: 0 2px 0 2px;
+		}
+	</style>
+}
+
+templ DetailsCSS() {
+	<style>
+		#details #title {
+			height: 30px;
+			margin-bottom: 10px;
+			border-radius: 0;
+		}
+
+		#details #description {
+			margin-bottom: 10px;
 		}
 	</style>
 }
