@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/models"
 )
 
@@ -60,7 +61,7 @@ func GetUser(username string, db *sql.DB) (models.User, error) {
 	return user, err
 }
 
-func GetUserByID(db *sql.DB, id int) (models.User, error) {
+func GetUserByID(db *sql.DB, id models.ID) (models.User, error) {
 	q := `select id, security, username, password from users where id = ?`
 	row := db.QueryRow(q, id)
 	user := models.User{}
@@ -105,9 +106,14 @@ func addUser(user models.User, db *sql.DB) ([]string, error) {
 		return msgs, errors.New("[addUser]: Invalid Input")
 	}
 
+	id, err := general.GenerateID(16)
+	if err != nil {
+		return []string{}, err
+	}
+
 	// Add User to Database
-	q := `insert into users(username, password) values(?,?)`
-	if _, err := db.Exec(q, username, HashPass(user.Password, username)); err == nil {
+	q := `insert into users(id, username, password) values(?,?,?)`
+	if _, err := db.Exec(q, id, username, HashPass(user.Password, username)); err == nil {
 		m := fmt.Sprintf("User %s Created", username)
 		msgs = append(msgs, m)
 	} else {

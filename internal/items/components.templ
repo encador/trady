@@ -1,30 +1,67 @@
 package items
 
 import "github.com/encador/trady/internal/models"
+import "strconv"
 
 type Data struct {
-	Item    models.Item
-	User    models.User
-	Owner   bool
-	Details bool
-	Options bool
+	Item     models.Item
+	Owner    models.User
+	UserBid  models.Item
+	BidCount int
+	Details  bool
+	Options  bool
+	MakeBid  bool
+	TakeBid  bool
 }
 
 templ Contols(d Data) {
 	<div id="item-controls" data-show="$showControls" style="display: none;">
-		if d.Owner {
+		if d.Owner.Username != "" {
 			@OwnerCSS()
-			@Owner(d.User)
+			@Owner(d.Owner)
 		}
 		if d.Details {
 			@DetailsCSS()
 			@Details(d.Item)
+		}
+		if d.MakeBid {
+			@BidCSS()
+			@MakeBid(d.UserBid)
+		}
+		if d.TakeBid && d.Item.Listed {
+			@BidCSS()
+			@TakeBid(d.BidCount)
 		}
 		if d.Options {
 			@OptionsCSS()
 			@Options(d.Item)
 		}
 	</div>
+}
+
+templ ContolsCSS() {
+	<style>
+		#item-controls {
+			width: 100%;
+			/* background-color: red; */
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+			user-select: none;
+		}
+
+		#item-controls h2 {
+			width: 100%;
+			margin-top: 10px;
+			padding-bottom: 5px;
+			text-align: center;
+			color: var(--white-3);
+			border-bottom: 3px solid var(--dark-4);
+		}
+	</style>
 }
 
 templ Item(item models.Item) {
@@ -127,7 +164,7 @@ templ DetailsCSS() {
 			min-width: 0;
 			max-height: 400px;
 			border-bottom: 3px solid var(--dark-4);
-      margin-bottom: 5px;
+			margin-bottom: 5px;
 		}
 		#details {
 			border: 3px solid var(--dark-4);
@@ -210,9 +247,9 @@ templ Options(item models.Item) {
 	<div id="options">
 		<h2>Item Options</h2>
 		if item.Listed {
-			<textarea disabled id="status">Status: Public</textarea>
+			<textarea disabled>Status: Public</textarea>
 		} else {
-			<textarea disabled id="status">Status: Private</textarea>
+			<textarea disabled>Status: Private</textarea>
 		}
 		<div id="buttons">
 			if !item.Listed {
@@ -272,27 +309,90 @@ templ OptionsCSS() {
 	</style>
 }
 
-templ ContolsCSS() {
-	<style>
-		#item-controls {
-			width: 100%;
-			/* background-color: red; */
+templ MakeBid(bid models.Item) {
+	<div id="bid">
+		<h2>My Bid</h2>
+		if bid.ID != "" {
+			<span>Item: { bid.Title }</span>
+		} else {
+			<span>Item: None</span>
+		}
+		<div id="buttons">
+			<button id="place-bid" class="green" data-on:click="@post('/board/picker')" data-indicator="fetching" data-attr:disabled="$fetching">Select Item</button>
+			<button
+				id="place-bid"
+				class="red"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || "+bid.ID != "" }
+			>Remove</button>
+		</div>
+	</div>
+}
 
+templ TakeBid(count int) {
+	<div id="bid">
+		<h2>Public Bids</h2>
+		<span>Count: { count }</span>
+		<div id="buttons">
+			<button
+				id="place-bid"
+				class="blue"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+			>View All</button>
+			<button
+				disabled
+				id="place-bid"
+				class="red"
+				data-on:click="alert('BID')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+			>Remove All</button>
+		</div>
+	</div>
+}
+
+templ BidCSS() {
+	<style>
+		#bid {
+			width: 80%;
+			height: fit-content;
+			background-color: var(--dark-3);
+			border: 3px solid var(--dark-4);
+			border-radius: 5px;
 			display: flex;
 			flex-direction: column;
+			overflow: hidden;
 			justify-content: center;
-			align-items: center;
-			gap: 15px;
-			user-select: none;
+			align-content: center;
 		}
-
-		#item-controls h2 {
-			width: 100%;
-			margin-top: 10px;
-			padding-bottom: 5px;
+		#bid #buttons {
+			margin: 5px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			gap: 5px;
+			flex-wrap: wrap;
+		}
+		#bid #buttons button {
+			font-size: 16px;
+			font-weight: bold;
+			width: auto;
+			padding: 2px 10px 2px 10px;
+		}
+		#bid span {
+			color: var(--white-4);
+			outline: none;
+			font-size: 18px;
 			text-align: center;
-			color: var(--white-3);
-			border-bottom: 3px solid var(--dark-4);
+			font-weight: bold;
+			resize: none;
+			height: 20px;
+			border: none;
+			margin: 10px 0 5px 0;
 		}
 	</style>
 }

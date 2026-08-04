@@ -3,12 +3,18 @@ package board
 import "github.com/encador/trady/internal/general"
 import "github.com/encador/trady/internal/models"
 import "github.com/encador/trady/internal/items"
+import "github.com/encador/trady/internal/bids"
 
 templ BoardPage(listings []models.Item) {
 	<div
 		data-init="$selectedItem = ''; $previousItem = ''; $showControls = false;"
 		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false"
 		data-indicator="selecting"
+	></div>
+	@bids.PickerCSS()
+	<div
+		id="picker"
+		style="display:none"
 	></div>
 	@Board(listings)
 }

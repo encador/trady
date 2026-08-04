@@ -1,9 +1,7 @@
 package inventory
 
 import (
-	"crypto/rand"
 	"database/sql"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"image"
@@ -15,62 +13,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/encador/trady/internal/general"
+	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
 )
-
-func generateID(n int) (string, error) {
-	b := make([]byte, n)
-	if _, err := rand.Read(b); err != nil {
-		return "", err
-	}
-	return hex.EncodeToString(b), nil
-}
-
-func getAllItems(db *sql.DB, user models.User) ([]models.Item, error) {
-	q := `select id, owner_id, title, description, image, listed from items where owner_id = ?`
-
-	items := []models.Item{}
-
-	rows, err := db.Query(q, user.ID)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		item := models.Item{}
-		if err := rows.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
-			return nil, err
-		}
-		items = append(items, item)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return items, nil
-}
-
-func GetItem(db *sql.DB, itemID string) (models.Item, error) {
-	q := `select id, owner_id, title, description, image, listed from items where id = ?`
-	item := models.Item{}
-
-	row := db.QueryRow(q, itemID)
-	if err := row.Scan(&item.ID, &item.OwnerID, &item.Title, &item.Description, &item.ImageURL, &item.Listed); err != nil {
-		return item, err
-	}
-
-	return item, nil
-}
-
-func isOwner(db *sql.DB, itemID string, user models.User) bool {
-	item, err := GetItem(db, itemID)
-	if err != nil {
-		return false
-	}
-	return item.OwnerID == user.ID
-}
 
 func saveFile(f multipart.File, path string) error {
 
@@ -143,63 +89,41 @@ func addItem(db *sql.DB, f multipart.File, item models.Item, dir string) (models
 	}
 
 	// Generate ItemID
-	id, err := generateID(16)
+	id, err := general.GenerateID(16)
 	if err != nil {
 		return item, err
 	}
-	fileName := id
+	fileName := string(id)
 
-	path := filepath.Join(dir, fileName)
+	item.ID = id
+	item.ImageURL = filepath.Join("images", fileName)
+	item.ImageLocation = filepath.Join(dir, fileName)
 
-	if err = saveFile(f, path); err != nil {
+	if err = saveFile(f, item.ImageLocation); err != nil {
 		return item, err
 	}
 
 	// Create DB entry
-	item.ID = id
-	item.ImageURL = filepath.Join("images", fileName)
-
-	q := `insert into items(id, owner_id, title, description, image, listed) values (?, ?, ?, ?,?, ?)`
-	if _, err := db.Exec(q, item.ID, item.OwnerID, item.Title, item.Description, item.ImageURL, item.Listed); err != nil {
-		return item, err
+	if err := items.Add(db, item); err != nil {
+		return models.Item{}, err
 	}
 
 	fmt.Println("[DB]: ADD ITEM(" + item.ID + ")")
 	return item, nil
 }
 
-func deleteItem(db *sql.DB, itemID string, directory string) error {
+func deleteItem(db *sql.DB, item models.Item) error {
 	// Delete File
-	file := filepath.Join(directory, itemID)
-	if err := os.Remove(file); err != nil && !os.IsNotExist(err) {
+	if err := os.Remove(item.ImageLocation); err != nil && !os.IsNotExist(err) {
 		return err
 	} else if err == nil {
-		fmt.Println("[SYSTEM]: DELETE " + file)
+		fmt.Println("[SYSTEM]: DELETE " + item.ImageLocation)
 	}
 
 	// Delete DB Entry
-	q := `delete from items where id = ?`
-	if _, err := db.Exec(q, itemID); err != nil {
-		return err
-	}
+	items.Remove(db, item.ID)
 
-	fmt.Println("[DB]: REMOVE ITEM(" + itemID + ")")
+	fmt.Println("[DB]: REMOVE ITEM(" + string(item.ID) + ")")
 	return nil
 
-}
-
-func listItem(db *sql.DB, item models.Item) error {
-	q := `update items set listed = true where id = ?`
-	if _, err := db.Exec(q, item.ID); err != nil{
-		return err
-	}
-	return nil
-}
-
-func delistItem(db *sql.DB, item models.Item) error {
-	q := `update items set listed = false where id = ?`
-	if _, err := db.Exec(q, item.ID); err != nil{
-		return err
-	}
-	return nil
 }

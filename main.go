@@ -9,7 +9,6 @@ import (
 
 	"github.com/encador/trady/internal/board"
 	"github.com/encador/trady/internal/database"
-	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/inventory"
 	"github.com/encador/trady/internal/middleware"
 	"github.com/encador/trady/internal/users"
@@ -80,7 +79,8 @@ func main() {
 	})
 
 	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		general.Base(general.Options{Content: general.Hello(""), URL: "/"}).Render(r.Context(), w)
+		// general.Base(general.Options{Content: general.Hello(""), URL: "/"}).Render(r.Context(), w)
+		http.Redirect(w, r, "/inventory", http.StatusSeeOther)
 	})
 
 	mux.Handle("/user", userH.HandleUserPage())
@@ -97,6 +97,7 @@ func main() {
 
 	mux.Handle("/board", boardH.BoardPage())
 	mux.Handle("/board/select", boardH.HandleSelect())
+	mux.Handle("/board/picker", boardH.HandleBidPicker())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))

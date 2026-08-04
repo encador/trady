@@ -10,6 +10,8 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+const ItemColumns = "select id, owner_id, title, description, image, location, listed from items "
+
 func Open(path string) (*sql.DB, error) {
 	if path == "" {
 		return nil, errors.New("[ERROR] No DB File Specified")
@@ -58,7 +60,7 @@ func Create(path string) error {
 	q := `
 	drop table if exists users;
 	create table users(
-	id integer primary key autoincrement,
+	id text primary key,
 	security integer not null default 1,
 	username text not null unique,
 	password text not null
@@ -71,6 +73,7 @@ func Create(path string) error {
 	title text not null,
 	description text,
 	image text,
+	location text,
 	listed boolean not null default 0
 	);
 	`

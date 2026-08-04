@@ -1,0 +1,208 @@
+package bids
+
+import "github.com/encador/trady/internal/models"
+
+templ Picker(items []models.Item, isTaker bool) {
+	<div
+		id="picker"
+		data-init="$mouseOverPicker=false; $showPicker=true; $pickerItem=''"
+		data-on:click="if (!$mouseOverPicker) {$showPicker=false}"
+		data-show="$showPicker"
+		data-on:picker__window="if (evt.detail.id !== $pickerItem) {$pickerItem = evt.detail.id} else {$pickerItem = ''};"
+	>
+		<div
+			id="picker-wrapper"
+			data-on:mouseenter="$mouseOverPicker=true"
+			data-on:mouseleave="$mouseOverPicker=false"
+			style="cursor: default"
+		>
+			<div
+				id="picker-window"
+			>
+				if len(items)> 0 {
+					@PickerItemCSS()
+					for _, item := range items {
+						@PickerItem(item)
+					}
+				} else {
+					<h2 style="color: var(--white-3);">Nothing To Show</h2>
+				}
+			</div>
+			@pickerOptionsCSS()
+			@pickerOptions(isTaker)
+		</div>
+	</div>
+}
+
+templ PickerCSS() {
+	<style>
+		#picker {
+			position: fixed;
+			background-color: #00000070;
+			inset: 0;
+			cursor: pointer;
+			user-select: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#picker-wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 5px;
+			margin-bottom: 10%;
+		}
+		#picker-window {
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			border: 3px solid var(--dark-3);
+			border-radius: 10px;
+			width: 50vw;
+			height: 60vh;
+			max-width: 1100px;
+			max-height: 600px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			padding: 10px;
+			flex-wrap: wrap;
+			overflow: auto;
+		}
+	</style>
+}
+
+templ pickerOptions(isTaker bool) {
+	<div id="picker-options">
+		if !isTaker {
+			<button
+				class="green"
+				title="Place Bid Using Selected Item"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click="@post('/board/make')"
+			>Place Bid</button>
+			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
+		} else {
+			<button
+				class="green"
+				title="Accept Trade For Selected Item"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/board/take')"
+			>Accept Bid</button>
+			<button
+				class="red"
+				title="Deny Selected Bid"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click="@post('/board/deny')"
+			>Deny</button>
+			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
+		}
+	</div>
+}
+
+templ pickerOptionsCSS() {
+	<style>
+		#picker-options {
+			width: fit-content;
+			padding: 0px 25px 0 25px;
+			height: 50px;
+			background-color: var(--dark-3);
+			/* border: 3px solid var(--dark-3); */
+			border-radius: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+		}
+		button {
+			font-size: 20px;
+			font-weight: bold;
+			padding: 1px 5px 1px 5px;
+		}
+		#picker-options button:disabled {
+			border-color: var(--dark-3);
+		}
+	</style>
+}
+
+templ PickerItem(item models.Item) {
+	<div
+		id="picker-item"
+		data-on:click={ `el.dispatchEvent(new CustomEvent('picker', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))` }
+		data-class:selected={ "$pickerItem === '" + item.ID + "'" }
+	>
+		<img src={ item.ImageURL } alt=""/>
+		<span id="title">{ item.Title }</span>
+		<span id="description">{ item.Description }</span>
+	</div>
+}
+
+templ PickerItemCSS() {
+	<style>
+		#picker-item img {
+			display: block;
+			width: 100%;
+			min-width: 0;
+			max-height: 400px;
+			border-bottom: 3px solid var(--dark-4);
+			margin-bottom: 5px;
+		}
+		#picker-item {
+			border: 3px solid var(--dark-4);
+			background-color: var(--dark-3);
+			width: 170px;
+			height: fit-content;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			border-radius: 10px;
+			padding-bottom: 5px;
+		}
+		#picker-item:hover {
+			border-color: var(--orange-2);
+			background-color: var(--orange-1);
+			cursor: pointer;
+		}
+		#picker-item:hover #description {
+			border-color: var(--orange-3);
+			background-color: var(--orange-2);
+		}
+		#picker-item.selected {
+			border-color: var(--blue-3);
+			background-color: var(--blue-2);
+		}
+		#picker-item.selected #description {
+			border-color: var(--blue-2);
+			background-color: var(--blue-3);
+		}
+
+		#picker-item #description {
+			display: inline-block;
+			white-space: pre-wrap;
+			overflow: auto;
+			overflow-wrap: anywhere;
+			border: 3px dashed var(--dark-3);
+			background-color: var(--dark-2);
+			color: var(--white-3);
+			width: 95%;
+			height: 50px;
+			padding: 2px;
+			border-radius: 15px;
+		}
+		#picker-item span {
+			color: var(--white-3);
+			font-size: 18px;
+			text-align: center;
+			font-weight: bold;
+			height: 20px;
+			border: none;
+			margin: 0px 0 5px 0;
+			overflow: auto;
+			padding: 0 2px 0 2px;
+		}
+	</style>
+}
