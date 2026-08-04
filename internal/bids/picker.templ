@@ -2,7 +2,7 @@ package bids
 
 import "github.com/encador/trady/internal/models"
 
-templ Picker(items []models.Item) {
+templ Picker(items []models.Item, isTaker bool) {
 	<div
 		id="picker"
 		data-init="$mouseOverPicker=false; $showPicker=true; $pickerItem=''"
@@ -19,13 +19,17 @@ templ Picker(items []models.Item) {
 			<div
 				id="picker-window"
 			>
-				@PickerItemCSS()
-				for _, item := range items {
-					@PickerItem(item)
+				if len(items)> 0 {
+					@PickerItemCSS()
+					for _, item := range items {
+						@PickerItem(item)
+					}
+				} else {
+					<h2 style="color: var(--white-3);">Nothing To Show</h2>
 				}
 			</div>
 			@pickerOptionsCSS()
-			@pickerOptions(true)
+			@pickerOptions(isTaker)
 		</div>
 	</div>
 }
@@ -57,8 +61,8 @@ templ PickerCSS() {
 			border-radius: 10px;
 			width: 50vw;
 			height: 60vh;
-			max-width: 1300px;
-			max-height: 800px;
+			max-width: 1100px;
+			max-height: 600px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -70,9 +74,9 @@ templ PickerCSS() {
 	</style>
 }
 
-templ pickerOptions(maker bool) {
+templ pickerOptions(isTaker bool) {
 	<div id="picker-options">
-		if maker {
+		if !isTaker {
 			<button
 				class="green"
 				title="Place Bid Using Selected Item"
@@ -81,7 +85,19 @@ templ pickerOptions(maker bool) {
 			>Place Bid</button>
 			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
 		} else {
-			<button class="green" type="button">Take Bid</button>
+			<button
+				class="green"
+				title="Accept Trade For Selected Item"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/board/take')"
+			>Accept Bid</button>
+			<button
+				class="red"
+				title="Deny Selected Bid"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click="@post('/board/deny')"
+			>Deny</button>
+			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
 		}
 	</div>
 }
@@ -103,7 +119,7 @@ templ pickerOptionsCSS() {
 		button {
 			font-size: 20px;
 			font-weight: bold;
-			padding: 0 5px 0 5px;
+			padding: 1px 5px 1px 5px;
 		}
 		#picker-options button:disabled {
 			border-color: var(--dark-3);

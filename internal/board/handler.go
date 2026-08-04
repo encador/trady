@@ -81,13 +81,25 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 
 func (h *BoardHandler) HandleBidPicker() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		sse := datastar.NewSSE(w, r)
+		signals := &BoardSignals{}
+		datastar.ReadSignals(r, signals)
+
 		user := auth.GetUser(r.Context())
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+		if err != nil || !item.Listed {
+			http.Error(w, "error", http.StatusInternalServerError)
+			return
+		}
 		items, err := items.GetAllForUser(h.database, user.ID)
 		if err != nil {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
-		sse.PatchElementTempl(bids.Picker(items), datastar.WithModeReplace())
+
+		isTaker := item.IsOwner(user)
+		fmt.Println(isTaker)
+
+		sse := datastar.NewSSE(w, r)
+		sse.PatchElementTempl(bids.Picker(items, isTaker), datastar.WithModeReplace())
 	})
 }

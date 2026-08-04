@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "github.com/encador/trady/internal/models"
 
-func Picker(items []models.Item) templ.Component {
+func Picker(items []models.Item, isTaker bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -35,17 +35,24 @@ func Picker(items []models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = PickerItemCSS().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		for _, item := range items {
-			templ_7745c5c3_Err = PickerItem(item).Render(ctx, templ_7745c5c3_Buffer)
+		if len(items) > 0 {
+			templ_7745c5c3_Err = PickerItemCSS().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			for _, item := range items {
+				templ_7745c5c3_Err = PickerItem(item).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h2 style=\"color: var(--white-3);\">Nothing To Show</h2>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,11 +60,11 @@ func Picker(items []models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = pickerOptions(true).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = pickerOptions(isTaker).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -86,7 +93,7 @@ func PickerCSS() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\n\t\t#picker {\n\t\t\tposition: fixed;\n\t\t\tbackground-color: #00000070;\n\t\t\tinset: 0;\n\t\t\tcursor: pointer;\n\t\t\tuser-select: none;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t}\n\t\t#picker-wrapper {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 5px;\n\t\t\tmargin-bottom: 10%;\n\t\t}\n\t\t#picker-window {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\tborder: 3px solid var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 50vw;\n\t\t\theight: 60vh;\n\t\t\tmax-width: 1300px;\n\t\t\tmax-height: 800px;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 10px;\n\t\t\tpadding: 10px;\n\t\t\tflex-wrap: wrap;\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\n\t\t#picker {\n\t\t\tposition: fixed;\n\t\t\tbackground-color: #00000070;\n\t\t\tinset: 0;\n\t\t\tcursor: pointer;\n\t\t\tuser-select: none;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t}\n\t\t#picker-wrapper {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 5px;\n\t\t\tmargin-bottom: 10%;\n\t\t}\n\t\t#picker-window {\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\tborder: 3px solid var(--dark-3);\n\t\t\tborder-radius: 10px;\n\t\t\twidth: 50vw;\n\t\t\theight: 60vh;\n\t\t\tmax-width: 1100px;\n\t\t\tmax-height: 600px;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 10px;\n\t\t\tpadding: 10px;\n\t\t\tflex-wrap: wrap;\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -94,7 +101,7 @@ func PickerCSS() templ.Component {
 	})
 }
 
-func pickerOptions(maker bool) templ.Component {
+func pickerOptions(isTaker bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -115,22 +122,22 @@ func pickerOptions(maker bool) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"picker-options\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div id=\"picker-options\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if maker {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<button class=\"green\" title=\"Place Bid Using Selected Item\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\"@post('/board/make')\">Place Bid</button> <button class=\"orange\" title=\"Close Picker Window\" data-on:click=\"$showPicker=false\">Close</button>")
+		if !isTaker {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<button class=\"green\" title=\"Place Bid Using Selected Item\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\"@post('/board/make')\">Place Bid</button> <button class=\"orange\" title=\"Close Picker Window\" data-on:click=\"$showPicker=false\">Close</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<button class=\"green\" type=\"button\">Take Bid</button>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<button class=\"green\" title=\"Accept Trade For Selected Item\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\" confirm('You Are About to Accept the Trade') && @post('/board/take')\">Accept Bid</button> <button class=\"red\" title=\"Deny Selected Bid\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\"@post('/board/deny')\">Deny</button> <button class=\"orange\" title=\"Close Picker Window\" data-on:click=\"$showPicker=false\">Close</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -159,7 +166,7 @@ func pickerOptionsCSS() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<style>\n\t\t#picker-options {\n\t\t\twidth: fit-content;\n\t\t\tpadding: 0px 25px 0 25px;\n\t\t\theight: 50px;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\t/* border: 3px solid var(--dark-3); */\n\t\t\tborder-radius: 10px;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t}\n\t\tbutton {\n\t\t\tfont-size: 20px;\n\t\t\tfont-weight: bold;\n\t\t\tpadding: 0 5px 0 5px;\n\t\t}\n\t\t#picker-options button:disabled {\n\t\t\tborder-color: var(--dark-3);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<style>\n\t\t#picker-options {\n\t\t\twidth: fit-content;\n\t\t\tpadding: 0px 25px 0 25px;\n\t\t\theight: 50px;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\t/* border: 3px solid var(--dark-3); */\n\t\t\tborder-radius: 10px;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t}\n\t\tbutton {\n\t\t\tfont-size: 20px;\n\t\t\tfont-weight: bold;\n\t\t\tpadding: 1px 5px 1px 5px;\n\t\t}\n\t\t#picker-options button:disabled {\n\t\t\tborder-color: var(--dark-3);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -188,72 +195,72 @@ func PickerItem(item models.Item) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div id=\"picker-item\" data-on:click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"picker-item\" data-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(`el.dispatchEvent(new CustomEvent('picker', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 117, Col: 133}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 133, Col: 133}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" data-class:selected=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" data-class:selected=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("$pickerItem === '" + item.ID + "'")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 118, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 134, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 120, Col: 26}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 136, Col: 26}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" alt=\"\"> <span id=\"title\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "\" alt=\"\"> <span id=\"title\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 121, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 137, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</span> <span id=\"description\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</span> <span id=\"description\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 122, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 138, Col: 43}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</span></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</span></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -282,7 +289,7 @@ func PickerItemCSS() templ.Component {
 			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<style>\n\t\t#picker-item img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tmargin-bottom: 5px;\n\t\t}\n\t\t#picker-item {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 170px;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t}\n\t\t#picker-item:hover {\n\t\t\tborder-color: var(--orange-2);\n\t\t\tbackground-color: var(--orange-1);\n\t\t\tcursor: pointer;\n\t\t}\n\t\t#picker-item:hover #description {\n\t\t\tborder-color: var(--orange-3);\n\t\t\tbackground-color: var(--orange-2);\n\t\t}\n\t\t#picker-item.selected {\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground-color: var(--blue-2);\n\t\t}\n\t\t#picker-item.selected #description {\n\t\t\tborder-color: var(--blue-2);\n\t\t\tbackground-color: var(--blue-3);\n\t\t}\n\n\t\t#picker-item #description {\n\t\t\tdisplay: inline-block;\n\t\t\twhite-space: pre-wrap;\n\t\t\toverflow: auto;\n\t\t\toverflow-wrap: anywhere;\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 95%;\n\t\t\theight: 50px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t}\n\t\t#picker-item span {\n\t\t\tcolor: var(--white-3);\n\t\t\tfont-size: 18px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\theight: 20px;\n\t\t\tborder: none;\n\t\t\tmargin: 0px 0 5px 0;\n\t\t\toverflow: auto;\n\t\t\tpadding: 0 2px 0 2px;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<style>\n\t\t#picker-item img {\n\t\t\tdisplay: block;\n\t\t\twidth: 100%;\n\t\t\tmin-width: 0;\n\t\t\tmax-height: 400px;\n\t\t\tborder-bottom: 3px solid var(--dark-4);\n\t\t\tmargin-bottom: 5px;\n\t\t}\n\t\t#picker-item {\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tbackground-color: var(--dark-3);\n\t\t\twidth: 170px;\n\t\t\theight: fit-content;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tborder-radius: 10px;\n\t\t\tpadding-bottom: 5px;\n\t\t}\n\t\t#picker-item:hover {\n\t\t\tborder-color: var(--orange-2);\n\t\t\tbackground-color: var(--orange-1);\n\t\t\tcursor: pointer;\n\t\t}\n\t\t#picker-item:hover #description {\n\t\t\tborder-color: var(--orange-3);\n\t\t\tbackground-color: var(--orange-2);\n\t\t}\n\t\t#picker-item.selected {\n\t\t\tborder-color: var(--blue-3);\n\t\t\tbackground-color: var(--blue-2);\n\t\t}\n\t\t#picker-item.selected #description {\n\t\t\tborder-color: var(--blue-2);\n\t\t\tbackground-color: var(--blue-3);\n\t\t}\n\n\t\t#picker-item #description {\n\t\t\tdisplay: inline-block;\n\t\t\twhite-space: pre-wrap;\n\t\t\toverflow: auto;\n\t\t\toverflow-wrap: anywhere;\n\t\t\tborder: 3px dashed var(--dark-3);\n\t\t\tbackground-color: var(--dark-2);\n\t\t\tcolor: var(--white-3);\n\t\t\twidth: 95%;\n\t\t\theight: 50px;\n\t\t\tpadding: 2px;\n\t\t\tborder-radius: 15px;\n\t\t}\n\t\t#picker-item span {\n\t\t\tcolor: var(--white-3);\n\t\t\tfont-size: 18px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\theight: 20px;\n\t\t\tborder: none;\n\t\t\tmargin: 0px 0 5px 0;\n\t\t\toverflow: auto;\n\t\t\tpadding: 0 2px 0 2px;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
