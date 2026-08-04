@@ -11,7 +11,7 @@ templ BoardPage(listings []models.Item) {
 		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/board/select')} else {$selectedItem = ''}; $showControls = false"
 		data-indicator="selecting"
 	></div>
-	<div data-init="@post('/board/make-bid')"></div>
+	<div data-init="@post('/board/picker')"></div>
 	@bids.PickerCSS()
 	<div
 		id="picker"

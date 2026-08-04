@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/encador/trady/internal/auth"
 	"github.com/encador/trady/internal/bids"
@@ -18,6 +17,8 @@ import (
 type BoardSignals struct {
 	SelectedItemID models.ID `json:"selectedItem"`
 	ShowControls   bool      `json:"showControls"`
+	ShowPicker     bool      `json:"showPicker"`
+	PickerItemID   models.ID `json:"pickerItem"`
 }
 
 type BoardHandler struct {
@@ -88,6 +89,5 @@ func (h *BoardHandler) HandleBidPicker() http.Handler {
 			return
 		}
 		sse.PatchElementTempl(bids.Picker(items), datastar.WithModeReplace())
-		time.Sleep(time.Second)
 	})
 }

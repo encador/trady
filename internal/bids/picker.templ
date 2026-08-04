@@ -5,18 +5,15 @@ import "github.com/encador/trady/internal/models"
 templ Picker(items []models.Item) {
 	<div
 		id="picker"
-		data-ref:picker
-		data-on:click="if (!$over-window) {$show-picker=false}"
-		data-show="$show-picker"
+		data-init="$mouseOverPicker=false; $showPicker=true; $pickerItem=''"
+		data-on:click="if (!$mouseOverPicker) {$showPicker=false}"
+		data-show="$showPicker"
 		data-on:picker__window="if (evt.detail.id !== $pickerItem) {$pickerItem = evt.detail.id} else {$pickerItem = ''};"
 	>
 		<div
-			data-init="$over-window=false; $show-picker=true"
-		></div>
-		<div
 			id="picker-wrapper"
-			data-on:mouseenter="$over-window=true"
-			data-on:mouseleave="$over-window=false"
+			data-on:mouseenter="$mouseOverPicker=true"
+			data-on:mouseleave="$mouseOverPicker=false"
 			style="cursor: default"
 		>
 			<div
@@ -27,7 +24,8 @@ templ Picker(items []models.Item) {
 					@PickerItem(item)
 				}
 			</div>
-			<div id="picker-options"></div>
+			@pickerOptionsCSS()
+			@pickerOptions(true)
 		</div>
 	</div>
 }
@@ -36,7 +34,7 @@ templ PickerCSS() {
 	<style>
 		#picker {
 			position: fixed;
-			background-color: #00000050;
+			background-color: #00000070;
 			inset: 0;
 			cursor: pointer;
 			user-select: none;
@@ -50,7 +48,7 @@ templ PickerCSS() {
 			justify-content: center;
 			align-items: center;
 			gap: 5px;
-			padding-bottom: 10%;
+			margin-bottom: 10%;
 		}
 		#picker-window {
 			background-color: var(--dark-2);
@@ -69,12 +67,46 @@ templ PickerCSS() {
 			flex-wrap: wrap;
 			overflow: auto;
 		}
+	</style>
+}
+
+templ pickerOptions(maker bool) {
+	<div id="picker-options">
+		if maker {
+			<button
+				class="green"
+				title="Place Bid Using Selected Item"
+				data-attr:disabled="$pickerItem==''"
+				data-on:click="@post('/board/make')"
+			>Place Bid</button>
+			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
+		} else {
+			<button class="green" type="button">Take Bid</button>
+		}
+	</div>
+}
+
+templ pickerOptionsCSS() {
+	<style>
 		#picker-options {
-			width: 30vw;
+			width: fit-content;
+			padding: 0px 25px 0 25px;
 			height: 50px;
-			background-color: var(--dark-2);
-			border: 3px solid var(--dark-3);
-			border-radius: 5px;
+			background-color: var(--dark-3);
+			/* border: 3px solid var(--dark-3); */
+			border-radius: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+		}
+		button {
+			font-size: 20px;
+			font-weight: bold;
+			padding: 0 5px 0 5px;
+		}
+		#picker-options button:disabled {
+			border-color: var(--dark-3);
 		}
 	</style>
 }
@@ -87,7 +119,7 @@ templ PickerItem(item models.Item) {
 	>
 		<img src={ item.ImageURL } alt=""/>
 		<span id="title">{ item.Title }</span>
-		<textarea disabled id="description">{ item.Description }</textarea>
+		<span id="description">{ item.Description }</span>
 	</div>
 }
 
@@ -109,9 +141,9 @@ templ PickerItemCSS() {
 			overflow: hidden;
 			display: flex;
 			flex-direction: column;
-			align-content: center;
+			justify-content: center;
 			align-items: center;
-			border-radius: 5px;
+			border-radius: 10px;
 			padding-bottom: 5px;
 		}
 		#picker-item:hover {
@@ -119,7 +151,7 @@ templ PickerItemCSS() {
 			background-color: var(--orange-1);
 			cursor: pointer;
 		}
-		#picker-item:hover textarea {
+		#picker-item:hover #description {
 			border-color: var(--orange-3);
 			background-color: var(--orange-2);
 		}
@@ -127,23 +159,23 @@ templ PickerItemCSS() {
 			border-color: var(--blue-3);
 			background-color: var(--blue-2);
 		}
-		#picker-item.selected textarea {
+		#picker-item.selected #description {
 			border-color: var(--blue-2);
 			background-color: var(--blue-3);
 		}
-		#picker-item textarea {
+
+		#picker-item #description {
+			display: inline-block;
+			white-space: pre-wrap;
+			overflow: auto;
+			overflow-wrap: anywhere;
 			border: 3px dashed var(--dark-3);
 			background-color: var(--dark-2);
 			color: var(--white-3);
-			width: 90%;
+			width: 95%;
 			height: 50px;
 			padding: 2px;
 			border-radius: 15px;
-			outline: none;
-			font-size: 15px;
-			text-align: center;
-			font-weight: bold;
-			resize: none;
 		}
 		#picker-item span {
 			color: var(--white-3);
@@ -155,20 +187,6 @@ templ PickerItemCSS() {
 			margin: 0px 0 5px 0;
 			overflow: auto;
 			padding: 0 2px 0 2px;
-		}
-	</style>
-}
-
-templ DetailsCSS() {
-	<style>
-		#details #title {
-			height: 30px;
-			margin-bottom: 10px;
-			border-radius: 0;
-		}
-
-		#details #description {
-			margin-bottom: 10px;
 		}
 	</style>
 }
