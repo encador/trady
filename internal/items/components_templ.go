@@ -595,7 +595,7 @@ func MakeBid(bid models.Item) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<div id=\"buttons\"><button id=\"place-bid\" class=\"green\" data-on:click=\"@post('/board/picker')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Select Item</button> <button id=\"place-bid\" class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<div id=\"buttons\"><button id=\"place-bid\" class=\"green\" data-on:click=\"@post('/bids/picker')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Select Item</button> <button id=\"place-bid\" class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

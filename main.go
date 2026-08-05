@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/encador/trady/internal/bids"
 	"github.com/encador/trady/internal/board"
 	"github.com/encador/trady/internal/database"
 	"github.com/encador/trady/internal/inventory"
@@ -62,13 +63,6 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	userH := users.NewHandler(db)
-	invH, err := inventory.NewHandler(db, cnf.uploadDir)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
-	boardH := board.NewBoardHandler(db)
 
 	fs := http.FileServer(http.FS(staticFiles))
 	mux.Handle("/static/", middleware.Cache1(fs))
@@ -83,11 +77,17 @@ func main() {
 		http.Redirect(w, r, "/inventory", http.StatusSeeOther)
 	})
 
+	userH := users.NewHandler(db)
 	mux.Handle("/user", userH.HandleUserPage())
 	mux.Handle("/user/new", userH.HandleAdd())
 	mux.Handle("/user/login", userH.HandleLoginPage())
 	mux.Handle("/user/logout", userH.HandleLogout())
 
+	invH, err := inventory.NewHandler(db, cnf.uploadDir)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(0)
+	}
 	mux.Handle("/inventory", invH.InventoryPage())
 	mux.Handle("/inventory/new", invH.HandleNew())
 	mux.Handle("/inventory/select", invH.HandleSelect())
@@ -95,9 +95,12 @@ func main() {
 	mux.Handle("/inventory/list", invH.HandleList())
 	mux.Handle("/inventory/delist", invH.HandleDelist())
 
+	boardH := board.NewBoardHandler(db)
 	mux.Handle("/board", boardH.BoardPage())
 	mux.Handle("/board/select", boardH.HandleSelect())
-	mux.Handle("/board/picker", boardH.HandleBidPicker())
+
+	bidsH := bids.NewBidHandler(db)
+	mux.Handle("/bids/picker", bidsH.HandleBidPicker())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))

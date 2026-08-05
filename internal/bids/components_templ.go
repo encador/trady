@@ -166,7 +166,7 @@ func pickerOptionsCSS() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<style>\n\t\t#picker-options {\n\t\t\twidth: fit-content;\n\t\t\tpadding: 0px 25px 0 25px;\n\t\t\theight: 50px;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\t/* border: 3px solid var(--dark-3); */\n\t\t\tborder-radius: 10px;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t}\n\t\tbutton {\n\t\t\tfont-size: 20px;\n\t\t\tfont-weight: bold;\n\t\t\tpadding: 1px 5px 1px 5px;\n\t\t}\n\t\t#picker-options button:disabled {\n\t\t\tborder-color: var(--dark-3);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<style>\n\t\t#picker-options {\n\t\t\twidth: fit-content;\n\t\t\tpadding: 0px 25px 0 25px;\n\t\t\theight: 50px;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\t/* border: 3px solid var(--dark-3); */\n\t\t\tborder-radius: 10px;\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tgap: 15px;\n\t\t}\n\t\tbutton {\n\t\t\tfont-size: 18px;\n\t\t\tfont-weight: bold;\n\t\t\tpadding: 1px 5px 1px 5px;\n\t\t}\n\t\t#picker-options button:disabled {\n\t\t\tborder-color: var(--dark-3);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -202,7 +202,7 @@ func PickerItem(item models.Item) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(`el.dispatchEvent(new CustomEvent('picker', { detail: { id: '` + item.ID + `' }, bubbles: true, composed: true }))`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 133, Col: 133}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/components.templ`, Line: 133, Col: 133}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -215,7 +215,7 @@ func PickerItem(item models.Item) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("$pickerItem === '" + item.ID + "'")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 134, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/components.templ`, Line: 134, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -228,7 +228,7 @@ func PickerItem(item models.Item) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(item.ImageURL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 136, Col: 26}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/components.templ`, Line: 136, Col: 26}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -241,7 +241,7 @@ func PickerItem(item models.Item) templ.Component {
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 137, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/components.templ`, Line: 137, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -254,7 +254,7 @@ func PickerItem(item models.Item) templ.Component {
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/picker.templ`, Line: 138, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/bids/components.templ`, Line: 138, Col: 43}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
