@@ -40,6 +40,9 @@ func main() {
 		err := database.Create(cnf.dbPath)
 		if err == nil {
 			fmt.Println("[LOG] DB Created")
+		} else {
+			fmt.Println(err.Error())
+			os.Exit(1)
 		}
 		err = os.MkdirAll(cnf.uploadDir, 0755)
 		if err != nil {
@@ -101,6 +104,7 @@ func main() {
 
 	bidsH := bids.NewBidHandler(db)
 	mux.Handle("/bids/picker", bidsH.HandleBidPicker())
+	mux.Handle("/bids/make", bidsH.HandleBidMake())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))

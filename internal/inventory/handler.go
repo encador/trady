@@ -119,7 +119,6 @@ func (h *InventoryHandler) HandleDelete() http.Handler {
 			return
 		}
 
-
 		sse := datastar.NewSSE(w, r)
 		sse.PatchSignals([]byte(`{ showControls: false, selectedItem: ''}`))
 		sse.RemoveElementByID("item-" + string(signals.SelectedItemID))
@@ -145,7 +144,7 @@ func (h *InventoryHandler) HandleSelect() http.Handler {
 		}
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(h.database, item.ID))}))
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
 		// sse.PatchSignals([]byte(`{ showControls: true }`))
@@ -176,7 +175,7 @@ func (h *InventoryHandler) HandleList() http.Handler {
 			return
 		}
 		item.Listed = true
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(h.database, item.ID))}))
 		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+string(item.ID)))
 		sse.PatchElementTempl(general.MsgBox("Item Listed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 
@@ -207,7 +206,7 @@ func (h *InventoryHandler) HandleDelist() http.Handler {
 			return
 		}
 		item.Listed = false
-		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		sse.PatchElementTempl(items.Contols(items.Data{Item: item, Options: true, Details: true, TakeBid: true, BidCount: len(bids.ForItem(h.database, item.ID))}))
 		sse.PatchElementTempl(items.Item(item), datastar.WithSelectorID("item-"+string(item.ID)))
 		sse.PatchElementTempl(general.MsgBox("Item Delisted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModeInner())
 

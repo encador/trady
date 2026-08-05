@@ -7,22 +7,20 @@ import (
 )
 
 // All bids for specific Item ID
-func ForItem(itemID models.ID) []models.Item {
+func ForItem(db *sql.DB, itemID models.ID) []models.Item {
 	return []models.Item{}
 }
 
 // All bids made by User ID
-func ByUser(userID models.ID) []models.Item {
+func ByUser(db *sql.DB, userID models.ID) []models.Item {
 	return []models.Item{}
 }
 
 // All bids made by User ID for Item ID
-func ByUserForItem(userID models.ID, itemID models.ID) []models.Item {
+func ByUserForItem(db *sql.DB, userID models.ID, itemID models.ID) []models.Item {
 	return []models.Item{}
 }
 
-func UserItems(db *sql.DB, userID models.ID) []models.Item {
-
-	return []models.Item{}
-
+func PlaceBid(db *sql.DB, userID models.ID, itemID models.ID, targetID models.ID) error {
+	return nil
 }

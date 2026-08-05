@@ -67,7 +67,7 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 
 		// Does the User own this item
 		if item.IsOwner(auth.GetUser(r.Context())) {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(h.database, item.ID))}))
 		} else {
 			owner, _ := users.GetUserByID(h.database, item.OwnerID)
 			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Owner: owner, MakeBid: true}))
