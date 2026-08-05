@@ -37,14 +37,16 @@ func main() {
 	flag.Parse()
 
 	if cnf.init {
-		err := database.Create(cnf.dbPath)
-		if err == nil {
-			fmt.Println("[LOG] DB Created")
-		} else {
-			fmt.Println(err.Error())
-			os.Exit(1)
+		if !database.Exists(cnf.dbPath) {
+			err := database.Create(cnf.dbPath)
+			if err == nil {
+				fmt.Println("[LOG] DB Created")
+			} else {
+				fmt.Println(err.Error())
+				os.Exit(1)
+			}
 		}
-		err = os.MkdirAll(cnf.uploadDir, 0755)
+		err := os.MkdirAll(cnf.uploadDir, 0755)
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println("[ERROR] UploadDir Not Created")

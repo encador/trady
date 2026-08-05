@@ -16,7 +16,7 @@ func Open(path string) (*sql.DB, error) {
 	if path == "" {
 		return nil, errors.New("[ERROR] No DB File Specified")
 	}
-	if _, err := os.Stat(path); err != nil {
+	if !Exists(path) {
 		return nil, fmt.Errorf("[ERROR] DB File (%s) Does NOT Exists", path)
 	}
 
@@ -33,12 +33,21 @@ func Open(path string) (*sql.DB, error) {
 	return db, nil
 }
 
+func Exists(path string) bool {
+	if path == "" {
+		return false
+	}
+
+	_, err := os.Stat(path)
+	return err == nil
+}
+
 func Create(path string) error {
 	if path == "" {
 		return errors.New("[ERROR] No DB File Name Specified")
 	}
 
-	if _, err := os.Stat(path); err == nil {
+	if Exists(path) {
 		// return fmt.Errorf("[ERROR] DB File (%s) Already Exists", path)
 		fmt.Printf("[LOG] DB File (%s) Already Exists\n", path)
 		return nil
