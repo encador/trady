@@ -2,9 +2,11 @@ package bids
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/encador/trady/internal/auth"
+	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
 	"github.com/starfederation/datastar-go/datastar"
@@ -24,7 +26,7 @@ func NewBidHandler(db *sql.DB) *BidHandler {
 	return &BidHandler{database: db}
 }
 
-func (h *BidHandler) HandleBidPicker() http.Handler {
+func (h *BidHandler) HandlePicker() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		signals := &BidSignals{}
 		datastar.ReadSignals(r, signals)
@@ -48,7 +50,7 @@ func (h *BidHandler) HandleBidPicker() http.Handler {
 	})
 }
 
-func (h *BidHandler) HandleBidMake() http.Handler {
+func (h *BidHandler) HandleMake() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		signals := &BidSignals{}
 		if err := datastar.ReadSignals(r, signals); err != nil {
@@ -64,9 +66,21 @@ func (h *BidHandler) HandleBidMake() http.Handler {
 		}
 		targetItem, err := items.GetFromID(h.database, signals.SelectedItemID)
 		// User cannot bid on their own items
-		if err != nil || targetItem.IsOwner(user) {
+		if err != nil || targetItem.IsOwner(user) || !targetItem.Listed {
 			http.Error(w, "target item error", http.StatusInternalServerError)
 			return
 		}
+
+		if err := PlaceBid(h.database, user.ID, bidItem.ID, targetItem.ID); err != nil {
+			fmt.Println(err.Error())
+			http.Error(w, "error placing bid", http.StatusInternalServerError)
+			return
+		}
+		sse := datastar.NewSSE(w, r)
+		signals.ShowPicker = false
+		signals.PickerItemID = ""
+		sse.MarshalAndPatchSignals(signals)
+		sse.PatchElementTempl(general.MsgBox("Bid Placed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+
 	})
 }
