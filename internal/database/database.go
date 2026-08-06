@@ -92,7 +92,8 @@ func Create(path string) error {
 	create table bids(
 		target_item_id text not null references items(id) on delete cascade,
 		bid_item_id text not null references items(id) on delete cascade,
-		check (target_item_id <> bid_item_id)
+		bid_owner_id text not null references users(id) on delete cascade,
+		check (target_item_id <> bid_item_id),
 		primary key (target_item_id, bid_item_id)
 	);
 	`

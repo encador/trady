@@ -309,22 +309,26 @@ templ OptionsCSS() {
 	</style>
 }
 
-templ MakeBid(bid models.Item) {
+templ MakeBid(userBid models.Item) {
 	<div id="bid">
 		<h2>My Bid</h2>
-		if bid.ID != "" {
-			<span>Item: { bid.Title }</span>
+		if userBid.ID != "" {
+			<span>Item: { userBid.Title }</span>
 		} else {
 			<span>Item: None</span>
 		}
 		<div id="buttons">
-			<button id="place-bid" class="green" data-on:click="@post('/bids/picker')" data-indicator="fetching" data-attr:disabled="$fetching">Select Item</button>
 			<button
-				id="place-bid"
+				class="green"
+				data-on:click="@post('/bids/picker')"
+				data-indicator="fetching"
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(userBid.Listed) }
+			>Select Item</button>
+			<button
 				class="red"
 				data-on:click="alert('BID')"
 				data-indicator="fetching"
-				data-attr:disabled={ "$fetching || "+bid.ID != "" }
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(!userBid.Listed) }
 			>Remove</button>
 		</div>
 	</div>
@@ -336,19 +340,17 @@ templ TakeBid(count int) {
 		<span>Count: { count }</span>
 		<div id="buttons">
 			<button
-				id="place-bid"
 				class="blue"
 				data-on:click="alert('BID')"
 				data-indicator="fetching"
-				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(count <= 0) }
 			>View All</button>
 			<button
 				disabled
-				id="place-bid"
 				class="red"
 				data-on:click="alert('BID')"
 				data-indicator="fetching"
-				data-attr:disabled={ "$fetching || " + strconv.Itoa(count) + "<=0" }
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(count <= 0) }
 			>Remove All</button>
 		</div>
 	</div>

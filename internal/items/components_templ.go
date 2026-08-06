@@ -546,7 +546,7 @@ func OptionsCSS() templ.Component {
 	})
 }
 
-func MakeBid(bid models.Item) templ.Component {
+func MakeBid(userBid models.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -571,15 +571,15 @@ func MakeBid(bid models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if bid.ID != "" {
+		if userBid.ID != "" {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "<span>Item: ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var22 string
-			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(bid.Title)
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(userBid.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 316, Col: 26}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 316, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
@@ -595,20 +595,33 @@ func MakeBid(bid models.Item) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<div id=\"buttons\"><button id=\"place-bid\" class=\"green\" data-on:click=\"@post('/bids/picker')\" data-indicator=\"fetching\" data-attr:disabled=\"$fetching\">Select Item</button> <button id=\"place-bid\" class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<div id=\"buttons\"><button class=\"green\" data-on:click=\"@post('/bids/picker')\" data-indicator=\"fetching\" data-attr:disabled=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var23 string
-		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || "+bid.ID != "")
+		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(userBid.Listed))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 327, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 325, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "\">Remove</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "\">Select Item</button> <button class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var24 string
+		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(!userBid.Listed))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 331, Col: 78}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "\">Remove</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -632,51 +645,51 @@ func TakeBid(count int) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var24 == nil {
-			templ_7745c5c3_Var24 = templ.NopComponent
+		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var25 == nil {
+			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "<div id=\"bid\"><h2>Public Bids</h2><span>Count: ")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var25 string
-		templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(count)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 336, Col: 22}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "</span><div id=\"buttons\"><button id=\"place-bid\" class=\"blue\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "<div id=\"bid\"><h2>Public Bids</h2><span>Count: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var26 string
-		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.Itoa(count) + "<=0")
+		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(count)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 343, Col: 70}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 340, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "\">View All</button> <button disabled id=\"place-bid\" class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</span><div id=\"buttons\"><button class=\"blue\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var27 string
-		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.Itoa(count) + "<=0")
+		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(count <= 0))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 351, Col: 70}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 346, Col: 73}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "\">Remove All</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "\">View All</button> <button disabled class=\"red\" data-on:click=\"alert('BID')\" data-indicator=\"fetching\" data-attr:disabled=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var28 string
+		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(count <= 0))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 353, Col: 73}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "\">Remove All</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -700,12 +713,12 @@ func BidCSS() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var28 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var28 == nil {
-			templ_7745c5c3_Var28 = templ.NopComponent
+		templ_7745c5c3_Var29 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var29 == nil {
+			templ_7745c5c3_Var29 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "<style>\n\t\t#bid {\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tborder-radius: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\toverflow: hidden;\n\t\t\tjustify-content: center;\n\t\t\talign-content: center;\n\t\t}\n\t\t#bid #buttons {\n\t\t\tmargin: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: row;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 5px;\n\t\t\tflex-wrap: wrap;\n\t\t}\n\t\t#bid #buttons button {\n\t\t\tfont-size: 16px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 10px 2px 10px;\n\t\t}\n\t\t#bid span {\n\t\t\tcolor: var(--white-4);\n\t\t\toutline: none;\n\t\t\tfont-size: 18px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t\theight: 20px;\n\t\t\tborder: none;\n\t\t\tmargin: 10px 0 5px 0;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "<style>\n\t\t#bid {\n\t\t\twidth: 80%;\n\t\t\theight: fit-content;\n\t\t\tbackground-color: var(--dark-3);\n\t\t\tborder: 3px solid var(--dark-4);\n\t\t\tborder-radius: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\toverflow: hidden;\n\t\t\tjustify-content: center;\n\t\t\talign-content: center;\n\t\t}\n\t\t#bid #buttons {\n\t\t\tmargin: 5px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: row;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tgap: 5px;\n\t\t\tflex-wrap: wrap;\n\t\t}\n\t\t#bid #buttons button {\n\t\t\tfont-size: 16px;\n\t\t\tfont-weight: bold;\n\t\t\twidth: auto;\n\t\t\tpadding: 2px 10px 2px 10px;\n\t\t}\n\t\t#bid span {\n\t\t\tcolor: var(--white-4);\n\t\t\toutline: none;\n\t\t\tfont-size: 18px;\n\t\t\ttext-align: center;\n\t\t\tfont-weight: bold;\n\t\t\tresize: none;\n\t\t\theight: 20px;\n\t\t\tborder: none;\n\t\t\tmargin: 10px 0 5px 0;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

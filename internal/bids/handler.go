@@ -71,16 +71,20 @@ func (h *BidHandler) HandleMake() http.Handler {
 			return
 		}
 
-		if err := PlaceBid(h.database, user.ID, bidItem.ID, targetItem.ID); err != nil {
-			fmt.Println(err.Error())
-			http.Error(w, "error placing bid", http.StatusInternalServerError)
-			return
-		}
 		sse := datastar.NewSSE(w, r)
 		signals.ShowPicker = false
 		signals.PickerItemID = ""
 		sse.MarshalAndPatchSignals(signals)
+
+		if err := PlaceBid(h.database, user.ID, bidItem.ID, targetItem.ID); err != nil {
+			fmt.Println(err.Error())
+			// http.Error(w, "error placing bid", http.StatusInternalServerError)
+			sse.PatchElementTempl(general.MsgBox("Bid Place Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
 		sse.PatchElementTempl(general.MsgBox("Bid Placed", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+		sse.PatchElementTempl(items.MakeBid(bidItem))
 
 	})
 }
