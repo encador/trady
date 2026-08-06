@@ -37,16 +37,23 @@ func (h *BidHandler) HandlePicker() http.Handler {
 			http.Error(w, "error", http.StatusInternalServerError)
 			return
 		}
-		items, err := items.GetAllForUser(h.database, user.ID)
-		if err != nil {
-			http.Error(w, "error", http.StatusInternalServerError)
-			return
+
+		var pickerItems []models.Item
+
+		if item.IsOwner(user){
+			pickerItems = ForItem(h.database, item.ID)
+		} else {
+			pickerItems, err = items.GetAllForUser(h.database, user.ID)
+			if err != nil {
+				http.Error(w, "error", http.StatusInternalServerError)
+				return
+		}
 		}
 
 		isTaker := item.IsOwner(user)
 
 		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(Picker(items, isTaker), datastar.WithModeReplace())
+		sse.PatchElementTempl(Picker(pickerItems, isTaker), datastar.WithModeReplace())
 	})
 }
 

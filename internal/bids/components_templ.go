@@ -132,7 +132,7 @@ func pickerOptions(isTaker bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<button class=\"green\" title=\"Accept Trade For Selected Item\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\" confirm('You Are About to Accept the Trade') && @post('/bids/take')\">Accept Bid</button> <button class=\"red\" title=\"Deny Selected Bid\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\"@post('/bids/deny')\">Deny</button> <button class=\"orange\" title=\"Close Picker Window\" data-on:click=\"$showPicker=false\">Close</button>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<button class=\"green\" title=\"Accept Trade For Selected Item\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\" confirm('You Are About to Accept the Trade') && @post('/bids/accept')\">Accept Bid</button> <button class=\"red\" title=\"Reject Selected Bid\" data-attr:disabled=\"$pickerItem==''\" data-on:click=\"@post('/bids/reject')\">Reject</button> <button class=\"orange\" title=\"Close Picker Window\" data-on:click=\"$showPicker=false\">Close</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

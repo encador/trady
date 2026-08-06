@@ -341,17 +341,17 @@ templ TakeBid(count int) {
 		<div id="buttons">
 			<button
 				class="blue"
-				data-on:click="alert('BID')"
+				data-on:click="@post('/bids/picker')"
 				data-indicator="fetching"
 				data-attr:disabled={ "$fetching || " + strconv.FormatBool(count <= 0) }
 			>View All</button>
 			<button
 				disabled
 				class="red"
-				data-on:click="alert('BID')"
+				data-on:click="@post('/bids/rejectall')"
 				data-indicator="fetching"
 				data-attr:disabled={ "$fetching || " + strconv.FormatBool(count <= 0) }
-			>Remove All</button>
+			>Reject All</button>
 		</div>
 	</div>
 }

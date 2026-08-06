@@ -9,7 +9,19 @@ import (
 
 // All bids for specific Item ID
 func ForItem(db *sql.DB, itemID models.ID) []models.Item {
-	return []models.Item{}
+	out := []models.Item{}
+	q := "select bid_item_id from bids where target_item_id = ?"
+	rows, _ := db.Query(q, itemID)
+	for rows.Next() {
+		var id models.ID
+		rows.Scan(&id)
+		item, err := items.GetFromID(db, id)
+		if err != nil {
+			return out
+		}
+		out = append(out, item)
+	}
+	return out
 }
 
 // All bids made by User ID

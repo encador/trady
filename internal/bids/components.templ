@@ -89,14 +89,14 @@ templ pickerOptions(isTaker bool) {
 				class="green"
 				title="Accept Trade For Selected Item"
 				data-attr:disabled="$pickerItem==''"
-				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/bids/take')"
+				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/bids/accept')"
 			>Accept Bid</button>
 			<button
 				class="red"
-				title="Deny Selected Bid"
+				title="Reject Selected Bid"
 				data-attr:disabled="$pickerItem==''"
-				data-on:click="@post('/bids/deny')"
-			>Deny</button>
+				data-on:click="@post('/bids/reject')"
+			>Reject</button>
 			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
 		}
 	</div>
