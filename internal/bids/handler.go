@@ -88,3 +88,27 @@ func (h *BidHandler) HandleMake() http.Handler {
 
 	})
 }
+
+func (h *BidHandler) HandleRemove() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := BidSignals{}
+		datastar.ReadSignals(r, &signals)
+		user := auth.GetUser(r.Context())
+		sse := datastar.NewSSE(w, r)
+
+		targetItem, err := items.GetFromID(h.database, signals.SelectedItemID)
+		if err != nil {
+			sse.PatchElementTempl(general.MsgBox("Invalid Item", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		if err := RemoveByUserForItem(h.database, user.ID, targetItem.ID); err != nil {
+			sse.PatchElementTempl(general.MsgBox("Bid Remove Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		sse.PatchElementTempl(general.MsgBox("Bid Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+		sse.PatchElementTempl(items.MakeBid(models.Item{}))
+
+	})
+}

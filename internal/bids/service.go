@@ -44,3 +44,11 @@ func PlaceBid(db *sql.DB, userID models.ID, itemID models.ID, targetID models.ID
 	}
 	return nil
 }
+
+func RemoveByUserForItem(db *sql.DB, userID models.ID, itemID models.ID) error {
+	q := "delete from bids where target_item_id = ? and bid_owner_id = ?"
+
+	_, err := db.Exec(q, itemID, userID)
+
+	return err
+}

@@ -107,6 +107,7 @@ func main() {
 	bidsH := bids.NewBidHandler(db)
 	mux.Handle("/bids/picker", bidsH.HandlePicker())
 	mux.Handle("/bids/make", bidsH.HandleMake())
+	mux.Handle("/bids/remove", bidsH.HandleRemove())
 
 	mux.Handle("/images/", http.StripPrefix("/images/", middleware.Cache1(http.FileServer(http.Dir(cnf.uploadDir)))))
 	// mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir(cnf.uploadDir))))

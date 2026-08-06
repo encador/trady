@@ -326,7 +326,7 @@ templ MakeBid(userBid models.Item) {
 			>Select Item</button>
 			<button
 				class="red"
-				data-on:click="alert('BID')"
+				data-on:click="@post('/bids/remove')"
 				data-indicator="fetching"
 				data-attr:disabled={ "$fetching || " + strconv.FormatBool(!userBid.Listed) }
 			>Remove</button>
