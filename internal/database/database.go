@@ -96,6 +96,14 @@ func Create(path string) error {
 		check (target_item_id <> bid_item_id),
 		primary key (target_item_id, bid_item_id)
 	);
+
+	create trigger remove_bid_when_item_delisted
+	after update of listed on items
+	when new.listed = false
+	begin
+		delete from bids
+		where target_item_id = new.id or bid_item_id = new.id;
+	end;
 	`
 	_, err = db.Exec(q)
 	return err
