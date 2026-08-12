@@ -40,14 +40,14 @@ func (h *BidHandler) HandlePicker() http.Handler {
 
 		var pickerItems []models.Item
 
-		if item.IsOwner(user){
+		if item.IsOwner(user) {
 			pickerItems = ForItem(h.database, item.ID)
 		} else {
 			pickerItems, err = items.GetAllForUser(h.database, user.ID)
 			if err != nil {
 				http.Error(w, "error", http.StatusInternalServerError)
 				return
-		}
+			}
 		}
 
 		isTaker := item.IsOwner(user)
@@ -78,6 +78,7 @@ func (h *BidHandler) HandleMake() http.Handler {
 			return
 		}
 
+		// Close Picker Menu
 		sse := datastar.NewSSE(w, r)
 		signals.ShowPicker = false
 		signals.PickerItemID = ""
@@ -116,6 +117,58 @@ func (h *BidHandler) HandleRemove() http.Handler {
 
 		sse.PatchElementTempl(general.MsgBox("Bid Removed", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 		sse.PatchElementTempl(items.MakeBid(models.Item{}))
+
+	})
+}
+
+func (h *BidHandler) HandleReject() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := BidSignals{}
+		datastar.ReadSignals(r, &signals)
+
+		sse := datastar.NewSSE(w, r)
+		signals.ShowPicker = false
+		sse.MarshalAndPatchSignals(signals)
+
+		user := auth.GetUser(r.Context())
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+		bid, err2 := items.GetFromID(h.database, signals.PickerItemID)
+		if err != nil || err2 != nil || !item.IsOwner(user) {
+			sse.PatchElementTempl(general.MsgBox("Bid Removal Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		if err := RemoveBidForItem(h.database, bid, item); err != nil {
+			sse.PatchElementTempl(general.MsgBox("Bid Removal Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		sse.PatchElementTempl(items.TakeBid(len(ForItem(h.database, item.ID))), datastar.WithModeReplace())
+		sse.PatchElementTempl(general.MsgBox("Removed Bid", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+
+	})
+}
+
+func (h *BidHandler) HandleRejectAll() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := BidSignals{}
+		datastar.ReadSignals(r, &signals)
+		sse := datastar.NewSSE(w, r)
+		user := auth.GetUser(r.Context())
+		item, err := items.GetFromID(h.database, signals.SelectedItemID)
+		if err != nil || !item.IsOwner(user) {
+			// http.Error(w, "error", http.StatusInternalServerError)
+			sse.PatchElementTempl(general.MsgBox("Bid Removal Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		if err := RemoveAllForItem(h.database, item); err != nil {
+			sse.PatchElementTempl(general.MsgBox("Bid Removal Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		sse.PatchElementTempl(items.TakeBid(0), datastar.WithModeReplace())
+		sse.PatchElementTempl(general.MsgBox("Removed All Bids", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
 	})
 }

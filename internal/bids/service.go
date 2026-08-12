@@ -64,3 +64,16 @@ func RemoveByUserForItem(db *sql.DB, userID models.ID, itemID models.ID) error {
 
 	return err
 }
+
+
+func RemoveBidForItem(db *sql.DB, bid, item models.Item) error {
+	q := "delete from bids where target_item_id = ? and bid_item_id = ?"
+	_, err := db.Exec(q, item.ID, bid.ID)
+	return err
+}
+
+func RemoveAllForItem(db *sql.DB, item models.Item) error {
+	q := "delete from bids where target_item_id = ?"
+	_, err := db.Exec(q, item.ID)
+	return err
+}

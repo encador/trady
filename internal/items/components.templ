@@ -310,9 +310,10 @@ templ OptionsCSS() {
 }
 
 templ MakeBid(userBid models.Item) {
+	{{ valid := userBid.ID != models.ID("") }}
 	<div id="bid">
 		<h2>My Bid</h2>
-		if userBid.ID != "" {
+		if valid {
 			<span>Item: { userBid.Title }</span>
 		} else {
 			<span>Item: None</span>
@@ -322,13 +323,13 @@ templ MakeBid(userBid models.Item) {
 				class="green"
 				data-on:click="@post('/bids/picker')"
 				data-indicator="fetching"
-				data-attr:disabled={ "$fetching || " + strconv.FormatBool(userBid.Listed) }
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(valid) }
 			>Select Item</button>
 			<button
 				class="red"
 				data-on:click="@post('/bids/remove')"
 				data-indicator="fetching"
-				data-attr:disabled={ "$fetching || " + strconv.FormatBool(!userBid.Listed) }
+				data-attr:disabled={ "$fetching || " + strconv.FormatBool(!valid) }
 			>Remove</button>
 		</div>
 	</div>

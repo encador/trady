@@ -567,11 +567,12 @@ func MakeBid(userBid models.Item) templ.Component {
 			templ_7745c5c3_Var21 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		valid := userBid.ID != models.ID("")
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "<div id=\"bid\"><h2>My Bid</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if userBid.ID != "" {
+		if valid {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "<span>Item: ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -579,7 +580,7 @@ func MakeBid(userBid models.Item) templ.Component {
 			var templ_7745c5c3_Var22 string
 			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(userBid.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 316, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 317, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
@@ -600,9 +601,9 @@ func MakeBid(userBid models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var23 string
-		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(userBid.Listed))
+		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(valid))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 325, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 326, Col: 68}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 		if templ_7745c5c3_Err != nil {
@@ -613,9 +614,9 @@ func MakeBid(userBid models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var24 string
-		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(!userBid.Listed))
+		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(!valid))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 331, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 332, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 		if templ_7745c5c3_Err != nil {
@@ -657,7 +658,7 @@ func TakeBid(count int) templ.Component {
 		var templ_7745c5c3_Var26 string
 		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(count)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 340, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 341, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
@@ -670,7 +671,7 @@ func TakeBid(count int) templ.Component {
 		var templ_7745c5c3_Var27 string
 		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(count <= 0))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 346, Col: 73}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 347, Col: 73}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 		if templ_7745c5c3_Err != nil {
@@ -683,7 +684,7 @@ func TakeBid(count int) templ.Component {
 		var templ_7745c5c3_Var28 string
 		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs("$fetching || " + strconv.FormatBool(count <= 0))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 353, Col: 73}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/items/components.templ`, Line: 354, Col: 73}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 		if templ_7745c5c3_Err != nil {
