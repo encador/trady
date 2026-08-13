@@ -9,6 +9,7 @@ import (
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
+	"github.com/encador/trady/internal/users"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
@@ -169,6 +170,33 @@ func (h *BidHandler) HandleRejectAll() http.Handler {
 
 		sse.PatchElementTempl(items.TakeBid(0), datastar.WithModeReplace())
 		sse.PatchElementTempl(general.MsgBox("Removed All Bids", 2), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+
+	})
+}
+
+func (h *BidHandler) HandleAccept() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		signals := BidSignals{}
+		datastar.ReadSignals(r, &signals)
+		user := auth.GetUser(r.Context())
+		userItem, err := items.GetFromID(h.database, signals.SelectedItemID)
+		targetItem, err2 := items.GetFromID(h.database, signals.PickerItemID)
+		targetItemOwner, err3 := users.GetUserByID(h.database, targetItem.OwnerID)
+		sse := datastar.NewSSE(w, r)
+		// Close picker window
+		signals.ShowPicker = false
+		sse.MarshalAndPatchSignals(signals)
+		if err != nil || err2 != nil || err3 != nil || !userItem.IsOwner(user) || !targetItem.Listed {
+			sse.PatchElementTempl(general.MsgBox("Bid Accept Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+		}
+
+		if err := SwapItemOwnership(h.database, userItem, targetItem, user, targetItemOwner); err != nil {
+			sse.PatchElementTempl(general.MsgBox("Bid Accept Error", 3), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+			return
+
+		}
+		sse.PatchElementTempl(general.MsgBox("Bid Accepted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
 	})
 }

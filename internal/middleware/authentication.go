@@ -43,9 +43,9 @@ var secLevel = map[string]int{
 	"/bids/picker":      1,
 	"/bids/make":        1,
 	"/bids/remove":      1,
-	"/bids/accept":      1,
 	"/bids/reject":      1,
 	"/bids/rejectall":   1,
+	"/bids/accept":      1,
 }
 
 // List of urls that redirect to Login when not logged-in

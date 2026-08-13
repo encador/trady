@@ -28,6 +28,7 @@ func GetUsername(ctx context.Context) string {
 	return user.Username
 }
 
+// GetUser extract the User struct from the provided request context
 func GetUser(ctx context.Context) models.User {
 	user, ok := ctx.Value(ctxKey).(models.User)
 	if ok {

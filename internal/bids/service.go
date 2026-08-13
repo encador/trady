@@ -77,3 +77,7 @@ func RemoveAllForItem(db *sql.DB, item models.Item) error {
 	_, err := db.Exec(q, item.ID)
 	return err
 }
+
+func SwapItemOwnership(db *sql.DB, item1, item2 models.Item, user1, user2 models.User) error {
+	return nil
+}
