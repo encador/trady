@@ -16,3 +16,10 @@ dev:
 		--proxy="http://localhost:55000" \
 		--proxybind="localhost" --proxyport="8080" \
 		--open-browser=false
+
+RUNNER ?= docker
+docker:
+	$(RUNNER) build -t trady .
+	- $(RUNNER) stop trady-app
+	- $(RUNNER) rm trady-app
+	$(RUNNER) run -d --name trady-app -p 8080:8080 trady
