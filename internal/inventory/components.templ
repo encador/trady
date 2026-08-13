@@ -3,6 +3,7 @@ package inventory
 import (
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
+	"github.com/encador/trady/internal/bids"
 	"github.com/encador/trady/internal/models"
 )
 
@@ -12,6 +13,12 @@ templ InventoryPage(items []models.Item) {
 		data-on:item-selected__window="if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/inventory/select')} else {$selectedItem = ''}; $showControls = false"
 		data-indicator="selecting"
 	></div>
+	@bids.PickerCSS()
+	<div
+		id="picker"
+		style="display:none"
+	></div>
+
 	@ItemList(items)
 }
 

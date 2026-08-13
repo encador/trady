@@ -17,8 +17,6 @@ import (
 type BoardSignals struct {
 	SelectedItemID models.ID `json:"selectedItem"`
 	ShowControls   bool      `json:"showControls"`
-	ShowPicker     bool      `json:"showPicker"`
-	PickerItemID   models.ID `json:"pickerItem"`
 }
 
 type BoardHandler struct {
@@ -67,39 +65,17 @@ func (h *BoardHandler) HandleSelect() http.Handler {
 			return
 		}
 
+		user := auth.GetUser(r.Context())
+
 		// Does the User own this item
-		if item.IsOwner(auth.GetUser(r.Context())) {
-			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(item.ID))}))
+		if item.IsOwner(user) {
+			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Options: true, TakeBid: true, BidCount: len(bids.ForItem(h.database, item.ID))}))
 		} else {
 			owner, _ := users.GetUserByID(h.database, item.OwnerID)
-			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Owner: owner, MakeBid: true}))
+			userBid := bids.ByUserForItem(h.database, user.ID, item.ID)
+			sse.PatchElementTempl(items.Contols(items.Data{Item: item, Details: true, Owner: owner, MakeBid: true, UserBid: userBid}))
 		}
 		signals.ShowControls = true
 		sse.MarshalAndPatchSignals(signals)
-	})
-}
-
-func (h *BoardHandler) HandleBidPicker() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		signals := &BoardSignals{}
-		datastar.ReadSignals(r, signals)
-
-		user := auth.GetUser(r.Context())
-		item, err := items.GetFromID(h.database, signals.SelectedItemID)
-		if err != nil || !item.Listed {
-			http.Error(w, "error", http.StatusInternalServerError)
-			return
-		}
-		items, err := items.GetAllForUser(h.database, user.ID)
-		if err != nil {
-			http.Error(w, "error", http.StatusInternalServerError)
-			return
-		}
-
-		isTaker := item.IsOwner(user)
-		fmt.Println(isTaker)
-
-		sse := datastar.NewSSE(w, r)
-		sse.PatchElementTempl(bids.Picker(items, isTaker), datastar.WithModeReplace())
 	})
 }

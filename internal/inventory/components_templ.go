@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/encador/trady/internal/bids"
 	"github.com/encador/trady/internal/general"
 	"github.com/encador/trady/internal/items"
 	"github.com/encador/trady/internal/models"
@@ -36,6 +37,14 @@ func InventoryPage(items []models.Item) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div data-init=\"$selectedItem = ''; $previousItem = ''; $showControls = false;\" data-on:item-selected__window=\"if (evt.detail.id !== $selectedItem) {$selectedItem = evt.detail.id; @post('/inventory/select')} else {$selectedItem = ''}; $showControls = false\" data-indicator=\"selecting\"></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = bids.PickerCSS().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"picker\" style=\"display:none\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -68,7 +77,7 @@ func ControlBox() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"ic-box\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div id=\"ic-box\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -76,7 +85,7 @@ func ControlBox() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<h2 style=\"color: var(--white-4); user-select:none;\" data-show=\"!$showControls && !$selectedItem && !$selecting\">Nothing Selected</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h2 style=\"color: var(--white-4); user-select:none;\" data-show=\"!$showControls && !$selectedItem && !$selecting\">Nothing Selected</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,7 +105,7 @@ func ControlBox() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\tmin-height: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><style>\n\t\t#ic-box {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\twidth: 100%;\n\t\t\tmin-height: 100%;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\t/* background-color: red; */\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -125,7 +134,7 @@ func ItemList(list []models.Item) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"item-list\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div id=\"item-list\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -143,7 +152,7 @@ func ItemList(list []models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div><style>\n\t\t#item-list {\n\t\t\tdisplay: flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tpadding: 15px;\n\t\t\t/* align-items: center; */\n\t\t\tjustify-content: center;\n\t\t\tbox-sizing: border-box;\n\t\t\tmargin: 0;\n\t\t\t/* width: 100%; */\n\t\t\t/* height: 100%; */\n\t\t\tmax-width: 100%;\n\t\t\tmax-height: 100%;\n\t\t\tmin-width: auto;\n\t\t\tmin-height: auto;\n\n\t\t\toverflow: auto;\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -172,7 +181,7 @@ func NewItem() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div id=\"new-item\" data-on:click=\"if ($selectedItem !== 'new') {$selectedItem = 'new'; $showControls = false} else {$selectedItem = ''}\" data-class:selected=\"$selectedItem === 'new'\"><b>+</b><p>Add New</p></div><style>\n\t\t#new-item {\n\t\t\tborder: 3px dashed var(--green-2);\n\t\t\tcolor: var(--green-1);\n\t\t\twidth: 130px;\n\t\t\theight: 140px;\n\t\t\tuser-select: none;\n\t\t\tborder-radius: 10px;\n\t\t\tmargin: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tfont-size: 27px;\n\t\t}\n\t\t#new-item:hover {\n\t\t\tcursor: pointer;\n\t\t\tbackground-color: var(--green-2);\n\t\t\tborder-color: var(--green-3);\n\t\t\tcolor: var(--green-1);\n\t\t}\n\t\t#new-item.selected {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcolor: var(--blue-1);\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div id=\"new-item\" data-on:click=\"if ($selectedItem !== 'new') {$selectedItem = 'new'; $showControls = false} else {$selectedItem = ''}\" data-class:selected=\"$selectedItem === 'new'\"><b>+</b><p>Add New</p></div><style>\n\t\t#new-item {\n\t\t\tborder: 3px dashed var(--green-2);\n\t\t\tcolor: var(--green-1);\n\t\t\twidth: 130px;\n\t\t\theight: 140px;\n\t\t\tuser-select: none;\n\t\t\tborder-radius: 10px;\n\t\t\tmargin: 10px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\tfont-size: 27px;\n\t\t}\n\t\t#new-item:hover {\n\t\t\tcursor: pointer;\n\t\t\tbackground-color: var(--green-2);\n\t\t\tborder-color: var(--green-3);\n\t\t\tcolor: var(--green-1);\n\t\t}\n\t\t#new-item.selected {\n\t\t\tbackground-color: var(--blue-2);\n\t\t\tborder-color: var(--blue-3);\n\t\t\tcolor: var(--blue-1);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

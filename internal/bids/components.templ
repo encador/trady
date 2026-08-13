@@ -81,7 +81,7 @@ templ pickerOptions(isTaker bool) {
 				class="green"
 				title="Place Bid Using Selected Item"
 				data-attr:disabled="$pickerItem==''"
-				data-on:click="@post('/board/make')"
+				data-on:click="@post('/bids/make')"
 			>Place Bid</button>
 			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
 		} else {
@@ -89,14 +89,14 @@ templ pickerOptions(isTaker bool) {
 				class="green"
 				title="Accept Trade For Selected Item"
 				data-attr:disabled="$pickerItem==''"
-				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/board/take')"
+				data-on:click=" confirm('You Are About to Accept the Trade') && @post('/bids/accept')"
 			>Accept Bid</button>
 			<button
 				class="red"
-				title="Deny Selected Bid"
+				title="Reject Selected Bid"
 				data-attr:disabled="$pickerItem==''"
-				data-on:click="@post('/board/deny')"
-			>Deny</button>
+				data-on:click="@post('/bids/reject')"
+			>Reject</button>
 			<button class="orange" title="Close Picker Window" data-on:click="$showPicker=false">Close</button>
 		}
 	</div>
@@ -117,7 +117,7 @@ templ pickerOptionsCSS() {
 			gap: 15px;
 		}
 		button {
-			font-size: 20px;
+			font-size: 18px;
 			font-weight: bold;
 			padding: 1px 5px 1px 5px;
 		}
