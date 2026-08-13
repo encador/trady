@@ -196,7 +196,9 @@ func (h *BidHandler) HandleAccept() http.Handler {
 			return
 
 		}
-		sse.PatchElementTempl(general.MsgBox("Bid Accepted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
 
+		// On Success
+		sse.PatchElementTempl(general.MsgBox("Bid Accepted", 1), datastar.WithSelectorID("msg-box"), datastar.WithModePrepend())
+		sse.ExecuteScript("window.location.reload()")
 	})
 }

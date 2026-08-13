@@ -65,7 +65,6 @@ func RemoveByUserForItem(db *sql.DB, userID models.ID, itemID models.ID) error {
 	return err
 }
 
-
 func RemoveBidForItem(db *sql.DB, bid, item models.Item) error {
 	q := "delete from bids where target_item_id = ? and bid_item_id = ?"
 	_, err := db.Exec(q, item.ID, bid.ID)
@@ -78,6 +77,26 @@ func RemoveAllForItem(db *sql.DB, item models.Item) error {
 	return err
 }
 
+// SwapItemOwnership swaps the owner_id between two users and their items
+//
+// Potential race condition
 func SwapItemOwnership(db *sql.DB, item1, item2 models.Item, user1, user2 models.User) error {
-	return nil
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	q := "update items set owner_id = ? where id = ? and owner_id = ?"
+	if _, err := tx.Exec(q, user2.ID, item1.ID, user1.ID); err != nil {
+		return err
+	}
+	if _, err := tx.Exec(q, user1.ID, item2.ID, user2.ID); err != nil {
+		return err
+	}
+	q = "update items set listed = false where id = ? or id = ?"
+	if _, err := tx.Exec(q, item1.ID, item2.ID); err != nil {
+		return err
+	}
+
+	return tx.Commit()
 }
