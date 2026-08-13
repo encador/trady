@@ -23,3 +23,9 @@ An online trading application for digital items
   go mod download
   make run
 ```
+## With Dockerfile
+```sh
+  git clone https://github.com/encador/trady.git
+  cd trady
+  make docker
+```
