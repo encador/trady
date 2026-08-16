@@ -11,7 +11,10 @@ import (
 func ForItem(db *sql.DB, itemID models.ID) []models.Item {
 	out := []models.Item{}
 	q := "select bid_item_id from bids where target_item_id = ?"
-	rows, _ := db.Query(q, itemID)
+	rows, err := db.Query(q, itemID)
+	if err != nil || rows.Err() != nil {
+		return out
+	}
 	for rows.Next() {
 		var id models.ID
 		rows.Scan(&id)
