@@ -1,6 +1,3 @@
-> [!WARNING]
-> Project is Work-In-Progress
-
 # Trady
 An online trading application for digital items
 
